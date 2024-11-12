@@ -1,0 +1,52 @@
+.stats {
+    margin-bottom: 1rem;
+    border-right: 2px solid #fff0;
+}
+
+.avatarIcon {
+    width: 60px;
+    height: 60px;
+}
+
+.productImage img {
+    width: 100%;
+    object-fit: cover;
+    height: 530px;
+}
+
+.font-weight-bold {
+    font-weight: bold;
+}
+
+.manaThumnail {
+    width: 200px;
+    height: 215px;
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+
+.manaThumnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+@media screen and (max-width: 1200px) and (min-width: 768px) {
+    .stats, .stats:not(:last-child) {
+        border-color: #fff0;
+    }
+
+    .stats:nth-child(odd) {
+        border-color: #000;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .stats, .stats:not(:last-child), .stats:nth-child(odd) {
+        border-color: #fff0;
+    }
+}
+
+
+
+

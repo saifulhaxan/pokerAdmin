@@ -1,0 +1,108 @@
+.stats {
+    margin-bottom: 1rem;
+    border-right: 2px solid #fff0;
+}
+
+.statsCard {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    background: #e9e9e970;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    align-items: baseline;
+}
+
+
+.statsChange p {
+    margin-bottom: 0;
+    font-size: 13px;
+}
+
+.statsContent {
+    display: flex;
+    gap: 1rem;
+    flex-grow: 1;
+}
+
+.statsImg {
+    flex-shrink: 0;
+}
+
+.statsImg img {
+    width: 60px;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 0.5rem;
+}
+
+.statsData {
+    flex-grow: 1;
+}
+
+.statsNumber {
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.statsText {
+    font-size: 14px;
+    color: var(--grayColor);
+    margin: 0;
+}
+
+.statsChange {
+    flex-shrink: 0;
+}
+
+
+.userBox {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #dbd9d9;
+    padding-bottom: 20px;
+}
+
+.userBox img {
+    width: 35px;
+    height: 35px;
+    object-fit: cover;
+    border-radius: 50px;
+}
+
+.userName h5 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+.userName {
+    display: flex;
+    justify-content: space-between;
+    flex-grow: 1;
+}
+
+.userName p {
+    margin-bottom: 0;
+    font-size: 12px;
+}
+
+@media screen and (max-width: 1200px) and (min-width: 768px) {
+    .stats, .stats:not(:last-child) {
+        border-color: #fff0;
+    }
+
+    .stats:nth-child(odd) {
+        border-color: #000;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .stats, .stats:not(:last-child), .stats:nth-child(odd) {
+        border-color: #fff0;
+    }
+}
