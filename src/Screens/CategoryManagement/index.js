@@ -14,6 +14,7 @@ import CustomInput from "../../Components/CustomInput";
 import CustomButton from "../../Components/CustomButton";
 import { SelectBox } from "../../Components/CustomSelect";
 import Select from 'react-select'
+import { useGet, usePost } from "../../Api";
 
 export const CategotyManagement = () => {
 
@@ -29,77 +30,13 @@ export const CategotyManagement = () => {
     const [brands, setBrands] = useState({});
     const editBrandList = [];
     const [formData, setFormData] = useState({});
-
-    const handleChangeSelect = (selected) => {
-        setFormData({
-            ...formData, brands: selected
-        })
-    };
-
-    const optionData = [
-        {
-            name: "Active",
-            code: "1"
-        },
-        {
-            name: "Inactive",
-            code: "0"
-        },
-    ]
-
-    const handlePageChange = (pageNumber) => {
-        setCurrentPage(pageNumber);
-    };
+    const [catID, setCatID] = useState('');
+    const { ApiData: CategoryData, loading: CategoryLoading, error: CategoryError, get: GetCategory } = useGet(`category`);
+    const { ApiData: AddNewCategoryData, loading: AddNewCategoryLoading, error: AddNewCategoryError, post: GetAddNewCategory } = usePost(`category`);
+    const { ApiData: EditCategoryData, loading: EditCategoryLoading, error: EditCategoryError, get: GetEditCategory } = useGet(`category/${catID ? catID : ''}`);
 
 
-
-
-    const handleChange = (e) => {
-        setInputValue(e.target.value);
-    }
-
-
-
-    const fetchData = () => {
-        const LogoutData = localStorage.getItem('login');
-        document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch('https://custom2.mystagingserver.site/food-stadium/public/api/vendor/zip_code_list',
-            {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${LogoutData}`
-                },
-            }
-        )
-
-            .then(response =>
-                response.json()
-            )
-            .then((data) => {
-                document.querySelector('.loaderBox').classList.add("d-none");
-                console.log(data?.data)
-                setData(data?.data);
-            })
-            .catch((error) => {
-                document.querySelector('.loaderBox').classList.add("d-none");
-                console.log(error)
-            })
-    }
-
-    console.log(data)
-
-    const SelectOptions = [];
-    useEffect(() => {
-        document.title = 'Poker | Category List';
-
-        fetchData()
-        // fectchBrandData();
-
-
-
-    }, []);
+    // list category 
 
     const maleHeaders = [
         {
@@ -122,141 +59,122 @@ export const CategotyManagement = () => {
     ];
 
 
-
-    for (const key in brands) {
-        if (brands.hasOwnProperty(key)) {
-            const item = brands[key];
-
-            // Create an object for each option with 'value' and 'label' properties
-            const option = {
-                value: item.id, // Assuming 'item.name' represents the option's value
-                label: item.name, // Assuming 'item.name' also represents the option's label
-            };
-
-            // Push the option object into the SelectOptions array
-            SelectOptions.push(option);
+    useEffect(() => {
+        if (CategoryData) {
+            setData(CategoryData)
         }
+    }, [CategoryData])
+
+
+    useEffect(() => {
+        document.title = 'Poker | Category List';
+        GetCategory()
+    }, []);
+
+
+    // add category
+
+
+    const handleAddForm = () => {
+        setFormData('');
+        setUser(true)
     }
 
-    console.log(SelectOptions);
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        GetAddNewCategory(formData);
+        if (formData?.title && formData?.status) {
+        }
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
+    }
+
+    useEffect(() => {
+        if (AddNewCategoryData) {
+            setUser(false);
+            setShowModal(true)
+            setTimeout(() => {
+                setShowModal(false)
+            }, 3000)
+            GetCategory()
+        }
+    }, [AddNewCategoryData])
+
+
+    // edit categoty 
+
+
+    const optionData = [
+        {
+            name: "Active",
+            id: true
+        },
+        {
+            name: "Inactive",
+            id: false
+        },
+    ]
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
 
         console.log(formData)
-        document.querySelector('.loaderBox').classList.remove("d-none");
-        const LogoutData = localStorage.getItem('login');
-        fetch(`https://custom2.mystagingserver.site/food-stadium/public/api/vendor/zip_code_add`,
-            {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${LogoutData}`
-                },
-                body: JSON.stringify(formData)
-            },
-        )
-            .then((response) => {
-                return response.json()
-            })
-            .then((data) => {
-                document.querySelector('.loaderBox').classList.add("d-none");
-                setShowModal(true)
-                console.log(data)
-                setUser(false)
-                setFormData({
-                    zip_code: ''
-                })
-                setShowModal(false)
-                fetchData()
-
-            })
-            .catch((error) => {
-                document.querySelector('.loaderBox').classList.add("d-none");
-                console.log(error);
-            })
     }
 
-    const editUnit = (unitID) => {
-        const LogoutData = localStorage.getItem('login');
-        fetch(`https://custom.mystagingserver.site/mtrecords/public/api/admin/view-unit/${unitID}`,
-            {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${LogoutData}`
-                },
-            },
-        )
-            .then((response) => {
-                return response.json()
-            })
-            .then((data) => {
-                console.log(data)
-                setIdUser(unitID)
-                console.log(idUser);
-                data.unit[0].unit_brands.map((item) => {
-                    const editData = {
-                        value: item.brands.id,
-                        label: item.brands.name,
-                    };
-                    editBrandList.push(editData)
-                })
-                setFormData({
-                    ...formData,
-                    name: data.unit[0].name,
-                    status: data.status,
-                    brands: editBrandList
-                });
 
-                setEditUser(true)
+    const openEditBox = (catID) => {
+        setCatID(catID);
 
-            })
-            .catch((error) => {
-                console.log(error);
-            })
     }
+
+    useEffect(() => {
+        if (catID) {
+            GetEditCategory()
+        }
+    }, [catID])
+
+
+    useEffect(() => {
+        if (EditCategoryData) {
+            setFormData({
+                ...formData,
+                title: EditCategoryData?.title,
+                status: EditCategoryData?.status
+            })
+
+            console.log('dataEdit', formData)
+            setEditUser(true)
+        }
+    }, [EditCategoryData])
+
+
+
+    // update
 
     const handleEditSubmit = (event) => {
         event.preventDefault();
-        console.log(formData)
+        alert()
 
-        const LogoutData = localStorage.getItem('login');
-        fetch(`https://custom.mystagingserver.site/mtrecords/public/api/admin/unit-add-edit/${idUser}`,
-            {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${LogoutData}`
-                },
-                body: JSON.stringify(formData)
-            },
-        )
-            .then((response) => {
-                return response.json()
-            })
-            .then((data) => {
-                console.log(data)
-                setFormData({
-                    name: ''
-                })
-                fetchData()
-                setEditUser(false)
-
-
-            })
-            .catch((error) => {
-                document.querySelector('.loaderBox').classList.add("d-none");
-                console.log(error);
-            })
     }
 
 
+    // pagination data 
 
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
 
+    const filterData = data?.filter(item =>
+        item?.title.toLowerCase().includes(inputValue.toLowerCase())
+    );
+
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = filterData?.slice(indexOfFirstItem, indexOfLastItem);
 
     return (
         <>
@@ -271,9 +189,7 @@ export const CategotyManagement = () => {
                                     </div>
                                     <div className="col-md-6 mb-2 d-flex justify-content-end">
                                         <div className="addUser">
-                                            <CustomButton text="Add Category" variant='primaryButton' onClick={() => {
-                                                setUser(true)
-                                            }} />
+                                            <CustomButton text="Add Category" variant='primaryButton' onClick={handleAddForm} />
 
                                         </div>
                                     </div>
@@ -286,33 +202,34 @@ export const CategotyManagement = () => {
 
                                         >
                                             <tbody>
-                                                {/* {data && Object.values(data).map((value, index) => (
+                                                {currentItems && currentItems.map((item, index) => (
                                                     <tr>
                                                         <td>{index + 1}</td>
-                                                        <td>{value}</td>
+                                                        <td>{item?.title}</td>
+                                                        <td className={`${item?.status === true ? 'text-success' : 'text-danger'}`}>{item?.status === true ? 'Active' : 'Inactive'}</td>
+                                                        <td>
+                                                            <Dropdown className="tableDropdown">
+                                                                <Dropdown.Toggle variant="transparent" className="notButton classicToggle">
+                                                                    <FontAwesomeIcon icon={faEllipsisV} />
+                                                                </Dropdown.Toggle>
+                                                                <Dropdown.Menu align="end" className="tableDropdownMenu">
+                                                                    <button className="tableAction" onClick={() => { openEditBox(item?.id) }}><FontAwesomeIcon icon={faEdit} className="tableActionIcon" />Edit</button>
+                                                                    <button className="tableAction"><FontAwesomeIcon icon={faTrash} className="tableActionIcon" />Delete</button>
+                                                                </Dropdown.Menu>
+                                                            </Dropdown>
+                                                        </td>
                                                     </tr>
-                                                ))} */}
-                                                <tr>
-                                                    <td>01</td>
-                                                    <td>Poker Game</td>
-                                                    <td className="text-success">Active</td>
-                                                    <td>    
-                                                        <Dropdown className="tableDropdown">
-                                                            <Dropdown.Toggle variant="transparent" className="notButton classicToggle">
-                                                                <FontAwesomeIcon icon={faEllipsisV} />
-                                                            </Dropdown.Toggle>
-                                                            <Dropdown.Menu align="end" className="tableDropdownMenu">
-                                                                <button className="tableAction" onClick={() => {
-                                                                    setEditUser(true)
-                                                                }}><FontAwesomeIcon icon={faEdit} className="tableActionIcon" />Edit</button>
-                                                                <button className="tableAction"><FontAwesomeIcon icon={faTrash} className="tableActionIcon" />Delete</button>
-                                                            </Dropdown.Menu>
-                                                        </Dropdown>
-                                                    </td>
-                                                </tr>
+                                                ))}
+
 
                                             </tbody>
                                         </CustomTable>
+                                        <CustomPagination
+                                            itemsPerPage={itemsPerPage}
+                                            totalItems={data?.length}
+                                            currentPage={currentPage}
+                                            onPageChange={handlePageChange}
+                                        />
 
                                     </div>
                                 </div>
@@ -322,43 +239,56 @@ export const CategotyManagement = () => {
 
                     {/* add unit  */}
 
-                    <CustomModal show={addUser} close={() => { setUser(false) }} >
+                    <CustomModal show={addUser} close={() => { setUser(false) }} handleSubmit={handleSubmit}>
                         <CustomInput
                             label="Add Category"
-                            type="number"
+                            type="text"
                             placeholder="Add Category"
                             required
-                            name="zip_code"
+                            name="title"
                             labelClass='mainLabel'
                             inputClass='mainInput'
-                            value={formData.category_name}
-                            onChange={(event) => {
-                                setFormData({ ...formData, category_name: event.target.value });
-                                console.log(formData);
-                            }}
+                            value={formData.title}
+                            onChange={handleChange}
 
 
                         />
 
-                        <CustomButton variant='primaryButton' text='Add' type='button' onClick={handleSubmit} />
+                        <SelectBox
+                            label="Select Status"
+                            required
+                            name="status"
+                            option={optionData}
+                            selectClass="mainInput"
+                            onChange={handleChange}
+                        />
+
+                        <CustomButton variant='primaryButton' text='Add' type='submit' />
                     </CustomModal>
 
                     <CustomModal show={editUser} close={() => { setEditUser(false) }} >
                         <CustomInput
                             label="Edit Category"
-                            type="number"
+                            type="text"
                             placeholder="Edit Category"
                             required
-                            name="zip_code"
+                            name="title"
                             labelClass='mainLabel'
                             inputClass='mainInput'
-                            value={formData.category_name}
-                            onChange={(event) => {
-                                setFormData({ ...formData, category_name: event.target.value });
-                                console.log(formData);
-                            }}
+                            value={formData?.title}
+                            onChange={handleChange}
 
 
+                        />
+
+                        <SelectBox
+                            label="Select Status"
+                            required
+                            name="status"
+                            value={formData?.status}
+                            option={optionData}
+                            selectClass="mainInput"
+                            onChange={handleChange}
                         />
                         <CustomButton variant='primaryButton' text='Update' type='button' onClick={handleEditSubmit} />
                     </CustomModal>

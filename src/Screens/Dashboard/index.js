@@ -27,10 +27,10 @@ export const Dashboard = () => {
   const [lead, setLead] = useState('');
   const [recived, setReceived] = useState('');
   const [amount, setAmount] = useState('');
-  const { apiData: leadsAmountData, loading: dataLoading } = useApi('admin/leads-amount');
-  const { apiData: leadsAmountMonthlyData, loading: leadLoading } = useApi('admin/leads-amount-monthly');
-  const { apiData: leadsAmountReceivedData, loading: receivedLoading } = useApi('admin/leads-amount-received');
-  const { apiData: leadsAmountReceivedMonthlyData, loading: AmountLoading } = useApi('admin/leads-amount-received-monthly');
+  // const { apiData: leadsAmountData, loading: dataLoading } = useApi('admin/leads-amount');
+  // const { apiData: leadsAmountMonthlyData, loading: leadLoading } = useApi('admin/leads-amount-monthly');
+  // const { apiData: leadsAmountReceivedData, loading: receivedLoading } = useApi('admin/leads-amount-received');
+  // const { apiData: leadsAmountReceivedMonthlyData, loading: AmountLoading } = useApi('admin/leads-amount-received-monthly');
 
 
   useEffect(() => {
@@ -39,13 +39,13 @@ export const Dashboard = () => {
   }, []);
 
 
-  useEffect(() => {
-    setData(leadsAmountData)
-    setLead(leadsAmountMonthlyData)
-    setReceived(leadsAmountReceivedData)
-    setAmount(leadsAmountReceivedMonthlyData)
+  // useEffect(() => {
+  //   setData(leadsAmountData)
+  //   setLead(leadsAmountMonthlyData)
+  //   setReceived(leadsAmountReceivedData)
+  //   setAmount(leadsAmountReceivedMonthlyData)
 
-  }, [leadsAmountData, leadsAmountMonthlyData, leadsAmountReceivedData, leadsAmountReceivedMonthlyData])
+  // }, [leadsAmountData, leadsAmountMonthlyData, leadsAmountReceivedData, leadsAmountReceivedMonthlyData])
 
 
   return (

@@ -6,65 +6,47 @@ import "./style.css";
 import { AuthLayout } from '../../Components/Layout/AuthLayout';
 import CustomButton from '../../Components/CustomButton';
 import CustomInput from "../../Components/CustomInput"
+import { useAuth } from '../../Api';
 
 
 const AdminLogin = () => {
     const navigate = useNavigate()
+    const { ApiData: LoginResponse, loading: LoginLoadning, error: LoginError, post: submitData } = useAuth('auth/signin');
 
     const [formData, setFormData] = useState({
         email: '',
         password: ''
     });
 
-  
 
-    console.log(formData.password);
+
 
     useEffect(() => {
         document.title = 'Poker City | Login';
     }, [])
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault();
-        
-        // const formDataMethod = new FormData();
-        // formDataMethod.append('email', formData.email);
-        // formDataMethod.append('password', formData.password);
-        // console.log(formData)
-        // document.querySelector('.loaderBox').classList.remove("d-none");
-
-        // const apiUrl = 'https://custom2.mystagingserver.site/food-stadium/public/api/user-login';
-
-
-        // try {
-        //     const response = await fetch(apiUrl, {
-        //         method: 'POST',
-        //         body: formDataMethod
-        //     });
-
-        //     if (response.ok) {
-               
-        //         const responseData = await response.json();
-        //         localStorage.setItem('login', responseData.data.token);
-        //         console.log('Login Response:', responseData);
-        //         document.querySelector('.loaderBox').classList.add("d-none");
-        //         navigate('/dashboard')
-                
-        //     } else {
-        //         document.querySelector('.loaderBox').classList.add("d-none");
-        //         alert('Invalid Credentials')
-
-        //         console.error('Login failed');
-        //     }
-        // } catch (error) {
-        //     document.querySelector('.loaderBox').classList.add("d-none");
-        //     console.error('Error:', error);
-        // }
-
-
-        localStorage.setItem('login', 12323)
-        navigate('/dashboard')
+        if (formData?.email != "" && formData?.email != "") {
+            submitData(formData)
+        }
     };
+
+    useEffect(() => {
+        if (LoginResponse) {
+            localStorage.setItem('login', LoginResponse?.token);
+            localStorage.setItem('username', LoginResponse?.user?.name);
+            if(LoginResponse?.token) {
+                navigate('/dashboard');
+            }
+        }
+    }, [LoginResponse])
+
+    useEffect(() => {
+        if (LoginError) {
+            console.log(LoginError)
+        }
+    }, [LoginError])
 
 
     return (
