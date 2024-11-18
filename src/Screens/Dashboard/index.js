@@ -18,7 +18,7 @@ import {
   faArrowCircleDown,
 } from "@fortawesome/free-solid-svg-icons";
 import { male1, male2, userImage, female1, male3 } from "../../Assets/images";
-import { useApi } from "../../Api";
+import { useApi, useGet } from "../../Api";
 
 import "./style.css";
 
@@ -27,25 +27,24 @@ export const Dashboard = () => {
   const [lead, setLead] = useState('');
   const [recived, setReceived] = useState('');
   const [amount, setAmount] = useState('');
-  // const { apiData: leadsAmountData, loading: dataLoading } = useApi('admin/leads-amount');
-  // const { apiData: leadsAmountMonthlyData, loading: leadLoading } = useApi('admin/leads-amount-monthly');
-  // const { apiData: leadsAmountReceivedData, loading: receivedLoading } = useApi('admin/leads-amount-received');
-  // const { apiData: leadsAmountReceivedMonthlyData, loading: AmountLoading } = useApi('admin/leads-amount-received-monthly');
+  const { ApiData: DashboardStatsData, loading: DashboardStatsLoading, error: DashboardStatsError, get: GetDashboardStats } = useGet(`user/stats`);
 
 
   useEffect(() => {
 
     document.title = 'Poker Admin | Dashboard';
+    GetDashboardStats()
   }, []);
 
 
-  // useEffect(() => {
-  //   setData(leadsAmountData)
-  //   setLead(leadsAmountMonthlyData)
-  //   setReceived(leadsAmountReceivedData)
-  //   setAmount(leadsAmountReceivedMonthlyData)
+  useEffect(() => {
+    if (DashboardStatsData) {
+      setData(DashboardStatsData?.recentRegistrations)
+    }
 
-  // }, [leadsAmountData, leadsAmountMonthlyData, leadsAmountReceivedData, leadsAmountReceivedMonthlyData])
+  }, [DashboardStatsData])
+
+  console.log(data)
 
 
   return (
@@ -180,42 +179,23 @@ export const Dashboard = () => {
                       <h3 className="mainTitle">Recently Registered</h3>
                     </div>
                     <div className="dashData">
-                      <div className="userBox">
-                        <div className="userImage">
-                          <img src={male1} alt="Jhon" />
-                        </div>
-                        <div className="userName">
-                          <h5>Jhon Mikal</h5>
-                          <p>12-09-24</p>
-                        </div>
-                      </div>
-                      <div className="userBox">
-                        <div className="userImage">
-                          <img src={male3} alt="Jhon" />
-                        </div>
-                        <div className="userName">
-                          <h5>Jhon Mikal</h5>
-                          <p>12-08-24</p>
-                        </div>
-                      </div>
-                      <div className="userBox">
-                        <div className="userImage">
-                          <img src={male2} alt="Jhon" />
-                        </div>
-                        <div className="userName">
-                          <h5>Jhon Mikal</h5>
-                          <p>12-08-24</p>
-                        </div>
-                      </div>
-                      <div className="userBox">
-                        <div className="userImage">
-                          <img src={female1} alt="Jhon" />
-                        </div>
-                        <div className="userName">
-                          <h5>Jhon Mikal</h5>
-                          <p>12-08-24</p>
-                        </div>
-                      </div>
+                      {
+                        data && data?.map((item, index) => (
+
+                          <div className="userBox" key={index}>
+                            <div className="userImage">
+                              <img src={male1} alt="Jhon" />
+                            </div>
+                            <div className="userName">
+                              <div className="info">
+                                <h5 className="text-capitalize">{item?.name}</h5>
+                                <small>{item?.email}</small>
+                              </div>
+                              <p>{item?.createdAt}</p>
+                            </div>
+                          </div>
+                        ))
+                      }
                     </div>
                   </div>
                 </div>

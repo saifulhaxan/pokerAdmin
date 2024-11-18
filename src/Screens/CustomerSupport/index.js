@@ -2,7 +2,7 @@
     * @description      : 
     * @author           : Saif
     * @group            : 
-    * @created          : 04/11/2024 - 22:57:05
+    * @created          : 04/11/2024 - 22:59:59
     * 
     * MODIFICATION LOG
     * - Version         : 1.0.0
@@ -15,7 +15,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { Dropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisV, faEye, faCheck, faTimes, faFilter, faEdit, faReply } from "@fortawesome/free-solid-svg-icons";
+import { faEllipsisV, faEye, faCheck, faTimes, faFilter, faEdit } from "@fortawesome/free-solid-svg-icons";
 
 import { DashboardLayout } from "../../Components/Layout/DashboardLayout";
 import CustomTable from "../../Components/CustomTable";
@@ -27,9 +27,9 @@ import CustomButton from "../../Components/CustomButton";
 
 
 import "./style.css";
+import { useGet } from "../../Api";
 
 export const CustomerSupport = () => {
-  const base_url = 'https://custom.mystagingserver.site/Tim-WDLLC/public/'
   const [data, setData] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
@@ -38,6 +38,8 @@ export const CustomerSupport = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(8);
   const [inputValue, setInputValue] = useState('');
+  const { ApiData: CustomerSupportData, loading: CustomerSupportLoading, error: CustomerSupportError, get: GetCustomerSupport } = useGet(`customer-support`);
+
 
   const navigate = useNavigate();
 
@@ -45,8 +47,10 @@ export const CustomerSupport = () => {
     setCurrentPage(pageNumber);
   };
 
+  console.log();
+
   const hanldeRoute = () => {
-    navigate('/add-ads')
+    navigate('/add-message')
   }
 
 
@@ -64,7 +68,7 @@ export const CustomerSupport = () => {
   }
 
   const filterData = data.filter(item =>
-    item.ad_title.toLowerCase().includes(inputValue.toLowerCase())
+    item?.name?.toLowerCase().includes(inputValue.toLowerCase())
   );
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -72,40 +76,23 @@ export const CustomerSupport = () => {
   const currentItems = filterData.slice(indexOfFirstItem, indexOfLastItem);
 
 
-  const AdsListing = () => {
-    const LogoutData = localStorage.getItem('login');
-    document.querySelector('.loaderBox').classList.remove("d-none");
-    fetch('',
-      {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${LogoutData}`
-        },
-      }
-    )
 
-      .then(response =>
-        response.json()
-      )
-      .then((data) => {
-        console.log(data)
-        document.querySelector('.loaderBox').classList.add("d-none");
-        // setData(data.data);
-      })
-      .catch((error) => {
-        document.querySelector('.loaderBox').classList.add("d-none");
-        console.log(error)
-      })
-
-  }
 
   useEffect(() => {
-    document.title = 'Poker City Admin | Customer Support';
-    AdsListing()
+    document.title = 'Poker | Customer Management';
+    GetCustomerSupport()
 
   }, []);
+
+
+  useEffect(()=>{
+    if(CustomerSupportData) {
+      setData(CustomerSupportData)
+    }
+  },[CustomerSupportData])
+
+
+
 
   const maleHeaders = [
     {
@@ -114,21 +101,16 @@ export const CustomerSupport = () => {
     },
     {
       key: "username",
-      title: "Customer Name",
+      title: "Name",
     },
     {
-      key: "email",
+      key: "emai",
       title: "Email",
-    },
-    {
-      key: "message",
-      title: "Message",
     },
     {
       key: "created_at",
       title: "Created On",
     },
-
     {
       key: "action",
       title: "Action",
@@ -145,14 +127,14 @@ export const CustomerSupport = () => {
               <div className="dashCard">
                 <div className="row mb-3 justify-content-between">
                   <div className="col-md-6 mb-2">
-                    <h2 className="mainTitle">Customer Queries</h2>
+                    <h2 className="mainTitle">Customer Management</h2>
                   </div>
-                  {/* <div className="col-md-6 mb-2">
+                  <div className="col-md-6 mb-2">
                     <div className="addUser">
-                      <CustomButton text="Add New Ad" variant='primaryButton' onClick={hanldeRoute} />
+                      {/* <CustomButton text="Add New Message" variant='primaryButton' onClick={hanldeRoute} /> */}
                       <CustomInput type="text" placeholder="Search Here..." value={inputValue} inputClass="mainInput" onChange={handleChange} />
                     </div>
-                  </div> */}
+                  </div>
                 </div>
                 <div className="row mb-3">
                   <div className="col-12">
@@ -160,111 +142,38 @@ export const CustomerSupport = () => {
                       headers={maleHeaders}
 
                     >
-                      {/* <tbody>
-                        {currentItems.map((item, index) => (
+                      <tbody>
+                        {currentItems?.map((item, index) => (
                           <tr key={index}>
                             <td>{index + 1}</td>
-                            <td><img src={base_url + item?.ad_image} className="avatarIcon"/></td>
                             <td className="text-capitalize">
-                              {item?.ad_title}
+                              {item?.name}
                             </td>
-                            <td>{item?.created_at}</td>
-                            <td className={!item.status  ? 'greenColor' : "redColor"}>{!item.status ? 'Active' : "Inactive"}</td>
+                            <td>{item?.email}</td>
+                            <td>{item?.createdAt}</td>
                             <td>
                               <Dropdown className="tableDropdown">
                                 <Dropdown.Toggle variant="transparent" className="notButton classicToggle">
                                   <FontAwesomeIcon icon={faEllipsisV} />
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu align="end" className="tableDropdownMenu">
-                                <Link to={`/ads-management/edit-ads/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faEdit} className="tableActionIcon" />Edit</Link>
-                                
+
+                                  <Link to={`/customer-support/message-details/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faEye} className="tableActionIcon" />View</Link>
+                                  {/* <Link to={`/user-management/edit-user/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faEdit} className="tableActionIcon" />Edit</Link> */}
+
                                 </Dropdown.Menu>
                               </Dropdown>
                             </td>
                           </tr>
                         ))}
-                      </tbody> */}
-                      <tbody>
-                        <tr>
-                          <td>01</td>
-                          <td>Alpha</td>
-                          <td>alpha@test.com</td>
-                          <td>I need the Book A How can I puschase?</td>
-                          <td>17-oct-2023</td>
-                          <td>
-                            <Dropdown className="tableDropdown">
-                              <Dropdown.Toggle variant="transparent" className="notButton classicToggle">
-                                <FontAwesomeIcon icon={faEllipsisV} />
-                              </Dropdown.Toggle>
-                              <Dropdown.Menu align="end" className="tableDropdownMenu">
-                                <Link to="#" className="tableAction"><FontAwesomeIcon icon={faReply} className="tableActionIcon" />Reply</Link>
-
-                              </Dropdown.Menu>
-                            </Dropdown>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>02</td>
-                          <td>Alpha</td>
-                          <td>alpha@test.com</td>
-                          <td>I need the Book A How can I puschase?</td>
-                          <td>17-oct-2023</td>
-                          <td>
-                            <Dropdown className="tableDropdown">
-                              <Dropdown.Toggle variant="transparent" className="notButton classicToggle">
-                                <FontAwesomeIcon icon={faEllipsisV} />
-                              </Dropdown.Toggle>
-                              <Dropdown.Menu align="end" className="tableDropdownMenu">
-                                <Link to="#" className="tableAction"><FontAwesomeIcon icon={faReply} className="tableActionIcon" />Reply</Link>
-
-                              </Dropdown.Menu>
-                            </Dropdown>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>03</td>
-                          <td>Alpha</td>
-                          <td>alpha@test.com</td>
-                          <td>I need the Book A How can I puschase?</td>
-                          <td>17-oct-2023</td>
-                          <td>
-                            <Dropdown className="tableDropdown">
-                              <Dropdown.Toggle variant="transparent" className="notButton classicToggle">
-                                <FontAwesomeIcon icon={faEllipsisV} />
-                              </Dropdown.Toggle>
-                              <Dropdown.Menu align="end" className="tableDropdownMenu">
-                                <Link to="#" className="tableAction"><FontAwesomeIcon icon={faReply} className="tableActionIcon" />Reply</Link>
-
-                              </Dropdown.Menu>
-                            </Dropdown>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>04</td>
-                          <td>Alpha</td>
-                          <td>alpha@test.com</td>
-                          <td>I need the Book A How can I puschase?</td>
-                          <td>17-oct-2023</td>
-                          <td>
-                            <Dropdown className="tableDropdown">
-                              <Dropdown.Toggle variant="transparent" className="notButton classicToggle">
-                                <FontAwesomeIcon icon={faEllipsisV} />
-                              </Dropdown.Toggle>
-                              <Dropdown.Menu align="end" className="tableDropdownMenu">
-                                <Link to="#" className="tableAction"><FontAwesomeIcon icon={faReply} className="tableActionIcon" />Reply</Link>
-
-                              </Dropdown.Menu>
-                            </Dropdown>
-                          </td>
-                        </tr>
                       </tbody>
                     </CustomTable>
-                    {/* <CustomPagination
+                    <CustomPagination
                       itemsPerPage={itemsPerPage}
-                      totalItems={data.length}
+                      totalItems={data?.length}
                       currentPage={currentPage}
                       onPageChange={handlePageChange}
-                    /> */}
+                    />
                   </div>
                 </div>
               </div>

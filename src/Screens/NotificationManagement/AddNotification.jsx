@@ -1,53 +1,48 @@
+/**
+    * @description      : 
+    * @author           : Saif
+    * @group            : 
+    * @created          : 04/11/2024 - 23:01:33
+    * 
+    * MODIFICATION LOG
+    * - Version         : 1.0.0
+    * - Date            : 04/11/2024
+    * - Author          : Saif
+    * - Modification    : 
+**/
 import { useState, useEffect } from "react";
 import { DashboardLayout } from "../../Components/Layout/DashboardLayout";
-import { useParams } from "react-router";
 import BackButton from "../../Components/BackButton";
 import CustomModal from "../../Components/CustomModal";
 import CustomInput from '../../Components/CustomInput';
 import { SelectBox } from "../../Components/CustomSelect";
 import CustomButton from "../../Components/CustomButton";
-import { CategoryList } from "../../Components/CategoryList";
-export const EditMenu = () => {
+import { CategoryList, DietaryList, MenuList } from "../../Components/CategoryList";
+import { useGet } from "../../Api";
+export const AddNotification = () => {
+    const [unit, setUnit] = useState({});
     const [showModal, setShowModal] = useState(false);
     const [formData, setFormData] = useState({
-        item_pic: '', // Initialize image as an empty string
+        image: '', // Initialize image as an empty string
     });
 
-    const { id } = useParams();
-
     const categories = CategoryList();
+    const dietary = DietaryList();
+    const Menu = MenuList();
+    const [users, setUser] = useState();
+    const { ApiData: UseeListingData, loading: UseeListingLoading, error: UseeListingError, get: GetUseeListing } = useGet(`user/getAll`);
 
-    const fetchMenuData = () => {
-        const LogoutData = localStorage.getItem('login');
-        document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch(`https://custom2.mystagingserver.site/food-stadium/public/api/vendor/view_customize_menu/${id}`,
-            {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${LogoutData}`
-                },
-            }
-        )
+    useEffect(() => {
+        GetUseeListing()
+    }, [])
 
-            .then(response =>
-                response.json()
-            )
-            .then((data) => {
-                console.log(data)
-                document.querySelector('.loaderBox').classList.add("d-none");
-                setFormData(data.data);
-            })
-            .catch((error) => {
-                document.querySelector('.loaderBox').classList.add("d-none");
-                console.log(error)
-            })
-    }
+    useEffect(() => {
+        if (UseeListingData) {
+            setUser(UseeListingData)
+        }
+    }, [UseeListingData])
 
-    useEffect(()=>{
-        fetchMenuData()
-    },[])
+
     const handleChange = (event) => {
         const { name, value } = event.target;
         setFormData((prevData) => ({
@@ -64,7 +59,7 @@ export const EditMenu = () => {
             const fileName = file;
             setFormData((prevData) => ({
                 ...prevData,
-                item_pic: fileName,
+                image: fileName,
             }));
         }
         console.log(formData)
@@ -88,7 +83,7 @@ export const EditMenu = () => {
         console.log(formData)
         document.querySelector('.loaderBox').classList.remove("d-none");
         // Make the fetch request
-        fetch(`https://custom2.mystagingserver.site/food-stadium/public/api/vendor/customize_menu_add_update/${id}`, {
+        fetch(`https://custom.mystagingserver.site/Tim-WDLLC/public/api/admin/book_add_update`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -121,7 +116,7 @@ export const EditMenu = () => {
                         <div className="col-12 mb-2">
                             <h2 className="mainTitle">
                                 <BackButton />
-                                Add Customise Menu
+                                Add Notification
                             </h2>
                         </div>
                     </div>
@@ -133,60 +128,51 @@ export const EditMenu = () => {
                                         <div className="row">
                                             <div className="col-md-6 mb-4">
                                                 <CustomInput
-                                                    label='Item Name'
+                                                    label='Add Title'
                                                     required
                                                     id='name'
                                                     type='text'
-                                                    placeholder='Enter Item Name'
+                                                    placeholder='Enter Title'
                                                     labelClass='mainLabel'
                                                     inputClass='mainInput'
-                                                    name="item_name"
-                                                    value={formData.item_name}
+                                                    name="title"
+                                                    value={formData.title}
                                                     onChange={handleChange}
                                                 />
                                             </div>
-                                            <div className="col-md-6 mb-4">
-                                                <CustomInput
-                                                    label='Item price'
-                                                    required
-                                                    id='price'
-                                                    type='number'
-                                                    placeholder='Enter price'
-                                                    labelClass='mainLabel'
-                                                    inputClass='mainInput'
-                                                    name="item_price"
-                                                    value={formData.item_price}
-                                                    onChange={handleChange}
-                                                />
-                                            </div>
+
                                             <div className="col-md-6 mb-4">
                                                 <SelectBox
                                                     selectClass="mainInput"
-                                                    name="category_id"
-                                                    label="Select Category"
-                                                    placeholder="Select Category"
+                                                    name="user"
+                                                    label="Select User"
+                                                    placeholder="Select User"
                                                     required
-                                                    value={formData.category_id}
-                                                    option={categories}
+                                                    value={formData.user}
+                                                    option={users}
                                                     onChange={handleChange}
                                                 />
 
                                             </div>
-                                            <div className="col-md-6 mb-4">
-                                                <CustomInput
-                                                    label='Upload Product Image'
-                                                    required
-                                                    id='file'
-                                                    type='file'
-                                                    labelClass='mainLabel'
-                                                    inputClass='mainInput'
-                                                    name="image"
-                                                    // value={formData.image}
-                                                    onChange={filehandleChange}
-                                                />
+                                            <div className="col-md-12 mb-4">
+                                                <div className="inputWrapper">
+                                                    <div className="form-controls">
+                                                        <label htmlFor="">Description</label>
+                                                        <textarea
+                                                            name="description"
+                                                            className="form-control shadow border-0"
+                                                            id=""
+                                                            cols="30"
+                                                            rows="10"
+                                                            value={formData.description}
+                                                            onChange={handleChange}
+                                                        >
+                                                        </textarea>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div className="col-md-12">
-                                                <CustomButton variant='primaryButton' text='Update Item' type='submit' />
+                                                <CustomButton variant='primaryButton' text='Submit' type='submit' />
                                             </div>
                                         </div>
                                     </div>
@@ -196,11 +182,10 @@ export const EditMenu = () => {
                     </div>
                 </div>
 
-                <CustomModal show={showModal} close={() => { setShowModal(false) }} success heading='Customise Menu Updated Successfully.' />
+                <CustomModal show={showModal} close={() => { setShowModal(false) }} success heading='Book added Successfully.' />
 
             </DashboardLayout>
         </>
     );
 };
-
 

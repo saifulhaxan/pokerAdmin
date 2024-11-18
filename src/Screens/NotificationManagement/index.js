@@ -1,3 +1,15 @@
+/**
+    * @description      : 
+    * @author           : Saif
+    * @group            : 
+    * @created          : 04/11/2024 - 22:59:59
+    * 
+    * MODIFICATION LOG
+    * - Version         : 1.0.0
+    * - Date            : 04/11/2024
+    * - Author          : Saif
+    * - Modification    : 
+**/
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -14,11 +26,10 @@ import CustomInput from "../../Components/CustomInput";
 import CustomButton from "../../Components/CustomButton";
 
 
-
 import "./style.css";
+import { useGet } from "../../Api";
 
-export const CustomiseMenu = () => {
-  const base_url = 'https://custom2.mystagingserver.site/food-stadium/public/'
+export const NotificationManagement = () => {
   const [data, setData] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
@@ -27,10 +38,7 @@ export const CustomiseMenu = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(8);
   const [inputValue, setInputValue] = useState('');
-
-
-  // console.log(categoryData);
-
+  const { ApiData: CustomerSupportData, loading: CustomerSupportLoading, error: CustomerSupportError, get: GetCustomerSupport } = useGet(`notifications`);
 
 
   const navigate = useNavigate();
@@ -39,8 +47,10 @@ export const CustomiseMenu = () => {
     setCurrentPage(pageNumber);
   };
 
+  console.log();
+
   const hanldeRoute = () => {
-    navigate('/add-menu')
+    navigate('/add-notification')
   }
 
 
@@ -58,7 +68,7 @@ export const CustomiseMenu = () => {
   }
 
   const filterData = data.filter(item =>
-    item?.item_name?.toLowerCase().includes(inputValue.toLowerCase())
+    item?.title?.toLowerCase().includes(inputValue.toLowerCase())
   );
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -66,40 +76,23 @@ export const CustomiseMenu = () => {
   const currentItems = filterData.slice(indexOfFirstItem, indexOfLastItem);
 
 
-  const CustomMenuList = () => {
-    const LogoutData = localStorage.getItem('login');
-    document.querySelector('.loaderBox').classList.remove("d-none");
-    fetch('https://custom2.mystagingserver.site/food-stadium/public/api/customize_menu_listing',
-      {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${LogoutData}`
-        },
-      }
-    )
 
-      .then(response =>
-        response.json()
-      )
-      .then((data) => {
-        console.log(data)
-        document.querySelector('.loaderBox').classList.add("d-none");
-        setData(data.data);
-      })
-      .catch((error) => {
-        document.querySelector('.loaderBox').classList.add("d-none");
-        console.log(error)
-      })
-
-  }
 
   useEffect(() => {
-    document.title = 'Poker | Customise Menu';
-    CustomMenuList()
+    document.title = 'Poker | Customer Management';
+    GetCustomerSupport()
 
   }, []);
+
+
+  useEffect(()=>{
+    if(CustomerSupportData) {
+      setData(CustomerSupportData)
+    }
+  },[CustomerSupportData])
+
+
+
 
   const maleHeaders = [
     {
@@ -107,30 +100,21 @@ export const CustomiseMenu = () => {
       title: "S.No",
     },
     {
-      key: "image",
-      title: "Menu Thumbnail",
-    },
-    {
       key: "username",
       title: "Name",
     },
     {
-      key: "price",
-      title: "Price",
+      key: "user",
+      title: "All user",
     },
     {
-      key: "category",
-      title: "Category Name",
-    },
-    {
-      key: "status",
-      title: "Status",
+      key: "created_at",
+      title: "Created On",
     },
     {
       key: "action",
       title: "Action",
     },
-
   ];
 
 
@@ -143,11 +127,11 @@ export const CustomiseMenu = () => {
               <div className="dashCard">
                 <div className="row mb-3 justify-content-between">
                   <div className="col-md-6 mb-2">
-                    <h2 className="mainTitle">Customise Menu</h2>
+                    <h2 className="mainTitle">Notification Management</h2>
                   </div>
                   <div className="col-md-6 mb-2">
                     <div className="addUser">
-                      <CustomButton text="Add New Menu" variant='primaryButton' onClick={hanldeRoute} />
+                      <CustomButton text="Add New Message" variant='primaryButton' onClick={hanldeRoute} />
                       <CustomInput type="text" placeholder="Search Here..." value={inputValue} inputClass="mainInput" onChange={handleChange} />
                     </div>
                   </div>
@@ -159,17 +143,14 @@ export const CustomiseMenu = () => {
 
                     >
                       <tbody>
-                        {currentItems.map((item, index) => (
+                        {currentItems?.map((item, index) => (
                           <tr key={index}>
                             <td>{index + 1}</td>
-                            <td><img src={base_url + item?.item_pic} className="avatarIcon" /></td>
-                            {/* <td><img src={base_url + item?.image} className="avatarIcon"/></td> */}
                             <td className="text-capitalize">
-                              {item?.item_name}
+                              {item?.title}
                             </td>
-                            <td>{`$ ${item?.item_price}`}</td>
-                            <td>{item?.category?.name}</td>
-                            <td className={item.status == 1 ? 'greenColor' : "redColor"}>{item.status == 1 ? 'Active' : "Inactive"}</td>
+                            <td>{item?.isForAllUsers == true ? 'Yes' :  'No'}</td>
+                            <td>{item?.createdAt}</td>
                             <td>
                               <Dropdown className="tableDropdown">
                                 <Dropdown.Toggle variant="transparent" className="notButton classicToggle">
@@ -177,8 +158,8 @@ export const CustomiseMenu = () => {
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu align="end" className="tableDropdownMenu">
 
-                                  {/* <Link to={`/customise-menu/edit-menu/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faEye} className="tableActionIcon" />View</Link> */}
-                                  <Link to={`/customise-menu/edit-menu/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faEdit} className="tableActionIcon" />Edit</Link>
+                                  <Link to={`/notification-management/message-details/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faEye} className="tableActionIcon" />View</Link>
+                                  {/* <Link to={`/user-management/edit-user/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faEdit} className="tableActionIcon" />Edit</Link> */}
 
                                 </Dropdown.Menu>
                               </Dropdown>
@@ -189,7 +170,7 @@ export const CustomiseMenu = () => {
                     </CustomTable>
                     <CustomPagination
                       itemsPerPage={itemsPerPage}
-                      totalItems={data.length}
+                      totalItems={data?.length}
                       currentPage={currentPage}
                       onPageChange={handlePageChange}
                     />

@@ -67,7 +67,7 @@ export const CategotyManagement = () => {
 
 
     useEffect(() => {
-        document.title = 'Poker | Category List';
+        document.title = 'Poker | Category Management';
         GetCategory()
     }, []);
 

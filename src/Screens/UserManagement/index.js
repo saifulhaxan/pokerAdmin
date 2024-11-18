@@ -27,6 +27,7 @@ import CustomButton from "../../Components/CustomButton";
 
 
 import "./style.css";
+import { useGet } from "../../Api";
 
 export const UserManagement = () => {
   const base_url = 'https://custom2.mystagingserver.site/food-stadium/public/'
@@ -38,6 +39,7 @@ export const UserManagement = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(8);
   const [inputValue, setInputValue] = useState('');
+  const { ApiData: UseeListingData, loading: UseeListingLoading, error: UseeListingError, get: GetUseeListing } = useGet(`user/getAll`);
 
 
   const navigate = useNavigate();
@@ -67,7 +69,7 @@ export const UserManagement = () => {
   }
 
   const filterData = data.filter(item =>
-    item.title.toLowerCase().includes(inputValue.toLowerCase())
+    item?.name?.toLowerCase().includes(inputValue.toLowerCase())
   );
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -75,40 +77,20 @@ export const UserManagement = () => {
   const currentItems = filterData.slice(indexOfFirstItem, indexOfLastItem);
 
 
-  const ProductData = () => {
-    const LogoutData = localStorage.getItem('login');
-    document.querySelector('.loaderBox').classList.remove("d-none");
-    fetch('https://custom2.mystagingserver.site/food-stadium/public/api/vendor/product_listing',
-      {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${LogoutData}`
-        },
-      }
-    )
 
-      .then(response =>
-        response.json()
-      )
-      .then((data) => {
-        console.log(data?.data)
-        document.querySelector('.loaderBox').classList.add("d-none");
-        setData(data?.data);
-      })
-      .catch((error) => {
-        document.querySelector('.loaderBox').classList.add("d-none");
-        console.log(error)
-      })
-
-  }
 
   useEffect(() => {
     document.title = 'Poker | User Management';
-    // ProductData()
+    GetUseeListing()
 
   }, []);
+
+
+  useEffect(()=>{
+    if(UseeListingData) {
+      setData(UseeListingData)
+    }
+  },[UseeListingData])
 
   const maleHeaders = [
     {
@@ -178,14 +160,17 @@ export const UserManagement = () => {
                         {currentItems?.map((item, index) => (
                           <tr key={index}>
                             <td>{index + 1}</td>
-                            <td><img src={base_url + item?.product_images[0]?.image} className="avatarIcon" /></td>
+                            <td>
+                              {/* <img src={base_url + item?.product_images[0]?.image} className="avatarIcon" /> */}
+                              </td>
                             <td className="text-capitalize">
-                              {item?.title}
+                              {item?.name}
                             </td>
-                            <td>{item?.price ? `$ ${item?.price}` : `$0`}</td>
-                            <td>{item?.category?.name}</td>
-                            <td>{item?.created_at}</td>
-                            <td className={item.status == 1 ? 'greenColor' : "redColor"}>{item.status == 1 ? 'Active' : "Inactive"}</td>
+                            <td>{item?.email}</td>
+                            <td>{item?.phone}</td>
+                            <td className={item?.subscribedUser == true ? 'greenColor' : "redColor"}>{item?.subscribedUser == true ? 'Active' : "Inactive"}</td>
+                            <td className={item?.isActive == true ? 'greenColor' : "redColor"}>{item?.isActive == true ? 'Active' : "Inactive"}</td>
+                            <td>{item?.createdAt}</td>
                             <td>
                               <Dropdown className="tableDropdown">
                                 <Dropdown.Toggle variant="transparent" className="notButton classicToggle">
@@ -193,8 +178,8 @@ export const UserManagement = () => {
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu align="end" className="tableDropdownMenu">
 
-                                  <Link to={`/book-management/book-details/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faEye} className="tableActionIcon" />View</Link>
-                                  <Link to={`/book-management/edit-book/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faEdit} className="tableActionIcon" />Edit</Link>
+                                  <Link to={`/user-management/user-details/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faEye} className="tableActionIcon" />View</Link>
+                                  {/* <Link to={`/user-management/edit-user/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faEdit} className="tableActionIcon" />Edit</Link> */}
 
                                 </Dropdown.Menu>
                               </Dropdown>

@@ -16,61 +16,73 @@ import { DashboardLayout } from "../../Components/Layout/DashboardLayout";
 import BackButton from "../../Components/BackButton";
 import CustomModal from "../../Components/CustomModal";
 import CustomButton from "../../Components/CustomButton";
+import { useGet, usePatch } from "../../Api";
 
 export const UserDetails = () => {
 
     const { id } = useParams();
-
-    const base_url = 'https://custom.mystagingserver.site/Tim-WDLLC/public/'
-
     const [data, setData] = useState({});
-
+    const [status, setStatus] = useState({});
     const [showModal, setShowModal] = useState(false);
     const [showModal2, setShowModal2] = useState(false);
     const [showModal3, setShowModal3] = useState(false);
     const [showModal4, setShowModal4] = useState(false);
     const [message, setMessage] = useState(false)
-
+    const { ApiData: UseeListingData, loading: UseeListingLoading, error: UseeListingError, get: GetUseeListing } = useGet(`user/getOne/${id}`);
+    const { ApiData: StatusUpdateData, loading: StatusUpdateLoading, error: StatusUpdateError, patch: GetStatusUpdate } = usePatch(`user/${id}`);
 
     const inActive = () => {
         setShowModal(false)
+        setStatus({
+            ...status,
+            status: false
+        })
         setShowModal2(true)
+
+        setTimeout(()=>{
+            setShowModal2(false)
+        },1000)
+        console.log('status', status)
     }
     const Active = () => {
         setShowModal3(false)
+        setStatus({
+            ...status,
+            status: true
+        })
         setShowModal4(true)
+        setTimeout(()=>{
+            setShowModal4(false)
+        },1000)
+        console.log('status', status)
     }
 
+    useEffect(()=>{
+        if(status) {
+            GetStatusUpdate(status);
+        }
+    },[status])
+
+
+    useEffect(()=>{
+        if(StatusUpdateData) {
+            GetUseeListing()
+        }
+    },[StatusUpdateData])
+
     useEffect(() => {
-        const LogoutData = localStorage.getItem('login');
-        document.title = 'Poker City Admin | Book Detail';
-        document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch(`https://custom.mystagingserver.site/Tim-WDLLC/public/api/admin/book_view/${id}`,
-            {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${LogoutData}`
-                },
-            }
-        )
-            .then((response) => {
-                return response.json()
-            })
-            .then((data) => {
-                document.querySelector('.loaderBox').classList.add("d-none");
-                console.log(data)
+        GetUseeListing()
+    }, [])
 
-                setData(data.data)
 
-            })
-            .catch((error) => {
-                document.querySelector('.loaderBox').classList.add("d-none");
-                console.log(error);
-            })
-    }, [id]);
-    console.log(data)
+    useEffect(() => {
+        if (UseeListingData) {
+            setData(UseeListingData)
+        }
+    }, [UseeListingData])
+
+
+
 
     return (
         <>
@@ -80,37 +92,48 @@ export const UserDetails = () => {
                         <div className="col-12 mb-2">
                             <h2 className="mainTitle">
                                 <BackButton />
-                                Book Details
+                                User Details
                             </h2>
                         </div>
                     </div>
                     <div className="row mb-3">
                         <div className="col-12">
-                            {/* <div className="row mb-3 justify-content-end">
-                <div className="col-lg-4 text-end order-1 order-lg-2 mb-3">
-                  <button onClick={() => {
-                    data?.status ? setShowModal(true) : setShowModal3(true)
-                  }} className="notButton primaryColor fw-bold text-decoration-underline">Mark as {data?.status ? 'Inactive' : 'Active'}</button>
-                  <span className={`statusBadge ${data?.status == 1 ? 'statusBadgeActive' : 'statusBadgeInactive'}`}>{data?.status == 1 ? 'Active' : 'Inactive'}</span>
-                </div>
-              </div> */}
+                            <div className="row mb-3 justify-content-end">
+                                <div className="col-lg-4 text-end order-1 order-lg-2 mb-3">
+                                    <button onClick={() => {
+                                        data?.isActive ? setShowModal(true) : setShowModal3(true)
+                                    }} className="notButton primaryColor fw-bold text-decoration-underline">Mark as {data?.isActive ? 'Inactive' : 'Active'}</button>
+                                    <span className={`statusBadge ${data?.isActive == 1 ? 'statusBadgeActive' : 'statusBadgeInactive'}`}>{data?.isActive == 1 ? 'Active' : 'Inactive'}</span>
+                                </div>
+                            </div>
 
 
                             <div className="row">
-                                <div className="col-md-6 mb-4">
+                                {/* <div className="col-md-6 mb-4">
 
                                     <div className="productImage">
                                         <img src={base_url + data?.image} />
                                     </div>
+                                </div> */}
+                                <div className="col-xl-4 col-md-4 mb-3">
+                                    <h4 className="secondaryLabel">User Name</h4>
+                                    <p className="secondaryText">{data?.name}</p>
                                 </div>
-                                <div className="col-md-6 mb-4">
-                                    <div className="productInfo">
-                                        <h3 className="text-capitalize">{data?.name}</h3>
-                                        <h4><span className="font-weight-bold">Price:</span>{` $ ${data?.price}`}</h4>
-                                        <p>{data?.description}</p>
-                                        <p><span className="font-weight-bold">Category:</span> <span>{data?.category?.name}</span></p>
-                                        
-                                    </div>
+                                <div className="col-xl-4 col-md-4 mb-3">
+                                    <h4 className="secondaryLabel">User Email</h4>
+                                    <p className="secondaryText">{data?.email}</p>
+                                </div>
+                                <div className="col-xl-4 col-md-4 mb-3">
+                                    <h4 className="secondaryLabel">User Contact</h4>
+                                    <p className="secondaryText">{data?.phone}</p>
+                                </div>
+                                <div className="col-xl-4 col-md-4 mb-3">
+                                    <h4 className="secondaryLabel">User DOB</h4>
+                                    <p className="secondaryText">{data?.dob}</p>
+                                </div>
+                                <div className="col-xl-4 col-md-4 mb-3">
+                                    <h4 className="secondaryLabel">User Subscription Status</h4>
+                                    <p className="secondaryText">{data?.subscribedUser === true ? 'Active' : 'Inactive'}</p>
                                 </div>
                             </div>
                         </div>
@@ -118,10 +141,10 @@ export const UserDetails = () => {
                 </div>
 
                 <CustomModal show={showModal} close={() => { setShowModal(false) }} action={inActive} heading='Are you sure you want to mark this user as inactive?' />
-                <CustomModal show={showModal2} close={() => { setShowModal2(false) }} success heading='Marked as Inactive' />
+                <CustomModal show={showModal2}  success heading='Marked as Inactive' />
 
                 <CustomModal show={showModal3} close={() => { setShowModal3(false) }} action={Active} heading='Are you sure you want to mark this user as Active?' />
-                <CustomModal show={showModal4} close={() => { setShowModal4(false) }} success heading='Marked as Active' />
+                <CustomModal show={showModal4}  success heading='Marked as Active' />
             </DashboardLayout>
         </>
     );

@@ -98,6 +98,57 @@ export const usePost = (url, initialData = null) => {
 };
 
 
+export const usePatch = (url, initialData = null) => {
+  const [ApiData, setData] = useState(initialData);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const LogoutData = localStorage.getItem('login');
+
+  const toggleLoader = (show) => {
+    const loaderBox = document.querySelector('.loaderBox');
+    if (loaderBox) {
+      loaderBox.classList.toggle('d-none', !show);
+    }
+  };
+
+  const patch = async (postData) => {
+    // Ensure 'status' is a boolean
+    if (postData.hasOwnProperty('status')) {
+      postData.status = postData.status === 'true' || postData.status === true;
+    }
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch(base_url + url, {
+        method: 'PATCH',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${LogoutData}`,
+        },
+        body: JSON.stringify(postData), // Convert object to JSON string
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const result = await response.json();
+      setData(result);
+      setLoading(false);
+    } catch (err) {
+      setError(err);
+      setLoading(false);
+    }
+  };
+
+
+  return { ApiData, loading, error, patch };
+};
+
+
 
 
 export const useGet = (url, initialData = null, idData = '') => {

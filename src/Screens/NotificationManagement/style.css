@@ -18,6 +18,10 @@
     font-weight: bold;
 }
 
+body {
+    position: relative;
+}
+
 @media screen and (max-width: 1200px) and (min-width: 768px) {
     .stats, .stats:not(:last-child) {
         border-color: #fff0;
