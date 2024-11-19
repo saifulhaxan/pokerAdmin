@@ -86,6 +86,12 @@ export const AddNotification = () => {
     const handleCheck = (e) => {
         const { name, value, checked } = e.target;
         setHideBox(!checked)
+        if (!checked) {
+            setFormData({
+                ...formData,
+                userIds: ['']
+            })
+        }
         setFormData((prevData) => ({
             ...prevData,
             [name]: checked,
@@ -110,7 +116,7 @@ export const AddNotification = () => {
                             <form onSubmit={handleSubmit}>
                                 <div className="row">
                                     <div className="col-lg-12">
-                                        <div className="row">
+                                        <div className="row align-items-center">
                                             <div className="col-md-5 mb-4">
                                                 <CustomInput
                                                     label='Add Title'
@@ -127,8 +133,8 @@ export const AddNotification = () => {
                                             </div>
                                             <div className="col-md-2 mb-4">
                                                 <div class="form-group form-check">
-                                                    <input type="checkbox" class="form-check-input" name="isForAllUsers" onChange={handleCheck} />
-                                                    <label class="form-check-label" >Check me out</label>
+                                                    <input type="checkbox" class="form-check-input" name="isForAllUsers" onChange={handleCheck} id="user" />
+                                                    <label class="form-check-label" for="user">Select all user</label>
                                                 </div>
                                             </div>
 
