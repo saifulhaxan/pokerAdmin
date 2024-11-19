@@ -18,19 +18,46 @@ import CustomInput from '../../Components/CustomInput';
 import { SelectBox } from "../../Components/CustomSelect";
 import CustomButton from "../../Components/CustomButton";
 import { CategoryList, DietaryList, MenuList } from "../../Components/CategoryList";
-import { useGet } from "../../Api";
+import { useGet, usePost } from "../../Api";
+import { useNavigate } from "react-router";
 export const AddNotification = () => {
     const [unit, setUnit] = useState({});
     const [showModal, setShowModal] = useState(false);
     const [formData, setFormData] = useState({
-        image: '', // Initialize image as an empty string
+        userIds: [] // Initialize image as an empty string
     });
+
+    const navigate = useNavigate()
 
     const categories = CategoryList();
     const dietary = DietaryList();
     const Menu = MenuList();
     const [users, setUser] = useState();
     const { ApiData: UseeListingData, loading: UseeListingLoading, error: UseeListingError, get: GetUseeListing } = useGet(`user/getAll`);
+    const { ApiData: AddNewtagData, loading: AddNewtagLoading, error: AddNewtagError, post: GetAddNewtag } = usePost(`notifications/send-to-specific`);
+
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (formData?.title && formData?.description) {
+            GetAddNewtag(formData);
+        }
+
+    }
+
+    useEffect(() => {
+        if (AddNewtagData) {
+            setUser(false);
+            setShowModal(true)
+            setTimeout(() => {
+                setShowModal(false)
+            }, 3000)
+            GetUseeListing()
+            navigate('/notification-management')
+        }
+    }, [AddNewtagData])
+
+
 
     useEffect(() => {
         GetUseeListing()
@@ -47,65 +74,23 @@ export const AddNotification = () => {
         const { name, value } = event.target;
         setFormData((prevData) => ({
             ...prevData,
-            [name]: value,
+            [name]: name === "userIds" ? [value] : value, // If "userIds", set as array; otherwise, set as value
         }));
         console.log(formData)
-    };
 
-    const filehandleChange = (event) => {
-        const file = event.target.files[0];
-        // console.log(file.name)
-        if (file) {
-            const fileName = file;
-            setFormData((prevData) => ({
-                ...prevData,
-                image: fileName,
-            }));
-        }
-        console.log(formData)
+
     };
 
 
-
-
-    const LogoutData = localStorage.getItem('login');
-
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-
-        // Create a new FormData object
-        const formDataMethod = new FormData();
-        for (const key in formData) {
-            formDataMethod.append(key, formData[key]);
-        }
-
-        console.log(formData)
-        document.querySelector('.loaderBox').classList.remove("d-none");
-        // Make the fetch request
-        fetch(`https://custom.mystagingserver.site/Tim-WDLLC/public/api/admin/book_add_update`, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Authorization': `Bearer ${LogoutData}`
-            },
-            body: formDataMethod // Use the FormData object as the request body
-        })
-            .then((response) => {
-                return response.json();
-            })
-            .then((data) => {
-                document.querySelector('.loaderBox').classList.add("d-none");
-                console.log(data);
-                setShowModal(true)
-            })
-            .catch((error) => {
-                document.querySelector('.loaderBox').classList.add("d-none");
-                console.log(error)
-            })
-    };
-
-
+    const [hideBox, setHideBox] = useState(true);
+    const handleCheck = (e) => {
+        const { name, value, checked } = e.target;
+        setHideBox(!checked)
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: checked,
+        }));
+    }
 
 
     return (
@@ -126,7 +111,7 @@ export const AddNotification = () => {
                                 <div className="row">
                                     <div className="col-lg-12">
                                         <div className="row">
-                                            <div className="col-md-6 mb-4">
+                                            <div className="col-md-5 mb-4">
                                                 <CustomInput
                                                     label='Add Title'
                                                     required
@@ -140,20 +125,30 @@ export const AddNotification = () => {
                                                     onChange={handleChange}
                                                 />
                                             </div>
-
-                                            <div className="col-md-6 mb-4">
-                                                <SelectBox
-                                                    selectClass="mainInput"
-                                                    name="user"
-                                                    label="Select User"
-                                                    placeholder="Select User"
-                                                    required
-                                                    value={formData.user}
-                                                    option={users}
-                                                    onChange={handleChange}
-                                                />
-
+                                            <div className="col-md-2 mb-4">
+                                                <div class="form-group form-check">
+                                                    <input type="checkbox" class="form-check-input" name="isForAllUsers" onChange={handleCheck} />
+                                                    <label class="form-check-label" >Check me out</label>
+                                                </div>
                                             </div>
+
+                                            {
+                                                hideBox && (
+                                                    <div className="col-md-5 mb-4">
+                                                        <SelectBox
+                                                            selectClass="mainInput"
+                                                            name="userIds"
+                                                            label="Select User"
+                                                            placeholder="Select User"
+                                                            required
+                                                            value={formData.user}
+                                                            option={users}
+                                                            onChange={handleChange}
+                                                        />
+
+                                                    </div>
+                                                )
+                                            }
                                             <div className="col-md-12 mb-4">
                                                 <div className="inputWrapper">
                                                     <div className="form-controls">
@@ -182,7 +177,7 @@ export const AddNotification = () => {
                     </div>
                 </div>
 
-                <CustomModal show={showModal} close={() => { setShowModal(false) }} success heading='Book added Successfully.' />
+                <CustomModal show={showModal} close={() => { setShowModal(false) }} success heading='Notification Send Successfully.' />
 
             </DashboardLayout>
         </>
