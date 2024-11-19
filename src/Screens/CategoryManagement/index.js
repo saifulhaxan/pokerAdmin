@@ -14,7 +14,7 @@ import CustomInput from "../../Components/CustomInput";
 import CustomButton from "../../Components/CustomButton";
 import { SelectBox } from "../../Components/CustomSelect";
 import Select from 'react-select'
-import { useGet, usePost } from "../../Api";
+import { useDelete, useGet, usePatch, usePost } from "../../Api";
 
 export const CategotyManagement = () => {
 
@@ -23,6 +23,7 @@ export const CategotyManagement = () => {
     const [itemsPerPage, setItemsPerPage] = useState(8);
     const [inputValue, setInputValue] = useState('');
     const [showModal, setShowModal] = useState(false);
+    const [showModal1, setShowModal1] = useState(false);
     const [addUser, setUser] = useState(false);
     const [editUser, setEditUser] = useState(false);
     const [userForm, setUserFrom] = useState(false);
@@ -31,10 +32,12 @@ export const CategotyManagement = () => {
     const editBrandList = [];
     const [formData, setFormData] = useState({});
     const [catID, setCatID] = useState('');
+    const [delID, setDelID] = useState('');
     const { ApiData: CategoryData, loading: CategoryLoading, error: CategoryError, get: GetCategory } = useGet(`category`);
     const { ApiData: AddNewCategoryData, loading: AddNewCategoryLoading, error: AddNewCategoryError, post: GetAddNewCategory } = usePost(`category`);
     const { ApiData: EditCategoryData, loading: EditCategoryLoading, error: EditCategoryError, get: GetEditCategory } = useGet(`category/${catID ? catID : ''}`);
-
+    const { ApiData: TagUpdateData, loading: TagUpdateLoading, error: TagUpdateError, patch: GetTagUpdate } = usePatch(`category/${catID}`);
+    const { ApiData: TagDeleteData, loading: TagDeleteLoading, error: TagDeleteError, del: GetTagDelete } = useDelete(`category/${delID}`);
 
     // list category 
 
@@ -157,9 +160,34 @@ export const CategotyManagement = () => {
 
     const handleEditSubmit = (event) => {
         event.preventDefault();
-        alert()
+        GetTagUpdate(formData);
 
     }
+
+  
+
+    useEffect(() => {
+        if (TagUpdateData) {
+            setEditUser(false);
+            setShowModal1(true);
+            setTimeout(() => {
+                setShowModal1(false)
+            }, 1000)
+
+            GetCategory()
+        }
+    }, [TagUpdateData])
+
+
+      //delete 
+
+      useEffect(() => {
+        if (delID) {
+            GetTagDelete()
+            GetCategory()
+        }
+    }, [delID])
+
 
 
     // pagination data 
@@ -214,7 +242,7 @@ export const CategotyManagement = () => {
                                                                 </Dropdown.Toggle>
                                                                 <Dropdown.Menu align="end" className="tableDropdownMenu">
                                                                     <button className="tableAction" onClick={() => { openEditBox(item?.id) }}><FontAwesomeIcon icon={faEdit} className="tableActionIcon" />Edit</button>
-                                                                    <button className="tableAction"><FontAwesomeIcon icon={faTrash} className="tableActionIcon" />Delete</button>
+                                                                    <button className="tableAction" onClick={() => { setDelID(item?.id) }}><FontAwesomeIcon icon={faTrash} className="tableActionIcon" />Delete</button>
                                                                 </Dropdown.Menu>
                                                             </Dropdown>
                                                         </td>
@@ -295,6 +323,7 @@ export const CategotyManagement = () => {
 
 
                     <CustomModal show={showModal} close={() => { setShowModal(false) }} success heading='Category Added Successfully.' />
+                    <CustomModal show={showModal1} close={() => { setShowModal1(false) }} success heading='Category Update Successfully.' />
 
                 </div>
             </DashboardLayout>

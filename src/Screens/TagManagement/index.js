@@ -14,7 +14,7 @@ import CustomInput from "../../Components/CustomInput";
 import CustomButton from "../../Components/CustomButton";
 import { SelectBox } from "../../Components/CustomSelect";
 import Select from 'react-select'
-import { useGet, usePost } from "../../Api";
+import { useDelete, useGet, usePatch, usePost } from "../../Api";
 
 export const TagManagement = () => {
 
@@ -22,6 +22,7 @@ export const TagManagement = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(8);
     const [inputValue, setInputValue] = useState('');
+    const [showModal1, setShowModal1] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [addUser, setUser] = useState(false);
     const [editUser, setEditUser] = useState(false);
@@ -31,10 +32,15 @@ export const TagManagement = () => {
     const editBrandList = [];
     const [formData, setFormData] = useState({});
     const [catID, setCatID] = useState('');
+    const [delID, setDelID] = useState('');
     const { ApiData: tagData, loading: tagLoading, error: tagError, get: Gettag } = useGet(`tags`);
     const { ApiData: AddNewtagData, loading: AddNewtagLoading, error: AddNewtagError, post: GetAddNewtag } = usePost(`tags`);
-    const { ApiData: EdittagData, loading: EdittagLoading, error: EdittagError, get: GetEdittag } = useGet(`tag/${catID ? catID : ''}`);
+    const { ApiData: EdittagData, loading: EdittagLoading, error: EdittagError, get: GetEdittag } = useGet(`tags/${catID ? catID : ''}`);
+    const { ApiData: TagUpdateData, loading: TagUpdateLoading, error: TagUpdateError, patch: GetTagUpdate } = usePatch(`tags/${catID}`);
+    const { ApiData: TagDeleteData, loading: TagDeleteLoading, error: TagDeleteError, del: GetTagDelete } = useDelete(`tags/${delID}`);
 
+
+  
 
     // list tag 
 
@@ -157,9 +163,41 @@ export const TagManagement = () => {
 
     const handleEditSubmit = (event) => {
         event.preventDefault();
-        alert()
+        GetTagUpdate(formData);
 
     }
+
+  
+
+    useEffect(() => {
+        if (TagUpdateData) {
+            setEditUser(false);
+            setShowModal1(true);
+            setTimeout(() => {
+                setShowModal1(false)
+            }, 1000)
+
+            Gettag()
+        }
+    }, [TagUpdateData])
+
+
+    //delete 
+
+    useEffect(() => {
+        if (delID) {
+            GetTagDelete()
+            Gettag()
+        }
+    }, [delID])
+
+    useEffect(()=>{
+        if(TagDeleteData) {
+            GetEdittag()
+        }
+    },[TagDeleteData])
+
+
 
 
     // pagination data 
@@ -214,7 +252,7 @@ export const TagManagement = () => {
                                                                 </Dropdown.Toggle>
                                                                 <Dropdown.Menu align="end" className="tableDropdownMenu">
                                                                     <button className="tableAction" onClick={() => { openEditBox(item?.id) }}><FontAwesomeIcon icon={faEdit} className="tableActionIcon" />Edit</button>
-                                                                    <button className="tableAction"><FontAwesomeIcon icon={faTrash} className="tableActionIcon" />Delete</button>
+                                                                    <button className="tableAction" onClick={() => { setDelID(item?.id) }}><FontAwesomeIcon icon={faTrash} className="tableActionIcon" />Delete</button>
                                                                 </Dropdown.Menu>
                                                             </Dropdown>
                                                         </td>
@@ -295,6 +333,7 @@ export const TagManagement = () => {
 
 
                     <CustomModal show={showModal} close={() => { setShowModal(false) }} success heading='Tag Added Successfully.' />
+                    <CustomModal show={showModal1} close={() => { setShowModal1(false) }} success heading='Tag Update Successfully.' />
 
                 </div>
             </DashboardLayout>

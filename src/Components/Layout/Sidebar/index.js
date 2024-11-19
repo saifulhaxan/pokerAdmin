@@ -22,7 +22,9 @@ import {
   faTableList,
   faTag,
   faYenSign,
-  faHeadphonesAlt
+  faHeadphonesAlt,
+  faVideo,
+  faAd
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faMessage,
@@ -60,19 +62,19 @@ export const Sidebar = (props) => {
             <span className="sideIcon">
               <FontAwesomeIcon icon={faHeadphonesAlt} />
             </span>
-            <span className="sideLinkText">Customer Management</span>
+            <span className="sideLinkText">Customer Support</span>
           </Link>
         </li>
         <li className="sidebar-li">
           <Link className={`sideLink ${location.pathname.includes('#') ? 'active' : ''}`} to="#">
             <span className="sideIcon">
-              <FontAwesomeIcon icon={faPenFancy} />
+              <FontAwesomeIcon icon={faVideo} />
             </span>
-            <span className="sideLinkText">Content Management</span>
+            <span className="sideLinkText">Lecture/Video Management</span>
           </Link>
         </li>
         <li className="sidebar-li">
-          <Link className={`sideLink ${location.pathname.includes('#') ? 'active' : ''}`} to="#">
+          <Link className={`sideLink ${location.pathname.includes('course-management') ? 'active' : ''}`} to="/course-management">
             <span className="sideIcon">
               <FontAwesomeIcon icon={faMoneyBill} />
             </span>
@@ -93,6 +95,14 @@ export const Sidebar = (props) => {
               <FontAwesomeIcon icon={faTag} />
             </span>
             <span className="sideLinkText">Tags Management</span>
+          </Link>
+        </li>
+        <li className="sidebar-li">
+          <Link className={`sideLink ${location.pathname.includes('promotion-management') ? 'active' : ''}`} to="/promotion-management">
+            <span className="sideIcon">
+              <FontAwesomeIcon icon={faAd} />
+            </span>
+            <span className="sideLinkText">Promotion Management</span>
           </Link>
         </li>
         <li className="sidebar-li">

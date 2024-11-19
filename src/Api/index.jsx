@@ -97,6 +97,58 @@ export const usePost = (url, initialData = null) => {
   return { ApiData, loading, error, post };
 };
 
+export const usePostForm = (url, initialData = null) => {
+  const [ApiData, setData] = useState(initialData);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const LogoutData = localStorage.getItem('login');
+
+  const toggleLoader = (show) => {
+    const loaderBox = document.querySelector('.loaderBox');
+    if (loaderBox) {
+      loaderBox.classList.toggle('d-none', !show);
+    }
+  };
+
+  const post = async (postData) => {
+    setLoading(true);
+    setError(null);
+    toggleLoader(true); // Show the loader
+
+    try {
+      const formData = new FormData();
+
+      // Convert `postData` object into FormData format
+      Object.keys(postData).forEach((key) => {
+        formData.append(key, postData[key]);
+      });
+
+      const response = await fetch(base_url + url, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${LogoutData}`, // Authorization remains in headers
+        },
+        body: formData, // Send FormData directly
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const result = await response.json();
+      setData(result);
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoading(false);
+      toggleLoader(false); // Hide the loader
+    }
+  };
+
+  return { ApiData, loading, error, post };
+};
+
+
 
 export const usePatch = (url, initialData = null) => {
   const [ApiData, setData] = useState(initialData);
@@ -147,6 +199,60 @@ export const usePatch = (url, initialData = null) => {
 
   return { ApiData, loading, error, patch };
 };
+
+
+export const usePatchForm = (url, initialData = null) => {
+  const [ApiData, setData] = useState(initialData);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const LogoutData = localStorage.getItem('login');
+
+  const toggleLoader = (show) => {
+    const loaderBox = document.querySelector('.loaderBox');
+    if (loaderBox) {
+      loaderBox.classList.toggle('d-none', !show);
+    }
+  };
+
+  const patch = async (patchData) => {
+    setLoading(true);
+    setError(null);
+    toggleLoader(true); // Show the loader
+
+    try {
+      const formData = new FormData();
+
+      // Convert `patchData` object into FormData format
+      Object.keys(patchData).forEach((key) => {
+        formData.append(key, patchData[key]);
+      });
+
+      const response = await fetch(base_url + url, {
+        method: 'PATCH',
+        headers: {
+          Authorization: `Bearer ${LogoutData}`, // Authorization remains in headers
+        },
+        body: formData, // Send FormData directly
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const result = await response.json();
+      setData(result);
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoading(false);
+      toggleLoader(false); // Hide the loader
+    }
+  };
+
+  return { ApiData, loading, error, patch };
+};
+
+
 
 
 
@@ -203,9 +309,19 @@ export const useDelete = (url, initialData = null, idData = '') => {
   const [error, setError] = useState(null);
   const LogoutData = localStorage.getItem('login');
   const [isTriggered, setIsTriggered] = useState(false);
+
+  const toggleLoader = (show) => {
+    const loaderBox = document.querySelector('.loaderBox');
+    if (loaderBox) {
+      loaderBox.classList.toggle('d-none', !show);
+    }
+  };
+
   const del = async () => {
     setLoading(true);
     setError(null);
+    toggleLoader(true); // Show the loader
+
     try {
       const response = await fetch(base_url + url + idData, {
         method: 'DELETE',
@@ -224,8 +340,9 @@ export const useDelete = (url, initialData = null, idData = '') => {
       setError(err);
     } finally {
       setLoading(false);
+      toggleLoader(false); // Hide the loader
     }
-  }
+  };
 
   return { ApiData, loading, error, del };
 };

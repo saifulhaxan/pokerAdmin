@@ -31,6 +31,14 @@ import { NotificationManagement } from "../Screens/NotificationManagement";
 import { AddNotification } from "../Screens/NotificationManagement/AddNotification";
 import { EditNotification } from "../Screens/NotificationManagement/EditNotification";
 import { NotificationDetail } from "../Screens/NotificationManagement/NotificationDetail";
+import { CourseManagement } from "../Screens/CourseManagement";
+import { AddCourse } from "../Screens/CourseManagement/AddCourse";
+import { EditCourse } from "../Screens/CourseManagement/EditCourse";
+import { CourseDetails } from "../Screens/CourseManagement/CourseDetail";
+import { PromotionManagement } from "../Screens/PromotionManagement";
+import { AddPromotion } from "../Screens/PromotionManagement/AddPromotion";
+import { EditPromotion } from "../Screens/PromotionManagement/EditPromotion";
+import { PromotionDetails } from "../Screens/PromotionManagement/PromotionDetail";
 // end
 
 
@@ -44,7 +52,7 @@ import Error from "../Screens/Error";
 
 export default function AdminRouter() {
   return (
-    <BrowserRouter basename="/admin">
+    <BrowserRouter basename="/">
       <Routes>
         <Route path="/" element={<AdminLogin />} />
         <Route path="/login" element={<AdminLogin />} />
@@ -69,6 +77,16 @@ export default function AdminRouter() {
 
         <Route path="/category-management" element={<ProtectedRoutes Components={CategotyManagement} />} />
         <Route path="/tag-management" element={<ProtectedRoutes Components={TagManagement} />} />
+
+        <Route path="/course-management" element={<ProtectedRoutes Components={CourseManagement} />} />
+        <Route path="/add-course" element={<ProtectedRoutes Components={AddCourse} />} />
+        <Route path="/edit-course/:id" element={<ProtectedRoutes Components={EditCourse} />} />
+        <Route path="/course-management/course-details/:id" element={<ProtectedRoutes Components={CourseDetails} />} />
+
+        <Route path="/promotion-management" element={<ProtectedRoutes Components={PromotionManagement} />} />
+        <Route path="/add-promotion" element={<ProtectedRoutes Components={AddPromotion} />} />
+        <Route path="/edit-promotion/:id" element={<ProtectedRoutes Components={EditPromotion} />} />
+        <Route path="/promotion-management/promotion-details/:id" element={<ProtectedRoutes Components={PromotionDetails} />} />
 
         <Route path="/profile" element={<ProtectedRoutes Components={Profile} />} />
         <Route path="/profile/edit-profile" element={<ProtectedRoutes Components={EditProfile} />} />
