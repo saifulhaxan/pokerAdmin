@@ -39,6 +39,10 @@ import { PromotionManagement } from "../Screens/PromotionManagement";
 import { AddPromotion } from "../Screens/PromotionManagement/AddPromotion";
 import { EditPromotion } from "../Screens/PromotionManagement/EditPromotion";
 import { PromotionDetails } from "../Screens/PromotionManagement/PromotionDetail";
+import { LectureManagement } from "../Screens/LearningManagement";
+import { AddLecture } from "../Screens/LearningManagement/AddLecture";
+import { EditLecture } from "../Screens/LearningManagement/EditLecture";
+import { LectureDetails } from "../Screens/LearningManagement/LectureDetail";
 // end
 
 
@@ -47,6 +51,8 @@ import Profile from "../Screens/Profile";
 import EditProfile from "../Screens/Profile/EditProfile";
 import ChangePassword from "../Screens/Profile/ChangePassword";
 import { ProtectedRoutes } from "./ProtectedRoutes";
+import VideoUploader from "../Screens/demo";
+import FileUpload from "../Screens/demo/demo";
 import Error from "../Screens/Error";
 
 
@@ -59,7 +65,8 @@ export default function AdminRouter() {
         <Route path="/forget-password" element={<ForgetPassword />} />
         <Route path="/forget-password2" element={<ForgetPassword2 />} />
         <Route path="/forget-password3" element={<ForgetPassword3 />} />
-
+        <Route path="/video" element={<ProtectedRoutes Components={VideoUploader} />} />
+        <Route path="/video-upload" element={<ProtectedRoutes Components={FileUpload} />} />
         <Route path="/dashboard" element={<ProtectedRoutes Components={Dashboard} />} />
         <Route path="/user-management" element={<ProtectedRoutes Components={UserManagement} />} />
         <Route path="/add-user" element={<ProtectedRoutes Components={AddUser} />} />
@@ -82,6 +89,11 @@ export default function AdminRouter() {
         <Route path="/add-course" element={<ProtectedRoutes Components={AddCourse} />} />
         <Route path="/edit-course/:id" element={<ProtectedRoutes Components={EditCourse} />} />
         <Route path="/course-management/course-details/:id" element={<ProtectedRoutes Components={CourseDetails} />} />
+
+        <Route path="/lecture-management" element={<ProtectedRoutes Components={LectureManagement} />} />
+        <Route path="/add-lecture" element={<ProtectedRoutes Components={AddLecture} />} />
+        <Route path="/edit-lecture/:id" element={<ProtectedRoutes Components={EditLecture} />} />
+        <Route path="/lecture-management/lecture-details/:id" element={<ProtectedRoutes Components={LectureDetails} />} />
 
         <Route path="/promotion-management" element={<ProtectedRoutes Components={PromotionManagement} />} />
         <Route path="/add-promotion" element={<ProtectedRoutes Components={AddPromotion} />} />

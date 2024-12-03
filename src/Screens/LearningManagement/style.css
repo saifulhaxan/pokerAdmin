@@ -1,0 +1,75 @@
+.stats {
+    margin-bottom: 1rem;
+    border-right: 2px solid #fff0;
+}
+
+.avatarIcon {
+    width: 60px;
+    height: 60px;
+}
+
+.productImage img {
+    width: 100%;
+    object-fit: cover;
+    height: 530px;
+}
+
+.font-weight-bold {
+    font-weight: bold;
+}
+
+.videoUploadBox {
+    text-align: center;
+    background-color: #f3f3f3;
+    padding: 30px;
+    border-radius: 4px;
+}
+
+.videoUploadBox svg {
+    font-size: 40px;
+    color: #6c6c6c;
+    margin-bottom: 10px;
+}
+
+.videoUploadBox label {
+    text-transform: uppercase;
+    color: #858181;
+}
+
+.uploadMeta {
+    display: flex;
+    justify-content: space-between;
+}
+
+.uploadMeta svg {
+    font-size: 16px;
+    margin-bottom: 0;
+    color: #6c6c6c;
+}
+
+.uploadMeta > div:last-child {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+
+@media screen and (max-width: 1200px) and (min-width: 768px) {
+    .stats, .stats:not(:last-child) {
+        border-color: #fff0;
+    }
+
+    .stats:nth-child(odd) {
+        border-color: #000;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .stats, .stats:not(:last-child), .stats:nth-child(odd) {
+        border-color: #fff0;
+    }
+}
+
+
+
+

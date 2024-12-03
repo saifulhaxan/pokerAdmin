@@ -8,9 +8,9 @@ const CustomButton = (props) => {
     <>
       {
         props?.icon ? (
-          <button type={props?.type} className={`customButton ${props?.variant} ${props?.className}`} onClick={props?.onClick}>{props?.text} <FontAwesomeIcon icon={props?.icon} /></button>
+          <button type={props?.type} disabled={props?.disabled} className={`customButton ${props?.variant} ${props?.className}`} onClick={props?.onClick}>{props?.text} <FontAwesomeIcon icon={props?.icon} /></button>
         ) : (
-          <button type={props?.type} className={`customButton ${props?.variant} ${props?.className}`} onClick={props?.onClick}>{props?.text} </button>
+          <button type={props?.type} disabled={props?.disabled} className={`customButton ${props?.variant} ${props?.className}`} onClick={props?.onClick}>{props?.text} </button>
         )
       }
     </>
