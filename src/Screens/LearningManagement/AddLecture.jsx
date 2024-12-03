@@ -1,15 +1,3 @@
-/**
-    * @description      : 
-    * @author           : Saif
-    * @group            : 
-    * @created          : 04/11/2024 - 23:01:33
-    * 
-    * MODIFICATION LOG
-    * - Version         : 1.0.0
-    * - Date            : 04/11/2024
-    * - Author          : Saif
-    * - Modification    : 
-**/
 import { useState, useEffect } from "react";
 import { DashboardLayout } from "../../Components/Layout/DashboardLayout";
 import BackButton from "../../Components/BackButton";
@@ -23,6 +11,7 @@ import { useNavigate } from "react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCameraAlt, faClockFour, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { faVideoCamera } from "@fortawesome/free-solid-svg-icons/faVideoCamera";
+
 export const AddLecture = () => {
     const [unit, setUnit] = useState({});
     const [showModal, setShowModal] = useState(false);
@@ -30,85 +19,71 @@ export const AddLecture = () => {
     const navigate = useNavigate();
     const { ApiData: AddCourseData, loading: AddCourseLoading, error: AddCourseError, post: GetAddCourse } = usePost(`lectures/upload`);
 
-
-
     const handleChange = (event) => {
         const { name, value } = event.target;
         setFormData((prevData) => ({
             ...prevData,
             [name]: value,
         }));
-        console.log(formData)
+        console.log(formData);
     };
-
-
 
     const handleSubmit = (e) => {
         e.preventDefault();
         GetAddCourse(formData);
-        if (formData?.title && formData?.description) {
-        }
-
-
+        if (formData?.title && formData?.description) { }
     };
-
 
     useEffect(() => {
         if (AddCourseData) {
-            setShowModal(true)
+            setShowModal(true);
             setTimeout(() => {
-                setShowModal(false)
-            }, 3000)
+                setShowModal(false);
+            }, 3000);
             navigate('/lecture-management');
         }
-    }, [AddCourseData])
-
+    }, [AddCourseData]);
 
     const [categories, setCategories] = useState();
     const { ApiData: CategoriesData, loading: CategoriesLoading, error: CategoriesError, get: GetCategories } = useGet(`category`);
 
     useEffect(() => {
-        GetCategories()
-    }, [])
+        GetCategories();
+    }, []);
 
     useEffect(() => {
         if (CategoriesData) {
-            setCategories(CategoriesData)
+            setCategories(CategoriesData);
         }
-    }, [CategoriesData])
-
+    }, [CategoriesData]);
 
     const [tags, setTags] = useState();
     const { ApiData: TagsData, loading: TagsLoading, error: TagsError, get: GetTags } = useGet(`tags`);
 
     useEffect(() => {
-        GetTags()
-    }, [])
+        GetTags();
+    }, []);
 
     useEffect(() => {
         if (TagsData) {
-            setTags(TagsData)
+            setTags(TagsData);
         }
-    }, [TagsData])
-
+    }, [TagsData]);
 
     const [course, setCourse] = useState();
     const { ApiData: CourseData, loading: CourseLoading, error: CourseError, get: GetCourse } = useGet(`courses`);
 
     useEffect(() => {
-        GetCourse()
-    }, [])
+        GetCourse();
+    }, []);
 
     useEffect(() => {
         if (CourseData) {
-            setCourse(CourseData)
+            setCourse(CourseData);
         }
-    }, [CourseData])
-
+    }, [CourseData]);
 
     // for lecture upload 
-
-
     const [file, setFile] = useState(null);
     const [progress, setProgress] = useState(0);
     const [uploadInfo, setUploadInfo] = useState('0%');
@@ -120,16 +95,14 @@ export const AddLecture = () => {
 
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
-
     };
-
 
     useEffect(() => {
         if (file) {
-            handleUpload()
+            handleUpload();
             document.querySelector('.loaderBox').classList.remove("d-none");
         }
-    }, [file])
+    }, [file]);
 
     const [isUploading, setIsUploading] = useState(false); // Track upload status
 
@@ -193,9 +166,7 @@ export const AddLecture = () => {
         }
     };
 
-
     const uploadChunkWithRetry = async (chunk, chunkIndex, totalChunks, fileName, clientId, retries = 3) => {
-
         for (let attempt = 0; attempt < retries; attempt++) {
             try {
                 const formData = new FormData();
@@ -221,7 +192,7 @@ export const AddLecture = () => {
                     setFormData({
                         ...formData,
                         videoUpload: result?.videoUrl
-                    })
+                    });
                     return true;
                 } else {
                     throw new Error(result.error || `Unknown error for chunk ${chunkIndex + 1}`);
@@ -258,155 +229,154 @@ export const AddLecture = () => {
         };
     }, []);
 
-
-
     return (
-        <>
-            <DashboardLayout>
-                <div className="dashCard mb-4">
-                    <div className="row mb-3">
-                        <div className="col-12 mb-2">
-                            <h2 className="mainTitle">
-                                <BackButton />
-                                Add New Lecture
-                            </h2>
-                        </div>
+        <DashboardLayout>
+            <div className="dashCard mb-4">
+                <div className="row mb-3">
+                    <div className="col-12 mb-2">
+                        <h2 className="mainTitle">
+                            <BackButton />
+                            Add New Lecture
+                        </h2>
                     </div>
-                    <div className="row mb-3">
-                        <div className="col-12">
-                            <form onSubmit={handleSubmit}>
-                                <div className="row">
-                                    <div className="col-lg-12">
-                                        <div className="row">
-                                            <div className="col-md-6 mb-4">
-                                                <CustomInput
-                                                    label='Add Lecture Name'
-                                                    required
-                                                    id='name'
-                                                    type='text'
-                                                    placeholder='Enter Lecture Name'
-                                                    labelClass='mainLabel'
-                                                    inputClass='mainInput'
-                                                    name="name"
-                                                    value={formData.name}
-                                                    onChange={handleChange}
-                                                />
-                                            </div>
-                                            <div className="col-md-6 mb-4">
-                                                <SelectBox
-                                                    selectClass="mainInput"
-                                                    name="courseId"
-                                                    label="Select Course"
-                                                    placeholder="Select Course"
-                                                    required
-                                                    value={formData.courseId}
-                                                    option={course}
-                                                    onChange={handleChange}
-                                                />
-                                            </div>
-                                            <div className="col-md-6 mb-4">
-                                                <SelectBox
-                                                    selectClass="mainInput"
-                                                    name="categoryId"
-                                                    label="Select Category"
-                                                    placeholder="Select Category"
-                                                    required
-                                                    value={formData.categoryId}
-                                                    option={categories}
-                                                    onChange={handleChange}
-                                                />
-                                            </div>
+                </div>
+                <div className="row mb-3">
+                    <div className="col-12">
+                        <form onSubmit={handleSubmit}>
+                            <div className="row">
+                                <div className="col-lg-12">
+                                    <div className="row">
+                                        <div className="col-md-6 mb-4">
+                                            <CustomInput
+                                                label='Add Lecture Name'
+                                                required
+                                                id='name'
+                                                type='text'
+                                                placeholder='Enter Lecture Name'
+                                                labelClass='mainLabel'
+                                                inputClass='mainInput'
+                                                name="name"
+                                                value={formData.name}
+                                                onChange={handleChange}
+                                            />
+                                        </div>
+                                        <div className="col-md-6 mb-4">
+                                            <SelectBox
+                                                selectClass="mainInput"
+                                                name="courseId"
+                                                label="Select Course"
+                                                placeholder="Select Course"
+                                                required
+                                                value={formData.courseId}
+                                                option={course}
+                                                onChange={handleChange}
+                                            />
+                                        </div>
+                                        <div className="col-md-6 mb-4">
+                                            <SelectBox
+                                                selectClass="mainInput"
+                                                name="categoryId"
+                                                label="Select Category"
+                                                placeholder="Select Category"
+                                                required
+                                                value={formData.categoryId}
+                                                option={categories}
+                                                onChange={handleChange}
+                                            />
+                                        </div>
 
-                                            <div className="col-md-6 mb-4">
-                                                <SelectBox
-                                                    selectClass="mainInput"
-                                                    name="tagIds"
-                                                    label="Select Tags"
-                                                    placeholder="Select Tags"
-                                                    required
-                                                    value={formData?.tagIds}
-                                                    option={tags}
-                                                    onChange={handleChange}
-                                                />
-                                            </div>
+                                        <div className="col-md-6 mb-4">
+                                            <SelectBox
+                                                selectClass="mainInput"
+                                                name="tagIds"
+                                                label="Select Tags"
+                                                placeholder="Select Tags"
+                                                required
+                                                value={formData?.tagIds}
+                                                option={tags}
+                                                onChange={handleChange}
+                                            />
+                                        </div>
 
-                                            <div className="col-md-12 mb-4">
-                                                <div className="videoUploadBox">
-                                                    <label for="uploadData">
-                                                        <FontAwesomeIcon icon={faVideoCamera}></FontAwesomeIcon>
-                                                        <span className="d-block">Video Upload</span></label>
-                                                    <input type="file" id="uploadData" accept=".mp4" className="d-none" onChange={handleFileChange} />
+                                        <div className="col-md-12 mb-4">
+                                            <div className="videoUploadBox">
+                                                <label for="uploadData">
+                                                    <FontAwesomeIcon icon={faVideoCamera}></FontAwesomeIcon>
+                                                    <span className="d-block">Video Upload</span></label>
+                                                <input type="file" id="uploadData" accept=".mp4" className="d-none" onChange={handleFileChange} />
 
 
-                                                    {remainingTime !== null && (
-                                                        <>
-                                                            <div style={{
-                                                                width: '100%',
-                                                                backgroundColor: 'rgb(255 255 255)',
-                                                                borderRadius: '5px',
-                                                                marginTop: '20px',
-                                                                overflow: 'hidden',
-                                                            }}>
-                                                                <div
-                                                                    style={{
-                                                                        height: '10px',
-                                                                        backgroundColor: '#4caf50',
-                                                                        width: `${progress}%`,
-                                                                        borderRadius: '5px',
-                                                                    }}
-                                                                ></div>
+                                                {remainingTime !== null && (
+                                                    <>
+                                                        <div style={{
+                                                            width: '100%',
+                                                            backgroundColor: 'rgb(255 255 255)',
+                                                            borderRadius: '5px',
+                                                            marginTop: '20px',
+                                                            overflow: 'hidden',
+                                                        }}>
+                                                            <div
+                                                                style={{
+                                                                    height: '10px',
+                                                                    backgroundColor: '#4caf50',
+                                                                    width: `${progress}%`,
+                                                                    borderRadius: '5px',
+                                                                }}
+                                                            ></div>
+                                                        </div>
+                                                        <div className="uploadMeta">
+                                                            <div style={{ marginTop: '10px' }}>{uploadInfo}</div>
+                                                            <div style={{ marginTop: '10px' }}>
+                                                                <FontAwesomeIcon icon={faClockFour}></FontAwesomeIcon>{formatTime(remainingTime)}
                                                             </div>
-                                                            <div className="uploadMeta">
-                                                                <div style={{ marginTop: '10px' }}>{uploadInfo}</div>
-                                                                <div style={{ marginTop: '10px' }}>
-                                                                    <FontAwesomeIcon icon={faClockFour}></FontAwesomeIcon>{formatTime(remainingTime)}
-                                                                </div>
-                                                            </div>
-                                                        </>
-                                                    )}
+                                                        </div>
+                                                    </>
+                                                )}
+                                            </div>
+                                        </div>
+
+                                        <div className="col-md-12 mb-4">
+                                            <div className="inputWrapper">
+                                                <div className="form-controls">
+                                                    <label htmlFor="">Description</label>
+                                                    <textarea
+                                                        name="description"
+                                                        required
+                                                        className="form-control shadow border-0"
+                                                        id=""
+                                                        cols="30"
+                                                        rows="10"
+                                                        value={formData.description}
+                                                        onChange={handleChange}
+                                                    >
+                                                    </textarea>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div className="col-md-12">
+                                            <CustomButton
+                                                variant="primaryButton"
+                                                text={isUploading ? 'Uploading...' : 'Submit'}
+                                                className={isUploading ? 'bg-light border text-dark' : ''}
+                                                type="submit"
+                                                disabled={isUploading} // Disable while uploading
+                                            />
 
-                                            <div className="col-md-12 mb-4">
-                                                <div className="inputWrapper">
-                                                    <div className="form-controls">
-                                                        <label htmlFor="">Description</label>
-                                                        <textarea
-                                                            name="description"
-                                                            required
-                                                            className="form-control shadow border-0"
-                                                            id=""
-                                                            cols="30"
-                                                            rows="10"
-                                                            value={formData.description}
-                                                            onChange={handleChange}
-                                                        >
-                                                        </textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="col-md-12">
-                                                <CustomButton
-                                                    variant="primaryButton"
-                                                    text={isUploading ? 'Uploading...' : 'Submit'}
-                                                    className={isUploading ? 'bg-light border text-dark' : ''}
-                                                    type="submit"
-                                                    disabled={isUploading} // Disable while uploading
-                                                />
-
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
-
-                <CustomModal show={showModal} close={() => { setShowModal(false) }} success heading='Lecture Added Successfully.' />
-
-            </DashboardLayout>
-        </>
+            </div>
+            {showModal && (
+                <CustomModal
+                    title="Lecture Added Successfully"
+                    body="Your lecture has been successfully uploaded."
+                    onClose={() => setShowModal(false)}
+                />
+            )}
+        </DashboardLayout>
     );
 };
-
