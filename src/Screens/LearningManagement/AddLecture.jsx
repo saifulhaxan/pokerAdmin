@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { DashboardLayout } from "../../Components/Layout/DashboardLayout";
 import BackButton from "../../Components/BackButton";
 import CustomModal from "../../Components/CustomModal";
@@ -15,18 +15,33 @@ import { faVideoCamera } from "@fortawesome/free-solid-svg-icons/faVideoCamera";
 export const AddLecture = () => {
     const [unit, setUnit] = useState({});
     const [showModal, setShowModal] = useState(false);
-    const [formData, setFormData] = useState({});
+    const [formData, setFormData] = useState({
+        tagIds: []
+    });
     const navigate = useNavigate();
     const { ApiData: AddCourseData, loading: AddCourseLoading, error: AddCourseError, post: GetAddCourse } = usePost(`lectures/upload`);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: value,
-        }));
-        console.log(formData);
+
+        setFormData((prevData) => {
+            // If the name is 'tagIds', handle it as an array
+            if (name === 'tagIds') {
+                return {
+                    ...prevData,
+                    [name]: [value], // Append the new value to the array
+                };
+            }
+            // Otherwise, handle it as a regular key-value update
+            return {
+                ...prevData,
+                [name]: value,
+            };
+        });
+
+        console.log(formData); // Will log the previous state due to the asynchronous nature of state updates
     };
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -88,8 +103,11 @@ export const AddLecture = () => {
     const [progress, setProgress] = useState(0);
     const [uploadInfo, setUploadInfo] = useState('0%');
     const [remainingTime, setRemainingTime] = useState(null);
-    const clientId = `${Date.now()}-${Math.random().toString(36).substring(2, 15)}`;
-    let eventSource = null;
+    const [isUploading, setIsUploading] = useState(false);
+    const [showLoader, setShowLoader] = useState(false);
+
+    const clientId = useRef(`${Date.now()}-${Math.random().toString(36).substring(2, 15)}`);
+    const eventSourceRef = useRef(null);
 
     const chunkSize = 5 * 1024 * 1024; // 5 MB
 
@@ -100,15 +118,13 @@ export const AddLecture = () => {
     useEffect(() => {
         if (file) {
             handleUpload();
-            document.querySelector('.loaderBox').classList.remove("d-none");
+            setShowLoader(true);
         }
     }, [file]);
 
-    const [isUploading, setIsUploading] = useState(false); // Track upload status
-
     const handleUpload = async () => {
         if (!file) {
-            alert('Please select a video file to upload.');
+            alert('Please select a file to upload.');
             return;
         }
 
@@ -118,15 +134,15 @@ export const AddLecture = () => {
         setProgress(0);
         setUploadInfo('Starting upload...');
         setRemainingTime(null);
-        setIsUploading(true); // Disable the submit button
+        setIsUploading(true);
 
-        const startTime = Date.now(); // Start timing the upload
+        const startTime = Date.now();
 
-        if (!eventSource) {
-            eventSource = new EventSource('https://156.67.218.73:3030/lecture-upload/progress');
-            eventSource.onmessage = (event) => {
+        if (!eventSourceRef.current) {
+            eventSourceRef.current = new EventSource('http://156.67.218.73:3000/lecture-upload/progress');
+            eventSourceRef.current.onmessage = (event) => {
                 const progressData = JSON.parse(event.data);
-                if (progressData.clientId === clientId) {
+                if (progressData.clientId === clientId.current) {
                     updateProgress(progressData.progress);
                 }
             };
@@ -138,10 +154,11 @@ export const AddLecture = () => {
                 const end = Math.min(start + chunkSize, file.size);
                 const chunk = file.slice(start, end);
 
-                const success = await uploadChunkWithRetry(chunk, chunkIndex, totalChunks, fileName, clientId);
+                const success = await uploadChunkWithRetry(chunk, chunkIndex, totalChunks, fileName);
                 if (!success) {
                     alert(`Upload failed at chunk ${chunkIndex + 1}. Please try again.`);
-                    setIsUploading(false); // Re-enable submit on error
+                    setIsUploading(false);
+                    setShowLoader(false);
                     return;
                 }
 
@@ -158,15 +175,18 @@ export const AddLecture = () => {
             console.error('Error during upload:', error);
             setUploadInfo('Upload failed. Please try again.');
         } finally {
-            setIsUploading(false); // Re-enable the submit button
-            if (eventSource) {
-                eventSource.close();
-                eventSource = null;
+            setIsUploading(false);
+            setShowLoader(false);
+            if (eventSourceRef.current) {
+                eventSourceRef.current.close();
+                eventSourceRef.current = null;
             }
         }
     };
 
-    const uploadChunkWithRetry = async (chunk, chunkIndex, totalChunks, fileName, clientId, retries = 3) => {
+    const LogoutData = localStorage.getItem('login');
+
+    const uploadChunkWithRetry = async (chunk, chunkIndex, totalChunks, fileName, retries = 3) => {
         for (let attempt = 0; attempt < retries; attempt++) {
             try {
                 const formData = new FormData();
@@ -174,31 +194,27 @@ export const AddLecture = () => {
                 formData.append('chunkIndex', chunkIndex);
                 formData.append('totalChunks', totalChunks);
                 formData.append('fileName', fileName);
-                formData.append('clientId', clientId);
+                formData.append('clientId', clientId.current);
 
-                const response = await fetch('https://156.67.218.73:3030/lecture-upload/', {
+                const response = await fetch('http://156.67.218.73:3000/lectures/upload', {
                     method: 'POST',
+                    headers: {
+                        Authorization: `Bearer ${LogoutData}`,
+                    },
                     body: formData,
                 });
 
                 if (!response.ok) {
-                    document.querySelector('.loaderBox').classList.add("d-none");
                     throw new Error(`Failed to upload chunk ${chunkIndex + 1}`);
                 }
 
                 const result = await response.json();
-                document.querySelector('.loaderBox').classList.add("d-none");
                 if (result.success) {
-                    setFormData({
-                        ...formData,
-                        videoUpload: result?.videoUrl
-                    });
                     return true;
                 } else {
                     throw new Error(result.error || `Unknown error for chunk ${chunkIndex + 1}`);
                 }
             } catch (error) {
-                document.querySelector('.loaderBox').classList.add("d-none");
                 console.error(`Error on attempt ${attempt + 1} for chunk ${chunkIndex + 1}:`, error);
             }
         }
@@ -210,7 +226,7 @@ export const AddLecture = () => {
         setProgress(progressValue);
         setUploadInfo(`${progressValue.toFixed(2)}%`);
         if (estimatedTime !== undefined) {
-            setRemainingTime(estimatedTime);
+            setRemainingTime(formatTime(estimatedTime));
         }
     };
 
@@ -221,13 +237,13 @@ export const AddLecture = () => {
     };
 
     useEffect(() => {
-        // Cleanup on component unmount
         return () => {
-            if (eventSource) {
-                eventSource.close();
+            if (eventSourceRef.current) {
+                eventSourceRef.current.close();
             }
         };
     }, []);
+
 
     return (
         <DashboardLayout>

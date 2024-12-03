@@ -73,8 +73,6 @@ export const usePost = (url, initialData = null) => {
       const response = await fetch(base_url + url, {
         method: 'POST',
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
           Authorization: `Bearer ${LogoutData}`,
         },
         body: JSON.stringify(postData), // Convert object to JSON string
