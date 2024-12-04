@@ -45,7 +45,7 @@ const FileUpload = () => {
 
   const uploadChunk = async (formData, chunkIndex, totalChunks) => {
     try {
-      const response = await fetch('http://156.67.218.73:3000/lectures/upload', {
+      const response = await fetch('https://devapi.archcitylms.com/lectures/upload', {
         method: 'POST',
         body: formData,
       });
