@@ -18,6 +18,10 @@
     font-weight: bold;
 }
 
+.h-550 {
+    height: 450px;
+}
+
 .videoUploadBox {
     text-align: center;
     background-color: #f3f3f3;

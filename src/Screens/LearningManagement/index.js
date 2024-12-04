@@ -85,11 +85,11 @@ export const LectureManagement = () => {
   }, []);
 
 
-  useEffect(()=>{
-    if(UseeListingData) {
+  useEffect(() => {
+    if (UseeListingData) {
       setData(UseeListingData)
     }
-  },[UseeListingData])
+  }, [UseeListingData])
 
   const maleHeaders = [
     {
@@ -113,12 +113,12 @@ export const LectureManagement = () => {
       title: "Course Name",
     },
     {
-      key: "status",
-      title: "Status",
-    },
-    {
       key: "created_at",
       title: "Created On",
+    },
+    {
+      key: "status",
+      title: "Status",
     },
     {
       key: "action",
@@ -159,10 +159,10 @@ export const LectureManagement = () => {
                               {item?.name}
                             </td>
                             <td>{item?.category?.title}</td>
-                           <td></td>
+                            <td></td>
                             <td>{item?.course?.title}</td>
-                            <td className={item?.course?.status == true ? 'greenColor' : "redColor"}>{item?.course?.status == true ? 'Active' : "Inactive"}</td>
                             <td>{item?.createdAt}</td>
+                            <td className={item?.course?.status == true ? 'greenColor' : "redColor"}>{item?.course?.status == true ? 'Active' : "Inactive"}</td>
                             <td>
                               <Dropdown className="tableDropdown">
                                 <Dropdown.Toggle variant="transparent" className="notButton classicToggle">
@@ -171,7 +171,7 @@ export const LectureManagement = () => {
                                 <Dropdown.Menu align="end" className="tableDropdownMenu">
 
                                   <Link to={`/lecture-management/lecture-details/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faEye} className="tableActionIcon" />View</Link>
-                                  <Link to={`/edit-lecture/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faEdit} className="tableActionIcon" />Edit</Link>
+                                  {/* <Link to={`/edit-lecture/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faEdit} className="tableActionIcon" />Edit</Link> */}
 
                                 </Dropdown.Menu>
                               </Dropdown>

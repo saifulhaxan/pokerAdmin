@@ -305,6 +305,7 @@ export const AddLecture = () => {
                 </div>
 
             </div>
-
-            {showModal && (<CustomModal modalText="Lecture added successfully." onClose={() => setShowModal(false)} />)} </DashboardLayout>);
+            <CustomModal show={showModal} close={() => { setShowModal(false) }} success heading='Lecture added successfully.' />
+        </DashboardLayout>
+    );
 }
