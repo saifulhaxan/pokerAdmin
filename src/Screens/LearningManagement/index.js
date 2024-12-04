@@ -68,7 +68,7 @@ export const LectureManagement = () => {
   }
 
   const filterData = data.filter(item =>
-    item?.title?.toLowerCase().includes(inputValue.toLowerCase())
+    item?.name?.toLowerCase().includes(inputValue.toLowerCase())
   );
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -156,10 +156,12 @@ export const LectureManagement = () => {
                           <tr key={index}>
                             <td>{index + 1}</td>
                             <td className="text-capitalize">
-                              {item?.title}
+                              {item?.name}
                             </td>
-                            <td>{item?.lecturesCount}</td>
-                            <td className={item?.status == true ? 'greenColor' : "redColor"}>{item?.status == true ? 'Active' : "Inactive"}</td>
+                            <td>{item?.category?.title}</td>
+                           <td></td>
+                            <td>{item?.course?.title}</td>
+                            <td className={item?.course?.status == true ? 'greenColor' : "redColor"}>{item?.course?.status == true ? 'Active' : "Inactive"}</td>
                             <td>{item?.createdAt}</td>
                             <td>
                               <Dropdown className="tableDropdown">
