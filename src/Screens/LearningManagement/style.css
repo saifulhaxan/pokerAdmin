@@ -58,6 +58,38 @@
 }
 
 
+.drop-zone {
+    border: 2px dashed #ddd;
+    background-color: #f9f9f9;
+    transition: background-color 0.3s;
+}
+
+.drop-zone.dragover {
+    background-color: #e9f7ff;
+}
+
+.progress-bar {
+    font-weight: bold;
+    text-align: center;
+    line-height: 20px;
+}
+
+.cloudinary-response {
+    font-size: 14px;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.drop-zone svg {
+    color: #ffa500 !important;
+}
+
+.drop-zone button {
+    background-color: #ffa500;
+    border: none;
+}
+
+
 @media screen and (max-width: 1200px) and (min-width: 768px) {
     .stats, .stats:not(:last-child) {
         border-color: #fff0;
