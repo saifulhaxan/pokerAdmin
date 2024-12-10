@@ -36,7 +36,7 @@ export const LectureManagement = () => {
   const [showModal3, setShowModal3] = useState(false);
   const [showModal4, setShowModal4] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(8);
+  const [itemsPerPage, setItemsPerPage] = useState(15);
   const [inputValue, setInputValue] = useState('');
   const [delID, setDelID] = useState('');
   const { ApiData: UseeListingData, loading: UseeListingLoading, error: UseeListingError, get: GetUseeListing } = useGet(`lectures`);
@@ -178,7 +178,7 @@ export const LectureManagement = () => {
                               {item?.name}
                             </td>
                             <td>{item?.category?.title}</td>
-                            <td></td>
+                            <td>{item?.tags[0]?.title}</td>
                             <td>{item?.course?.title}</td>
                             <td>{item?.createdAt}</td>
                             <td className={item?.course?.status == true ? 'greenColor' : "redColor"}>{item?.course?.status == true ? 'Active' : "Inactive"}</td>

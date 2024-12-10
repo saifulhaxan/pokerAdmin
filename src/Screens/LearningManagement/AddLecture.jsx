@@ -12,7 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const AddLecture = () => {
     // States for form data, categories, tags, courses, and UI feedback
-    const [formData, setFormData] = useState({ tagIds: [] });
+    const [formData, setFormData] = useState({ tagIds: [], videoUpload: 'https://res.cloudinary.com/dpjop4dvs/video/upload/v1733870432/NLHEPreflopModuleColdCallingPart%204of10.mp4.mp4' });
     const [categories, setCategories] = useState([]);
     const [tags, setTags] = useState([]);
     const [courses, setCourses] = useState([]);
@@ -72,6 +72,8 @@ export const AddLecture = () => {
             ...prevData,
             [name]: name === "tagIds" ? [Number(value)] : value,
         }));
+
+        console.log('abc', formData)
     };
 
     // Handle form submission
@@ -121,9 +123,10 @@ export const AddLecture = () => {
                 setStatus('Upload Complete!');
                 setProgress(100);
                 setCloudinaryResponse(data.cloudinaryResponse);
+                console.log('cloud', data)
                 setFormData({
                     ...formData,
-                    videoUrl: data?.data?.videoUrl
+                    videoUpload: data?.videoUrl
                 })
                 eventSource.close();
             } else if (data.status === 'error') {
