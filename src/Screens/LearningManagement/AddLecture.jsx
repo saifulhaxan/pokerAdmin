@@ -17,14 +17,14 @@ export const AddLecture = () => {
     const [tags, setTags] = useState([]);
     const [courses, setCourses] = useState([]);
     const [showModal, setShowModal] = useState(false);
-    const [progress, setProgress] = useState(0);
-    const [status, setStatus] = useState('');
-    const [cloudinaryResponse, setCloudinaryResponse] = useState(null);
-    const [estimatedTime, setEstimatedTime] = useState(0); // State for estimated time
+    // const [progress, setProgress] = useState(0);
+    // const [status, setStatus] = useState('');
+    // const [cloudinaryResponse, setCloudinaryResponse] = useState(null);
+    // const [estimatedTime, setEstimatedTime] = useState(0); // State for estimated time
 
 
     // Refs for dropzone and file input
-    const dropZoneRef = useRef(null);
+    // const dropZoneRef = useRef(null);
     const fileInputRef = useRef(null);
 
     const navigate = useNavigate();
@@ -75,18 +75,15 @@ export const AddLecture = () => {
     };
 
     // Handle form submission
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (formData.name && formData.description) {
-            GetAddCourse(formData);
-        } else {
-            alert("Please fill all the required fields.");
-        }
-    };
-
-    // Video Upload Logic
     const CHUNK_SIZE = 5 * 1024 * 1024; // 5MB chunks
     const BASE_URL = 'https://devapi.archcitylms.com/lectures';
+    const [progress, setProgress] = useState(0);
+    const [status, setStatus] = useState('');
+    const [cloudinaryResponse, setCloudinaryResponse] = useState(null);
+    const [estimatedTime, setEstimatedTime] = useState(null);
+    // const [formData, setFormData] = useState({ name: '', description: '', videoUrl: '' });
+    const dropZoneRef = useRef(null);
+
     let connectionId = '';
 
     const preventDefaults = (e) => {
@@ -98,33 +95,29 @@ export const AddLecture = () => {
         if (files.length > 0) await uploadFile(files[0]);
     };
 
-
-
     const updateProgressBar = (current, total) => {
         const percentage = (current / total) * 100;
-        setProgress(percentage); // Assuming you already have `setProgress` in your state
+        setProgress(percentage);
     };
-    
+
     const uploadFile = async (file) => {
         connectionId = crypto.randomUUID();
         const totalChunks = Math.ceil(file.size / CHUNK_SIZE);
 
         setStatus(`Uploading ${file.name}...`);
-        const startTime = Date.now(); // Record the start time
+        const startTime = Date.now();
 
-        // Start SSE for progress
         const eventSource = new EventSource(`${BASE_URL}/progress/${connectionId}`);
-
         eventSource.onmessage = (event) => {
             const data = JSON.parse(event.data);
             if (data.status === 'success') {
                 setStatus('Upload Complete!');
                 setProgress(100);
                 setCloudinaryResponse(data.cloudinaryResponse);
-                setFormData({
-                    ...formData,
-                    videoUrl: data?.data?.videoUrl
-                })
+                setFormData((prev) => ({
+                    ...prev,
+                    videoUrl: data?.data?.videoUrl,
+                }));
                 eventSource.close();
             } else if (data.status === 'error') {
                 setStatus(`Error: ${data.error}`);
@@ -134,7 +127,6 @@ export const AddLecture = () => {
 
         let uploadedBytes = 0;
 
-        // Upload chunks sequentially
         for (let chunkIndex = 0; chunkIndex < totalChunks; chunkIndex++) {
             const start = chunkIndex * CHUNK_SIZE;
             const end = Math.min(start + CHUNK_SIZE, file.size);
@@ -158,18 +150,49 @@ export const AddLecture = () => {
                 }
 
                 uploadedBytes += chunk.size;
-                const elapsedTime = (Date.now() - startTime) / 1000; // in seconds
-                const uploadSpeed = uploadedBytes / elapsedTime; // bytes per second
+                const elapsedTime = (Date.now() - startTime) / 1000;
+                const uploadSpeed = uploadedBytes / elapsedTime;
                 const remainingBytes = file.size - uploadedBytes;
-                const remainingTime = remainingBytes / uploadSpeed; // seconds
+                const remainingTime = remainingBytes / uploadSpeed;
 
-                setEstimatedTime(Math.ceil(remainingTime)); // Update estimated time
+                setEstimatedTime(Math.ceil(remainingTime));
                 updateProgressBar(chunkIndex + 1, totalChunks);
             } catch (error) {
                 setStatus(`Upload failed: ${error.message}`);
                 eventSource.close();
                 break;
             }
+        }
+    };
+
+    const handleDrop = (e) => {
+        preventDefaults(e);
+        const files = e.dataTransfer.files;
+        handleFiles(files);
+    };
+
+    const handleDragOver = (e) => {
+        preventDefaults(e);
+        if (dropZoneRef.current) dropZoneRef.current.classList.add('dragover');
+    };
+
+    const handleDragLeave = (e) => {
+        preventDefaults(e);
+        if (dropZoneRef.current) dropZoneRef.current.classList.remove('dragover');
+    };
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({ ...prev, [name]: value }));
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (formData.name && formData.description && formData.videoUrl) {
+            console.log('Form Submitted:', formData);
+            alert('Form submitted successfully!');
+        } else {
+            alert('Please fill all the required fields and upload a video.');
         }
     };
 
