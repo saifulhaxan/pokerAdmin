@@ -15,7 +15,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { Dropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisV, faEye, faCheck, faTimes, faFilter, faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faEllipsisV, faEye, faCheck, faTimes, faFilter, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 import { DashboardLayout } from "../../Components/Layout/DashboardLayout";
 import CustomTable from "../../Components/CustomTable";
@@ -27,7 +27,7 @@ import CustomButton from "../../Components/CustomButton";
 
 
 import "./style.css";
-import { useGet } from "../../Api";
+import { useDelete, useGet } from "../../Api";
 
 export const CourseManagement = () => {
   const [data, setData] = useState([]);
@@ -38,7 +38,22 @@ export const CourseManagement = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(8);
   const [inputValue, setInputValue] = useState('');
+  const [delID, setDelID] = useState('');
+  const { ApiData: TagDeleteData, loading: TagDeleteLoading, error: TagDeleteError, del: GetTagDelete } = useDelete(`courses/${delID}`);
   const { ApiData: UseeListingData, loading: UseeListingLoading, error: UseeListingError, get: GetUseeListing } = useGet(`courses`);
+
+  useEffect(() => {
+    if (delID) {
+        GetTagDelete()
+    }
+}, [delID])
+
+
+useEffect(() => {
+  if (TagDeleteData) {
+      GetUseeListing()
+  }
+}, [TagDeleteData])
 
 
   const navigate = useNavigate();
@@ -162,7 +177,7 @@ export const CourseManagement = () => {
 
                                   <Link to={`/course-management/course-details/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faEye} className="tableActionIcon" />View</Link>
                                   <Link to={`/edit-course/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faEdit} className="tableActionIcon" />Edit</Link>
-
+                                  <button className="tableAction" onClick={() => { setDelID(item?.id) }}><FontAwesomeIcon icon={faTrash} className="tableActionIcon" />Delete</button>
                                 </Dropdown.Menu>
                               </Dropdown>
                             </td>
