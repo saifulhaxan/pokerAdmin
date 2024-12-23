@@ -72,6 +72,8 @@ export const AddLecture = () => {
             ...prevData,
             [name]: name === "tagIds" ? [Number(value)] : value,
         }));
+
+        console.log('ac', formData)
     };
 
     // Handle form submission
@@ -92,8 +94,14 @@ export const AddLecture = () => {
     };
 
     const handleFiles = async (files) => {
-        if (files.length > 0) await uploadFile(files[0]);
+        if (files.length > 0) {
+            let file = files[0];
+            let modifiedName = file.name.replace(/\s+/g, '_'); // Replace spaces with underscores
+            let modifiedFile = new File([file], modifiedName, { type: file.type });
+            await uploadFile(modifiedFile);
+        }
     };
+
 
     const updateProgressBar = (current, total) => {
         const percentage = (current / total) * 100;
@@ -114,9 +122,11 @@ export const AddLecture = () => {
                 setStatus('Upload Complete!');
                 setProgress(100);
                 setCloudinaryResponse(data.cloudinaryResponse);
+                console.log('cloud', data)
                 setFormData((prev) => ({
                     ...prev,
-                    videoUrl: data?.data?.videoUrl,
+                    videoUpload: data?.videoUrl,
+                    lectureLength: Math.round(data?.duration) // Round off the duration
                 }));
                 eventSource.close();
             } else if (data.status === 'error') {
@@ -188,9 +198,10 @@ export const AddLecture = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (formData.name && formData.description && formData.videoUrl) {
+        if (formData.name && formData.description && formData.videoUpload) {
             console.log('Form Submitted:', formData);
-            alert('Form submitted successfully!');
+            // alert('Form submitted successfully!');
+            GetAddCourse(formData)
         } else {
             alert('Please fill all the required fields and upload a video.');
         }
