@@ -180,7 +180,7 @@ export const Dashboard = () => {
                     </div>
                     <div className="dashData">
                       {
-                        data && data?.map((item, index) => (
+                        data && data?.slice(0, 4)?.map((item, index) => (
 
                           <div className="userBox" key={index}>
                             <div className="userImage">
