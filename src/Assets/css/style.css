@@ -3,11 +3,11 @@
 /*----- General Css Start -----*/
 
 :root {
-    --primaryColor: orange;
+    --primaryColor: #017947;
     --grayColor: #2E2E2E;
     --redColor : #ff0000;
     --greenColor: #42C900;
-    --yellowColor: #E5BB45;
+    --yellowColor: #017947;
     --whiteColor: #fff;
 }
 

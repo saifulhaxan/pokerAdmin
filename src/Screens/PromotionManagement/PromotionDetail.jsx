@@ -118,7 +118,7 @@ export const PromotionDetails = () => {
                                 </div> */}
                                 <div className="col-md-12 mb-4">
                                     <div className="imageBox">
-                                        <img src={data?.image ? data?.image : logo} alt="promotion Image" className="mw-100" />
+                                        <img src={data?.image} alt="promotion Image" className="mw-100" />
                                     </div>
                                 </div>
                                 <div className="col-md-12 mb-4">

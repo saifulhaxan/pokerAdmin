@@ -24,6 +24,29 @@
     height: 400px;
 }
 
+.imageUploadBanner img {
+    width: 100%;
+    height: 243px;
+    object-fit: cover;
+}
+
+.imageUploadBanner {
+    position: relative;
+}
+
+.imageUploadBanner button {
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
 @media screen and (max-width: 1200px) and (min-width: 768px) {
     .stats, .stats:not(:last-child) {
         border-color: #fff0;

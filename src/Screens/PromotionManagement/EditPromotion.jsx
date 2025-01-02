@@ -20,19 +20,22 @@ import CustomButton from "../../Components/CustomButton";
 import { CategoryList, DietaryList, MenuList } from "../../Components/CategoryList";
 import { useGet, usePatch, usePatchForm, usePost, usePostForm } from "../../Api";
 import { useNavigate, useParams } from "react-router";
+import ImageUpload from "../../Components/ImageUpload";
+import { faClose } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 export const EditPromotion = () => {
     const [unit, setUnit] = useState({});
     const [showModal, setShowModal] = useState(false);
     const [formData, setFormData] = useState({});
     const navigate = useNavigate();
-    const {id} = useParams();
+    const { id } = useParams();
     const { ApiData: EditCourseData, loading: EditCourseLoading, error: EditCourseError, get: GetEditCourse } = useGet(`promotion/${id}`);
-    const { ApiData: UpdateCourseData, loading: UpdateCourseLoading, error: UpdateCourseError, patch: GetUpdateCourse } = usePatchForm(`promotion/${id}`);
+    const { ApiData: UpdateCourseData, loading: UpdateCourseLoading, error: UpdateCourseError, patch: GetUpdateCourse } = usePatch(`promotion/${id}`);
 
 
-    
-    useEffect(()=>{
-        if(EditCourseData) {
+
+    useEffect(() => {
+        if (EditCourseData) {
             setFormData({
                 ...formData,
                 title: EditCourseData?.title,
@@ -40,7 +43,7 @@ export const EditPromotion = () => {
                 image: EditCourseData?.image
             });
         }
-    },[EditCourseData])
+    }, [EditCourseData])
 
 
     const handleChange = (event) => {
@@ -57,16 +60,14 @@ export const EditPromotion = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         GetUpdateCourse(formData);
-        if (formData?.title && formData?.description) {
-        }
 
-      
+
     };
 
 
-    useEffect(()=>{
+    useEffect(() => {
         GetEditCourse()
-    },[])
+    }, [])
 
 
     useEffect(() => {
@@ -94,6 +95,21 @@ export const EditPromotion = () => {
         console.log(formData)
     };
 
+    const handleImageUpload = (response) => {
+        console.log('Image upload response:', response);
+        setFormData({
+            ...formData,
+            image: response?.imageUrl
+        })
+    };
+
+    const removeImage = () => {
+        setFormData({
+            ...formData,
+            image: ''
+        })
+    }
+
     return (
         <>
             <DashboardLayout>
@@ -102,7 +118,7 @@ export const EditPromotion = () => {
                         <div className="col-12 mb-2">
                             <h2 className="mainTitle">
                                 <BackButton />
-                               Edit Promotion
+                                Edit Promotion
                             </h2>
                         </div>
                     </div>
@@ -128,16 +144,16 @@ export const EditPromotion = () => {
                                             </div>
 
                                             <div className="col-md-6 mb-4">
-                                                <CustomInput
-                                                    label='Edit Promotion Image'
-                                                    id='file'
-                                                    type='file'
-                                                    labelClass='mainLabel'
-                                                    inputClass='mainInput'
-                                                    name="image"
-                                                    // value={formData.image}
-                                                    onChange={filehandleChange}
-                                                />
+                                                <ImageUpload onUpload={handleImageUpload} title="Upload Promotion Image" />
+                                                {
+                                                    formData?.image ? (
+                                                        <div className="imageUploadBanner">
+                                                            <img src={formData?.image} alt="User" />
+                                                            <button type="button" onClick={removeImage}><FontAwesomeIcon icon={faClose}></FontAwesomeIcon></button>
+                                                        </div>
+
+                                                    ) : ''
+                                                }
                                             </div>
 
                                             <div className="col-md-12 mb-4">
