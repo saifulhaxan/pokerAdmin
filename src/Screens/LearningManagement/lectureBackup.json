@@ -1,0 +1,985 @@
+[
+    {
+        "id": 1,
+        "name": "NLHE Pre Flop Module Introduction Part 1",
+        "videoUpload": "https://res.cloudinary.com/dpjop4dvs/video/upload/v1736638177/NLHEPreFlopModuleIntroductionPart1.mp4.mp4",
+        "lectureLength": 453,
+        "description": "NLHE Pre Flop Module Introduction Part 1.",
+        "order": 1,
+        "createdAt": "2025-01-11T23:31:08.084Z",
+        "updatedAt": "2025-01-11T23:32:49.290Z",
+        "deletedAt": null,
+        "course": {
+            "id": 1,
+            "title": "NLHE (No-Limit Hold’em)",
+            "description": "Poker Game",
+            "status": true,
+            "createdAt": "2025-01-10T12:30:15.072Z",
+            "updatedAt": "2025-01-10T12:30:15.070Z",
+            "deletedAt": null
+        },
+        "category": {
+            "id": 1,
+            "title": "Pre Flop",
+            "status": true,
+            "createdAt": "2025-01-10T12:28:19.974Z",
+            "updatedAt": "2025-01-10T12:28:19.974Z",
+            "deletedAt": null
+        },
+        "tags": [
+            {
+                "id": 2,
+                "title": "Intermediate",
+                "status": true,
+                "createdAt": "2025-01-10T12:31:21.737Z",
+                "updatedAt": "2025-01-10T12:31:21.737Z",
+                "deletedAt": null
+            },
+            {
+                "id": 1,
+                "title": "Begginer",
+                "status": true,
+                "createdAt": "2025-01-10T12:31:10.411Z",
+                "updatedAt": "2025-01-10T12:31:10.411Z",
+                "deletedAt": null
+            }
+        ],
+        "isFavourite": false
+    },
+    {
+        "id": 2,
+        "name": "NLHE Preflop Module Raise First In Part 2 of 10",
+        "videoUpload": "https://res.cloudinary.com/dpjop4dvs/video/upload/v1733786746/NLHE%20Preflop%20Module%20Raise%20First%20In%20Part%202%20of%2010.mp4.mp4",
+        "lectureLength": 192,
+        "description": "NLHE Preflop Module Raise First In Part 2 of 10",
+        "order": 2,
+        "createdAt": "2025-01-11T23:38:15.723Z",
+        "updatedAt": "2025-01-11T23:38:15.723Z",
+        "deletedAt": null,
+        "course": {
+            "id": 1,
+            "title": "NLHE (No-Limit Hold’em)",
+            "description": "Poker Game",
+            "status": true,
+            "createdAt": "2025-01-10T12:30:15.072Z",
+            "updatedAt": "2025-01-10T12:30:15.070Z",
+            "deletedAt": null
+        },
+        "category": {
+            "id": 1,
+            "title": "Pre Flop",
+            "status": true,
+            "createdAt": "2025-01-10T12:28:19.974Z",
+            "updatedAt": "2025-01-10T12:28:19.974Z",
+            "deletedAt": null
+        },
+        "tags": [
+            {
+                "id": 2,
+                "title": "Intermediate",
+                "status": true,
+                "createdAt": "2025-01-10T12:31:21.737Z",
+                "updatedAt": "2025-01-10T12:31:21.737Z",
+                "deletedAt": null
+            }
+        ],
+        "isFavourite": false
+    },
+    {
+        "id": 3,
+        "name": "NLHE Preflop Module Raise Sizings Part 3",
+        "videoUpload": "https://res.cloudinary.com/dpjop4dvs/video/upload/v1733787553/t_upload_part_3.mp4.mp4",
+        "lectureLength": 599,
+        "description": "NLHE Preflop Module Raise Sizings Part 3 of 10",
+        "order": 3,
+        "createdAt": "2025-01-11T23:40:43.092Z",
+        "updatedAt": "2025-01-11T23:45:08.296Z",
+        "deletedAt": null,
+        "course": {
+            "id": 1,
+            "title": "NLHE (No-Limit Hold’em)",
+            "description": "Poker Game",
+            "status": true,
+            "createdAt": "2025-01-10T12:30:15.072Z",
+            "updatedAt": "2025-01-10T12:30:15.070Z",
+            "deletedAt": null
+        },
+        "category": {
+            "id": 1,
+            "title": "Pre Flop",
+            "status": true,
+            "createdAt": "2025-01-10T12:28:19.974Z",
+            "updatedAt": "2025-01-10T12:28:19.974Z",
+            "deletedAt": null
+        },
+        "tags": [
+            {
+                "id": 3,
+                "title": "Professional",
+                "status": true,
+                "createdAt": "2025-01-10T12:31:36.250Z",
+                "updatedAt": "2025-01-10T12:31:36.250Z",
+                "deletedAt": null
+            }
+        ],
+        "isFavourite": false
+    },
+    {
+        "id": 4,
+        "name": "NLHE Preflop Module Cold Calling Part 4",
+        "videoUpload": "https://res.cloudinary.com/dpjop4dvs/video/upload/v1733830218/NLHEPreflopModuleColdCallingPart4of10.mp4.mp4",
+        "lectureLength": 755,
+        "description": "NLHE Preflop Module Cold Calling Part 4 of 10",
+        "order": 4,
+        "createdAt": "2025-01-11T23:42:39.857Z",
+        "updatedAt": "2025-01-11T23:45:56.110Z",
+        "deletedAt": null,
+        "course": {
+            "id": 1,
+            "title": "NLHE (No-Limit Hold’em)",
+            "description": "Poker Game",
+            "status": true,
+            "createdAt": "2025-01-10T12:30:15.072Z",
+            "updatedAt": "2025-01-10T12:30:15.070Z",
+            "deletedAt": null
+        },
+        "category": {
+            "id": 1,
+            "title": "Pre Flop",
+            "status": true,
+            "createdAt": "2025-01-10T12:28:19.974Z",
+            "updatedAt": "2025-01-10T12:28:19.974Z",
+            "deletedAt": null
+        },
+        "tags": [
+            {
+                "id": 3,
+                "title": "Professional",
+                "status": true,
+                "createdAt": "2025-01-10T12:31:36.250Z",
+                "updatedAt": "2025-01-10T12:31:36.250Z",
+                "deletedAt": null
+            }
+        ],
+        "isFavourite": false
+    },
+    {
+        "id": 5,
+        "name": "NLHE Preflop Module3 Betting Part 5",
+        "videoUpload": "https://res.cloudinary.com/dpjop4dvs/video/upload/v1733827372/NLHEPreflopModule3BettingPart5of10.mp4.mp4",
+        "lectureLength": 386,
+        "description": "NLHE Preflop Module3 Betting Part 5 of 10",
+        "order": 5,
+        "createdAt": "2025-01-11T23:44:25.680Z",
+        "updatedAt": "2025-01-11T23:47:17.413Z",
+        "deletedAt": null,
+        "course": {
+            "id": 1,
+            "title": "NLHE (No-Limit Hold’em)",
+            "description": "Poker Game",
+            "status": true,
+            "createdAt": "2025-01-10T12:30:15.072Z",
+            "updatedAt": "2025-01-10T12:30:15.070Z",
+            "deletedAt": null
+        },
+        "category": {
+            "id": 1,
+            "title": "Pre Flop",
+            "status": true,
+            "createdAt": "2025-01-10T12:28:19.974Z",
+            "updatedAt": "2025-01-10T12:28:19.974Z",
+            "deletedAt": null
+        },
+        "tags": [
+            {
+                "id": 3,
+                "title": "Professional",
+                "status": true,
+                "createdAt": "2025-01-10T12:31:36.250Z",
+                "updatedAt": "2025-01-10T12:31:36.250Z",
+                "deletedAt": null
+            }
+        ],
+        "isFavourite": false
+    },
+    {
+        "id": 6,
+        "name": "NLHE Preflop Module 4 Betting Part 6",
+        "videoUpload": "https://res.cloudinary.com/dpjop4dvs/video/upload/v1734561758/nhle_part_6.mp4.mp4",
+        "lectureLength": 585,
+        "description": "NLHE Preflop Module 4 Betting Part 6",
+        "order": 6,
+        "createdAt": "2025-01-11T23:48:55.064Z",
+        "updatedAt": "2025-01-11T23:48:55.064Z",
+        "deletedAt": null,
+        "course": {
+            "id": 1,
+            "title": "NLHE (No-Limit Hold’em)",
+            "description": "Poker Game",
+            "status": true,
+            "createdAt": "2025-01-10T12:30:15.072Z",
+            "updatedAt": "2025-01-10T12:30:15.070Z",
+            "deletedAt": null
+        },
+        "category": {
+            "id": 1,
+            "title": "Pre Flop",
+            "status": true,
+            "createdAt": "2025-01-10T12:28:19.974Z",
+            "updatedAt": "2025-01-10T12:28:19.974Z",
+            "deletedAt": null
+        },
+        "tags": [
+            {
+                "id": 3,
+                "title": "Professional",
+                "status": true,
+                "createdAt": "2025-01-10T12:31:36.250Z",
+                "updatedAt": "2025-01-10T12:31:36.250Z",
+                "deletedAt": null
+            }
+        ],
+        "isFavourite": false
+    },
+    {
+        "id": 7,
+        "name": "NLHE Preflop Module How To Play Pocket Pairs Part 7",
+        "videoUpload": "https://res.cloudinary.com/dpjop4dvs/video/upload/v1733871510/NLHEPreflo7.mp4.mp4",
+        "lectureLength": 723,
+        "description": "NLHE Preflop Module How To Play Pocket Pairs Part 7 of 10",
+        "order": 7,
+        "createdAt": "2025-01-11T23:50:58.419Z",
+        "updatedAt": "2025-01-11T23:50:58.418Z",
+        "deletedAt": null,
+        "course": {
+            "id": 1,
+            "title": "NLHE (No-Limit Hold’em)",
+            "description": "Poker Game",
+            "status": true,
+            "createdAt": "2025-01-10T12:30:15.072Z",
+            "updatedAt": "2025-01-10T12:30:15.070Z",
+            "deletedAt": null
+        },
+        "category": {
+            "id": 1,
+            "title": "Pre Flop",
+            "status": true,
+            "createdAt": "2025-01-10T12:28:19.974Z",
+            "updatedAt": "2025-01-10T12:28:19.974Z",
+            "deletedAt": null
+        },
+        "tags": [
+            {
+                "id": 3,
+                "title": "Professional",
+                "status": true,
+                "createdAt": "2025-01-10T12:31:36.250Z",
+                "updatedAt": "2025-01-10T12:31:36.250Z",
+                "deletedAt": null
+            }
+        ],
+        "isFavourite": false
+    },
+    {
+        "id": 8,
+        "name": "NLHE Preflop Module How To Play Broadways Part 8",
+        "videoUpload": "https://res.cloudinary.com/dpjop4dvs/video/upload/v1733871377/NLHE8.mp4.mp4",
+        "lectureLength": 426,
+        "description": "NLHE Preflop Module How To Play Broadways Part 8 of 10",
+        "order": 8,
+        "createdAt": "2025-01-11T23:53:58.831Z",
+        "updatedAt": "2025-01-11T23:53:58.831Z",
+        "deletedAt": null,
+        "course": {
+            "id": 1,
+            "title": "NLHE (No-Limit Hold’em)",
+            "description": "Poker Game",
+            "status": true,
+            "createdAt": "2025-01-10T12:30:15.072Z",
+            "updatedAt": "2025-01-10T12:30:15.070Z",
+            "deletedAt": null
+        },
+        "category": {
+            "id": 1,
+            "title": "Pre Flop",
+            "status": true,
+            "createdAt": "2025-01-10T12:28:19.974Z",
+            "updatedAt": "2025-01-10T12:28:19.974Z",
+            "deletedAt": null
+        },
+        "tags": [
+            {
+                "id": 3,
+                "title": "Professional",
+                "status": true,
+                "createdAt": "2025-01-10T12:31:36.250Z",
+                "updatedAt": "2025-01-10T12:31:36.250Z",
+                "deletedAt": null
+            }
+        ],
+        "isFavourite": false
+    },
+    {
+        "id": 9,
+        "name": "NLHE Preflop Module How To Play Suited Aces and Kings Part 9",
+        "videoUpload": "https://res.cloudinary.com/dpjop4dvs/video/upload/v1733871382/NLHEPreflop9.mp4.mp4",
+        "lectureLength": 377,
+        "description": "NLHE Preflop Module How To Play Suited Aces and Kings Part 9 of 10",
+        "order": 9,
+        "createdAt": "2025-01-11T23:55:29.679Z",
+        "updatedAt": "2025-01-11T23:55:29.679Z",
+        "deletedAt": null,
+        "course": {
+            "id": 1,
+            "title": "NLHE (No-Limit Hold’em)",
+            "description": "Poker Game",
+            "status": true,
+            "createdAt": "2025-01-10T12:30:15.072Z",
+            "updatedAt": "2025-01-10T12:30:15.070Z",
+            "deletedAt": null
+        },
+        "category": {
+            "id": 1,
+            "title": "Pre Flop",
+            "status": true,
+            "createdAt": "2025-01-10T12:28:19.974Z",
+            "updatedAt": "2025-01-10T12:28:19.974Z",
+            "deletedAt": null
+        },
+        "tags": [
+            {
+                "id": 3,
+                "title": "Professional",
+                "status": true,
+                "createdAt": "2025-01-10T12:31:36.250Z",
+                "updatedAt": "2025-01-10T12:31:36.250Z",
+                "deletedAt": null
+            }
+        ],
+        "isFavourite": false
+    },
+    {
+        "id": 10,
+        "name": "NLHE Preflop Module How To Play Suited Connectors and Gappers Part 10",
+        "videoUpload": "https://res.cloudinary.com/dpjop4dvs/video/upload/v1733871709/NLHEPreflop10.mp4.mp4",
+        "lectureLength": 918,
+        "description": "NLHE Preflop Module How To Play Suited Connectors and Gappers Part 10 of 10",
+        "order": 10,
+        "createdAt": "2025-01-11T23:56:54.771Z",
+        "updatedAt": "2025-01-11T23:56:54.771Z",
+        "deletedAt": null,
+        "course": {
+            "id": 1,
+            "title": "NLHE (No-Limit Hold’em)",
+            "description": "Poker Game",
+            "status": true,
+            "createdAt": "2025-01-10T12:30:15.072Z",
+            "updatedAt": "2025-01-10T12:30:15.070Z",
+            "deletedAt": null
+        },
+        "category": {
+            "id": 1,
+            "title": "Pre Flop",
+            "status": true,
+            "createdAt": "2025-01-10T12:28:19.974Z",
+            "updatedAt": "2025-01-10T12:28:19.974Z",
+            "deletedAt": null
+        },
+        "tags": [
+            {
+                "id": 3,
+                "title": "Professional",
+                "status": true,
+                "createdAt": "2025-01-10T12:31:36.250Z",
+                "updatedAt": "2025-01-10T12:31:36.250Z",
+                "deletedAt": null
+            }
+        ],
+        "isFavourite": false
+    },
+    {
+        "id": 11,
+        "name": "ACP NL River Course Strategy",
+        "videoUpload": "https://res.cloudinary.com/dpjop4dvs/video/upload/v1734970920/ACP_NL_River_Course_Strategy.mp4.mp4",
+        "lectureLength": 1687,
+        "description": "ACP NL River Course Strategy",
+        "order": 1,
+        "createdAt": "2025-01-12T02:28:39.747Z",
+        "updatedAt": "2025-01-12T02:28:39.747Z",
+        "deletedAt": null,
+        "course": {
+            "id": 1,
+            "title": "NLHE (No-Limit Hold’em)",
+            "description": "Poker Game",
+            "status": true,
+            "createdAt": "2025-01-10T12:30:15.072Z",
+            "updatedAt": "2025-01-10T12:30:15.070Z",
+            "deletedAt": null
+        },
+        "category": {
+            "id": 4,
+            "title": "River",
+            "status": true,
+            "createdAt": "2025-01-10T12:28:54.676Z",
+            "updatedAt": "2025-01-10T12:28:54.676Z",
+            "deletedAt": null
+        },
+        "tags": [
+            {
+                "id": 3,
+                "title": "Professional",
+                "status": true,
+                "createdAt": "2025-01-10T12:31:36.250Z",
+                "updatedAt": "2025-01-10T12:31:36.250Z",
+                "deletedAt": null
+            }
+        ],
+        "isFavourite": false
+    },
+    {
+        "id": 12,
+        "name": "ACP Flop Course Stack to Pot Ratio",
+        "videoUpload": "https://res.cloudinary.com/dpjop4dvs/video/upload/v1734970658/ACP_Flop_Course_Stack_to_Pot_Ratio.mp4.mp4",
+        "lectureLength": 1056,
+        "description": "ACP Flop Course Stack to Pot Ratio",
+        "order": 1,
+        "createdAt": "2025-01-12T02:34:40.639Z",
+        "updatedAt": "2025-01-12T02:34:40.639Z",
+        "deletedAt": null,
+        "course": {
+            "id": 1,
+            "title": "NLHE (No-Limit Hold’em)",
+            "description": "Poker Game",
+            "status": true,
+            "createdAt": "2025-01-10T12:30:15.072Z",
+            "updatedAt": "2025-01-10T12:30:15.070Z",
+            "deletedAt": null
+        },
+        "category": {
+            "id": 2,
+            "title": "Flop",
+            "status": true,
+            "createdAt": "2025-01-10T12:28:34.672Z",
+            "updatedAt": "2025-01-10T12:28:34.672Z",
+            "deletedAt": null
+        },
+        "tags": [
+            {
+                "id": 3,
+                "title": "Professional",
+                "status": true,
+                "createdAt": "2025-01-10T12:31:36.250Z",
+                "updatedAt": "2025-01-10T12:31:36.250Z",
+                "deletedAt": null
+            }
+        ],
+        "isFavourite": false
+    },
+    {
+        "id": 13,
+        "name": "ACP Flop Course Sizings",
+        "videoUpload": "https://res.cloudinary.com/dpjop4dvs/video/upload/v1734970154/ACP_Flop_Course_Sizings.mp4.mp4",
+        "lectureLength": 741,
+        "description": "ACP Flop Course Sizings",
+        "order": 2,
+        "createdAt": "2025-01-12T02:36:43.810Z",
+        "updatedAt": "2025-01-12T02:36:43.810Z",
+        "deletedAt": null,
+        "course": {
+            "id": 1,
+            "title": "NLHE (No-Limit Hold’em)",
+            "description": "Poker Game",
+            "status": true,
+            "createdAt": "2025-01-10T12:30:15.072Z",
+            "updatedAt": "2025-01-10T12:30:15.070Z",
+            "deletedAt": null
+        },
+        "category": {
+            "id": 2,
+            "title": "Flop",
+            "status": true,
+            "createdAt": "2025-01-10T12:28:34.672Z",
+            "updatedAt": "2025-01-10T12:28:34.672Z",
+            "deletedAt": null
+        },
+        "tags": [
+            {
+                "id": 3,
+                "title": "Professional",
+                "status": true,
+                "createdAt": "2025-01-10T12:31:36.250Z",
+                "updatedAt": "2025-01-10T12:31:36.250Z",
+                "deletedAt": null
+            }
+        ],
+        "isFavourite": false
+    },
+    {
+        "id": 14,
+        "name": "ACP Flop Course Practical Examples",
+        "videoUpload": "https://res.cloudinary.com/dpjop4dvs/video/upload/v1734970073/ACP_Flop_Course_Practical_Examples.mp4.mp4",
+        "lectureLength": 1064,
+        "description": "ACP Flop Course Practical Examples",
+        "order": 3,
+        "createdAt": "2025-01-12T02:38:10.257Z",
+        "updatedAt": "2025-01-12T02:38:10.257Z",
+        "deletedAt": null,
+        "course": {
+            "id": 1,
+            "title": "NLHE (No-Limit Hold’em)",
+            "description": "Poker Game",
+            "status": true,
+            "createdAt": "2025-01-10T12:30:15.072Z",
+            "updatedAt": "2025-01-10T12:30:15.070Z",
+            "deletedAt": null
+        },
+        "category": {
+            "id": 2,
+            "title": "Flop",
+            "status": true,
+            "createdAt": "2025-01-10T12:28:34.672Z",
+            "updatedAt": "2025-01-10T12:28:34.672Z",
+            "deletedAt": null
+        },
+        "tags": [
+            {
+                "id": 3,
+                "title": "Professional",
+                "status": true,
+                "createdAt": "2025-01-10T12:31:36.250Z",
+                "updatedAt": "2025-01-10T12:31:36.250Z",
+                "deletedAt": null
+            }
+        ],
+        "isFavourite": false
+    },
+    {
+        "id": 15,
+        "name": "ACP Flop Course Player Profiles",
+        "videoUpload": "https://res.cloudinary.com/dpjop4dvs/video/upload/v1734969945/ACP_Flop_Course_Player_Profiles.mp4.mp4",
+        "lectureLength": 794,
+        "description": "ACP Flop Course Player Profiles",
+        "order": 4,
+        "createdAt": "2025-01-12T02:39:24.870Z",
+        "updatedAt": "2025-01-12T02:39:43.045Z",
+        "deletedAt": null,
+        "course": {
+            "id": 1,
+            "title": "NLHE (No-Limit Hold’em)",
+            "description": "Poker Game",
+            "status": true,
+            "createdAt": "2025-01-10T12:30:15.072Z",
+            "updatedAt": "2025-01-10T12:30:15.070Z",
+            "deletedAt": null
+        },
+        "category": {
+            "id": 2,
+            "title": "Flop",
+            "status": true,
+            "createdAt": "2025-01-10T12:28:34.672Z",
+            "updatedAt": "2025-01-10T12:28:34.672Z",
+            "deletedAt": null
+        },
+        "tags": [
+            {
+                "id": 3,
+                "title": "Professional",
+                "status": true,
+                "createdAt": "2025-01-10T12:31:36.250Z",
+                "updatedAt": "2025-01-10T12:31:36.250Z",
+                "deletedAt": null
+            }
+        ],
+        "isFavourite": false
+    },
+    {
+        "id": 16,
+        "name": "ACP Flop Course Nut and Range Advantage",
+        "videoUpload": "https://res.cloudinary.com/dpjop4dvs/video/upload/v1734969843/ACP_Flop_Course_Nut_and_Range_Advantage.mp4.mp4",
+        "lectureLength": 485,
+        "description": "ACP Flop Course Nut and Range Advantage",
+        "order": 5,
+        "createdAt": "2025-01-12T02:41:04.236Z",
+        "updatedAt": "2025-01-12T02:41:04.236Z",
+        "deletedAt": null,
+        "course": {
+            "id": 1,
+            "title": "NLHE (No-Limit Hold’em)",
+            "description": "Poker Game",
+            "status": true,
+            "createdAt": "2025-01-10T12:30:15.072Z",
+            "updatedAt": "2025-01-10T12:30:15.070Z",
+            "deletedAt": null
+        },
+        "category": {
+            "id": 2,
+            "title": "Flop",
+            "status": true,
+            "createdAt": "2025-01-10T12:28:34.672Z",
+            "updatedAt": "2025-01-10T12:28:34.672Z",
+            "deletedAt": null
+        },
+        "tags": [
+            {
+                "id": 3,
+                "title": "Professional",
+                "status": true,
+                "createdAt": "2025-01-10T12:31:36.250Z",
+                "updatedAt": "2025-01-10T12:31:36.250Z",
+                "deletedAt": null
+            }
+        ],
+        "isFavourite": false
+    },
+    {
+        "id": 17,
+        "name": "ACP Flop Course Introduction",
+        "videoUpload": "https://res.cloudinary.com/dpjop4dvs/video/upload/v1734969770/ACP_Flop_Course_Introduction.mp4.mp4",
+        "lectureLength": 262,
+        "description": "ACP Flop Course Introduction",
+        "order": 6,
+        "createdAt": "2025-01-12T02:42:34.326Z",
+        "updatedAt": "2025-01-12T02:42:34.326Z",
+        "deletedAt": null,
+        "course": {
+            "id": 1,
+            "title": "NLHE (No-Limit Hold’em)",
+            "description": "Poker Game",
+            "status": true,
+            "createdAt": "2025-01-10T12:30:15.072Z",
+            "updatedAt": "2025-01-10T12:30:15.070Z",
+            "deletedAt": null
+        },
+        "category": {
+            "id": 2,
+            "title": "Flop",
+            "status": true,
+            "createdAt": "2025-01-10T12:28:34.672Z",
+            "updatedAt": "2025-01-10T12:28:34.672Z",
+            "deletedAt": null
+        },
+        "tags": [
+            {
+                "id": 3,
+                "title": "Professional",
+                "status": true,
+                "createdAt": "2025-01-10T12:31:36.250Z",
+                "updatedAt": "2025-01-10T12:31:36.250Z",
+                "deletedAt": null
+            }
+        ],
+        "isFavourite": false
+    },
+    {
+        "id": 18,
+        "name": "ACP Flop Course Board Textures",
+        "videoUpload": "https://res.cloudinary.com/dpjop4dvs/video/upload/v1734969704/ACP_Flop_Course_Board_Textures.mp4.mp4",
+        "lectureLength": 603,
+        "description": "ACP Flop Course Board Textures",
+        "order": 7,
+        "createdAt": "2025-01-12T02:43:37.703Z",
+        "updatedAt": "2025-01-12T02:43:37.703Z",
+        "deletedAt": null,
+        "course": {
+            "id": 1,
+            "title": "NLHE (No-Limit Hold’em)",
+            "description": "Poker Game",
+            "status": true,
+            "createdAt": "2025-01-10T12:30:15.072Z",
+            "updatedAt": "2025-01-10T12:30:15.070Z",
+            "deletedAt": null
+        },
+        "category": {
+            "id": 2,
+            "title": "Flop",
+            "status": true,
+            "createdAt": "2025-01-10T12:28:34.672Z",
+            "updatedAt": "2025-01-10T12:28:34.672Z",
+            "deletedAt": null
+        },
+        "tags": [
+            {
+                "id": 3,
+                "title": "Professional",
+                "status": true,
+                "createdAt": "2025-01-10T12:31:36.250Z",
+                "updatedAt": "2025-01-10T12:31:36.250Z",
+                "deletedAt": null
+            }
+        ],
+        "isFavourite": false
+    },
+    {
+        "id": 19,
+        "name": "NL Turn Course When to Overbet",
+        "videoUpload": "https://res.cloudinary.com/dpjop4dvs/video/upload/v1734969355/NL_Turn_Course_When_to_Overbet.mp4.mp4",
+        "lectureLength": 971,
+        "description": "NL Turn Course When to Overbet",
+        "order": 1,
+        "createdAt": "2025-01-12T02:47:01.368Z",
+        "updatedAt": "2025-01-12T02:47:01.367Z",
+        "deletedAt": null,
+        "course": {
+            "id": 1,
+            "title": "NLHE (No-Limit Hold’em)",
+            "description": "Poker Game",
+            "status": true,
+            "createdAt": "2025-01-10T12:30:15.072Z",
+            "updatedAt": "2025-01-10T12:30:15.070Z",
+            "deletedAt": null
+        },
+        "category": {
+            "id": 3,
+            "title": "Turn",
+            "status": true,
+            "createdAt": "2025-01-10T12:28:46.122Z",
+            "updatedAt": "2025-01-10T12:28:46.122Z",
+            "deletedAt": null
+        },
+        "tags": [
+            {
+                "id": 3,
+                "title": "Professional",
+                "status": true,
+                "createdAt": "2025-01-10T12:31:36.250Z",
+                "updatedAt": "2025-01-10T12:31:36.250Z",
+                "deletedAt": null
+            }
+        ],
+        "isFavourite": false
+    },
+    {
+        "id": 20,
+        "name": "NL Turn Course When To Check",
+        "videoUpload": "https://res.cloudinary.com/dpjop4dvs/video/upload/v1734969258/NL_Turn_Course_When_To_Check.mp4.mp4",
+        "lectureLength": 591,
+        "description": "NL Turn Course When To Check",
+        "order": 2,
+        "createdAt": "2025-01-12T02:48:20.703Z",
+        "updatedAt": "2025-01-12T02:48:20.703Z",
+        "deletedAt": null,
+        "course": {
+            "id": 1,
+            "title": "NLHE (No-Limit Hold’em)",
+            "description": "Poker Game",
+            "status": true,
+            "createdAt": "2025-01-10T12:30:15.072Z",
+            "updatedAt": "2025-01-10T12:30:15.070Z",
+            "deletedAt": null
+        },
+        "category": {
+            "id": 3,
+            "title": "Turn",
+            "status": true,
+            "createdAt": "2025-01-10T12:28:46.122Z",
+            "updatedAt": "2025-01-10T12:28:46.122Z",
+            "deletedAt": null
+        },
+        "tags": [
+            {
+                "id": 3,
+                "title": "Professional",
+                "status": true,
+                "createdAt": "2025-01-10T12:31:36.250Z",
+                "updatedAt": "2025-01-10T12:31:36.250Z",
+                "deletedAt": null
+            }
+        ],
+        "isFavourite": false
+    },
+    {
+        "id": 21,
+        "name": "NL Turn Course When To Bet Small",
+        "videoUpload": "https://res.cloudinary.com/dpjop4dvs/video/upload/v1734969193/NL_Turn_Course_When_To_Bet_Small.mp4.mp4",
+        "lectureLength": 1080,
+        "description": "NL Turn Course When To Bet Small",
+        "order": 3,
+        "createdAt": "2025-01-12T02:49:37.315Z",
+        "updatedAt": "2025-01-12T02:49:37.315Z",
+        "deletedAt": null,
+        "course": {
+            "id": 1,
+            "title": "NLHE (No-Limit Hold’em)",
+            "description": "Poker Game",
+            "status": true,
+            "createdAt": "2025-01-10T12:30:15.072Z",
+            "updatedAt": "2025-01-10T12:30:15.070Z",
+            "deletedAt": null
+        },
+        "category": {
+            "id": 3,
+            "title": "Turn",
+            "status": true,
+            "createdAt": "2025-01-10T12:28:46.122Z",
+            "updatedAt": "2025-01-10T12:28:46.122Z",
+            "deletedAt": null
+        },
+        "tags": [
+            {
+                "id": 3,
+                "title": "Professional",
+                "status": true,
+                "createdAt": "2025-01-10T12:31:36.250Z",
+                "updatedAt": "2025-01-10T12:31:36.250Z",
+                "deletedAt": null
+            }
+        ],
+        "isFavourite": false
+    },
+    {
+        "id": 22,
+        "name": "NL Turn Course Turn Strategy",
+        "videoUpload": "https://res.cloudinary.com/dpjop4dvs/video/upload/v1734969094/NL_Turn_Course_Turn_Strategy.mp4.mp4",
+        "lectureLength": 661,
+        "description": "NL Turn Course Turn Strategy",
+        "order": 4,
+        "createdAt": "2025-01-12T02:50:54.238Z",
+        "updatedAt": "2025-01-12T02:50:54.238Z",
+        "deletedAt": null,
+        "course": {
+            "id": 1,
+            "title": "NLHE (No-Limit Hold’em)",
+            "description": "Poker Game",
+            "status": true,
+            "createdAt": "2025-01-10T12:30:15.072Z",
+            "updatedAt": "2025-01-10T12:30:15.070Z",
+            "deletedAt": null
+        },
+        "category": {
+            "id": 3,
+            "title": "Turn",
+            "status": true,
+            "createdAt": "2025-01-10T12:28:46.122Z",
+            "updatedAt": "2025-01-10T12:28:46.122Z",
+            "deletedAt": null
+        },
+        "tags": [
+            {
+                "id": 3,
+                "title": "Professional",
+                "status": true,
+                "createdAt": "2025-01-10T12:31:36.250Z",
+                "updatedAt": "2025-01-10T12:31:36.250Z",
+                "deletedAt": null
+            }
+        ],
+        "isFavourite": false
+    },
+    {
+        "id": 23,
+        "name": "ACP NL Turn Course Small Sizing",
+        "videoUpload": "https://res.cloudinary.com/dpjop4dvs/video/upload/v1734969000/ACP_NL_Turn_Course_Small_Sizing.mp4.mp4",
+        "lectureLength": 1309,
+        "description": "ACP NL Turn Course Small Sizing",
+        "order": 5,
+        "createdAt": "2025-01-12T02:52:03.307Z",
+        "updatedAt": "2025-01-12T02:52:03.307Z",
+        "deletedAt": null,
+        "course": {
+            "id": 1,
+            "title": "NLHE (No-Limit Hold’em)",
+            "description": "Poker Game",
+            "status": true,
+            "createdAt": "2025-01-10T12:30:15.072Z",
+            "updatedAt": "2025-01-10T12:30:15.070Z",
+            "deletedAt": null
+        },
+        "category": {
+            "id": 3,
+            "title": "Turn",
+            "status": true,
+            "createdAt": "2025-01-10T12:28:46.122Z",
+            "updatedAt": "2025-01-10T12:28:46.122Z",
+            "deletedAt": null
+        },
+        "tags": [
+            {
+                "id": 3,
+                "title": "Professional",
+                "status": true,
+                "createdAt": "2025-01-10T12:31:36.250Z",
+                "updatedAt": "2025-01-10T12:31:36.250Z",
+                "deletedAt": null
+            }
+        ],
+        "isFavourite": false
+    },
+    {
+        "id": 24,
+        "name": "ACP NL Turn Course Large Sizings",
+        "videoUpload": "https://res.cloudinary.com/dpjop4dvs/video/upload/v1734968880/ACP_NL_Turn_Course_Large_Sizings.mp4.mp4",
+        "lectureLength": 798,
+        "description": "ACP NL Turn Course Large Sizings",
+        "order": 6,
+        "createdAt": "2025-01-12T02:53:32.307Z",
+        "updatedAt": "2025-01-12T02:53:32.307Z",
+        "deletedAt": null,
+        "course": {
+            "id": 1,
+            "title": "NLHE (No-Limit Hold’em)",
+            "description": "Poker Game",
+            "status": true,
+            "createdAt": "2025-01-10T12:30:15.072Z",
+            "updatedAt": "2025-01-10T12:30:15.070Z",
+            "deletedAt": null
+        },
+        "category": {
+            "id": 3,
+            "title": "Turn",
+            "status": true,
+            "createdAt": "2025-01-10T12:28:46.122Z",
+            "updatedAt": "2025-01-10T12:28:46.122Z",
+            "deletedAt": null
+        },
+        "tags": [
+            {
+                "id": 3,
+                "title": "Professional",
+                "status": true,
+                "createdAt": "2025-01-10T12:31:36.250Z",
+                "updatedAt": "2025-01-10T12:31:36.250Z",
+                "deletedAt": null
+            }
+        ],
+        "isFavourite": false
+    },
+    {
+        "id": 25,
+        "name": "ACP NL Turn Course Checking",
+        "videoUpload": "https://res.cloudinary.com/dpjop4dvs/video/upload/v1734967899/ACP_NL_Turn_Course_Checking.mp4.mp4",
+        "lectureLength": 949,
+        "description": "ACP NL Turn Course Checking",
+        "order": 7,
+        "createdAt": "2025-01-12T02:54:32.860Z",
+        "updatedAt": "2025-01-12T02:54:32.859Z",
+        "deletedAt": null,
+        "course": {
+            "id": 1,
+            "title": "NLHE (No-Limit Hold’em)",
+            "description": "Poker Game",
+            "status": true,
+            "createdAt": "2025-01-10T12:30:15.072Z",
+            "updatedAt": "2025-01-10T12:30:15.070Z",
+            "deletedAt": null
+        },
+        "category": {
+            "id": 3,
+            "title": "Turn",
+            "status": true,
+            "createdAt": "2025-01-10T12:28:46.122Z",
+            "updatedAt": "2025-01-10T12:28:46.122Z",
+            "deletedAt": null
+        },
+        "tags": [
+            {
+                "id": 3,
+                "title": "Professional",
+                "status": true,
+                "createdAt": "2025-01-10T12:31:36.250Z",
+                "updatedAt": "2025-01-10T12:31:36.250Z",
+                "deletedAt": null
+            }
+        ],
+        "isFavourite": false
+    }
+]

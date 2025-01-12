@@ -12,11 +12,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const AddLecture = () => {
     // States for form data, categories, tags, courses, and UI feedback
-    const [formData, setFormData] = useState({ tagIds: [] });
+    const [formData, setFormData] = useState({ 
+        tagIds: [],
+        });
     const [categories, setCategories] = useState([]);
     const [tags, setTags] = useState([]);
     const [courses, setCourses] = useState([]);
     const [showModal, setShowModal] = useState(false);
+    const LogoutData = localStorage.getItem('login');
     // const [progress, setProgress] = useState(0);
     // const [status, setStatus] = useState('');
     // const [cloudinaryResponse, setCloudinaryResponse] = useState(null);
@@ -153,6 +156,10 @@ export const AddLecture = () => {
                 const response = await fetch(`${BASE_URL}/upload`, {
                     method: 'POST',
                     body: formData,
+                    headers: {
+                        Accept: 'application/json',
+                        Authorization: `Bearer ${LogoutData}`,
+                    },
                 });
 
                 if (!response.ok) {
@@ -234,6 +241,20 @@ export const AddLecture = () => {
                                         inputClass="mainInput"
                                         name="name"
                                         value={formData.name || ""}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                                <div className="col-md-6 mb-4">
+                                    <CustomInput
+                                        label="Add order"
+                                        required
+                                        id="order"
+                                        type="number"
+                                        placeholder="Enter order"
+                                        labelClass="mainLabel"
+                                        inputClass="mainInput"
+                                        name="order"
+                                        value={formData.order || ""}
                                         onChange={handleChange}
                                     />
                                 </div>

@@ -43,6 +43,7 @@ export const EditLecture = () => {
                 videoUpload: sepicficLecture?.videoUpload,
                 courseId: sepicficLecture?.course?.id,
                 categoryId: sepicficLecture?.category?.id,
+                order: sepicficLecture?.order,
                 tagIds: sepicficLecture?.tags[0]?.id,
                 name: sepicficLecture?.name,
                 description: sepicficLecture?.description,
@@ -248,6 +249,20 @@ export const EditLecture = () => {
                                     />
                                 </div>
                                 <div className="col-md-6 mb-4">
+                                    <CustomInput
+                                        label="Edit order"
+                                        required
+                                        id="order"
+                                        type="number"
+                                        placeholder="Enter order"
+                                        labelClass="mainLabel"
+                                        inputClass="mainInput"
+                                        name="order"
+                                        value={formData?.order || ""}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                                <div className="col-md-6 mb-4">
                                     <SelectBox
                                         selectClass="mainInput"
                                         name="courseId"
@@ -262,7 +277,7 @@ export const EditLecture = () => {
                                 <div className="col-md-6 mb-4">
                                     <SelectBox
                                         selectClass="mainInput"
-                                        name="categoryId"
+                                        name="order"
                                         label="Select Category"
                                         placeholder="Select Category"
                                         required
