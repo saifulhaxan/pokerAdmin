@@ -222,7 +222,7 @@ export const AddLecture = () => {
                     <div className="col-12 mb-2">
                         <h2 className="mainTitle">
                             <BackButton />
-                            Add New Lecture
+                            Add New Module
                         </h2>
                     </div>
                 </div>
@@ -232,11 +232,11 @@ export const AddLecture = () => {
                             <div className="row">
                                 <div className="col-md-6 mb-4">
                                     <CustomInput
-                                        label="Add Lecture Name"
+                                        label="Add Module Name"
                                         required
                                         id="name"
                                         type="text"
-                                        placeholder="Enter Lecture Name"
+                                        placeholder="Enter Module Name"
                                         labelClass="mainLabel"
                                         inputClass="mainInput"
                                         name="name"
@@ -375,7 +375,7 @@ export const AddLecture = () => {
                 </div>
 
             </div >
-            <CustomModal show={showModal} close={() => { setShowModal(false) }} success heading='Lecture added successfully.' />
+            <CustomModal show={showModal} close={() => { setShowModal(false) }} success heading='Module added successfully.' />
         </DashboardLayout >
     );
 }

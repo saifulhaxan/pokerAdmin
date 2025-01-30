@@ -30,6 +30,17 @@
     transition: 0.3s linear;
 }
 
+span.redDot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50px;
+    background-color: red;
+    display: block;
+    position: absolute;
+    right: 72px;
+    top: 20px;
+}
+
 
 .sidebar-li {
     margin: 20px 0;

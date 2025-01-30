@@ -21,6 +21,8 @@ import { male1, male2, userImage, female1, male3 } from "../../Assets/images";
 import { useApi, useGet } from "../../Api";
 
 import "./style.css";
+import { Link } from "react-router-dom";
+import FormatDateTime from "../../Components/DateFormate";
 
 export const Dashboard = () => {
   const [data, setData] = useState('');
@@ -39,7 +41,7 @@ export const Dashboard = () => {
 
   useEffect(() => {
     if (DashboardStatsData) {
-      setData(DashboardStatsData?.recentRegistrations)
+      setData(DashboardStatsData)
     }
 
   }, [DashboardStatsData])
@@ -55,12 +57,12 @@ export const Dashboard = () => {
             <div className="col-12">
               <div className="dashCard">
                 <div className="row">
-                  <div className="col-xl-4 col-md-6 stats">
+                  <div className="col-xl-3 col-md-6 stats">
                     <div className="statsCard">
                       <div className="statsContent">
                         <div className="statsData">
                           {/* {leadLoading ? 'Loading...' : <h3 className="statsNumber">{`$ ${data?.totalSum}`}</h3>} */}
-                          <h3 className="statsNumber">125</h3>
+                          <h3 className="statsNumber">{data?.users}</h3>
                           <p className="statsText">Total Users</p>
                         </div>
                       </div>
@@ -77,12 +79,12 @@ export const Dashboard = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="col-xl-4 col-md-6 stats">
+                  <div className="col-xl-3 col-md-6 stats">
                     <div className="statsCard">
                       <div className="statsContent">
                         <div className="statsData">
                           {/* {receivedLoading ? 'Loading... ' : <h3 className="statsNumber">{`$ ${recived?.totalSumReceivedAmount}`}</h3>} */}
-                          <h3 className="statsNumber">55</h3>
+                          <h3 className="statsNumber">{data?.lectureTrendObject?.totalLectures}</h3>
                           <p className="statsText">Total Lectures</p>
                         </div>
                       </div>
@@ -99,15 +101,39 @@ export const Dashboard = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="col-xl-4 col-md-6 stats">
+                  <div className="col-xl-3 col-md-6 stats">
                     <div className="statsCard">
                       <div className="statsContent">
                         <div className="statsData">
                           {/* {AmountLoading ? 'Loading...' : 
                           <h3 className="statsNumber">{`$ ${amount?.sumAmountMonthlyReceived}`}</h3>
                           } */}
-                          <h3 className="statsNumber">45</h3>
-                          <p className="statsText">Total Subscription</p>
+                          <h3 className="statsNumber">{data?.subscriptions?.length}</h3>
+                          <p className="statsText">Active Subscription</p>
+                        </div>
+                      </div>
+                      <div className="statsChange">
+                        <p>
+                          <FontAwesomeIcon
+                            icon={faArrowCircleDown}
+                            className="me-2 redColor"
+                          />
+
+                          100 %
+                        </p>
+                        <p>Since last week</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-xl-3 col-md-6 stats">
+                    <div className="statsCard">
+                      <div className="statsContent">
+                        <div className="statsData">
+                          {/* {AmountLoading ? 'Loading...' : 
+                          <h3 className="statsNumber">{`$ ${amount?.sumAmountMonthlyReceived}`}</h3>
+                          } */}
+                          <h3 className="statsNumber">{data?.activePromos?.length}</h3>
+                          <p className="statsText">Active Promotions</p>
                         </div>
                       </div>
                       <div className="statsChange">
@@ -180,20 +206,22 @@ export const Dashboard = () => {
                     </div>
                     <div className="dashData">
                       {
-                        data && data?.slice(0, 4)?.map((item, index) => (
+                        data && data?.recentRegistrations?.slice(0, 5)?.map((item, index) => (
 
-                          <div className="userBox" key={index}>
-                            <div className="userImage">
-                              <img src={male1} alt="Jhon" />
-                            </div>
-                            <div className="userName">
-                              <div className="info">
-                                <h5 className="text-capitalize">{item?.name}</h5>
-                                <small>{item?.email}</small>
+                          <Link to={`/user-management/user-details/${item?.id}`} className="text-decoration-none text-dark">
+                            <div className="userBox" key={index}>
+                              <div className="userImage">
+                                <img src={male1} alt="Jhon" />
                               </div>
-                              <p>{item?.createdAt}</p>
+                              <div className="userName">
+                                <div className="info">
+                                  <h5 className="text-capitalize">{item?.name}</h5>
+                                  <small>{item?.email}</small>
+                                </div>
+                                <p><FormatDateTime isoDateString={item?.createdAt}></FormatDateTime></p>
+                              </div>
                             </div>
-                          </div>
+                          </Link>
                         ))
                       }
                     </div>

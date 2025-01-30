@@ -28,6 +28,7 @@ import CustomButton from "../../Components/CustomButton";
 
 import "./style.css";
 import { useGet } from "../../Api";
+import FormatDateTime from "../../Components/DateFormate";
 
 export const NotificationManagement = () => {
   const [data, setData] = useState([]);
@@ -150,7 +151,7 @@ export const NotificationManagement = () => {
                               {item?.title}
                             </td>
                             <td>{item?.isForAllUsers == true ? 'Yes' :  'No'}</td>
-                            <td>{item?.createdAt}</td>
+                            <td><FormatDateTime isoDateString={item?.createdAt}></FormatDateTime></td>
                             <td>
                               <Dropdown className="tableDropdown">
                                 <Dropdown.Toggle variant="transparent" className="notButton classicToggle">

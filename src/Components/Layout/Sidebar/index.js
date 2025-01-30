@@ -32,8 +32,22 @@ import {
 
 import "./style.css";
 import { faUsers } from "@fortawesome/free-solid-svg-icons/faUsers";
+import { useEffect, useState } from "react";
+import { useGet } from "../../../Api";
 
 export const Sidebar = (props) => {
+  const [isRead, setIsRead] = useState(false);
+  const { ApiData: CustomerSupportData, loading: CustomerSupportLoading, error: CustomerSupportError, get: GetCustomerSupport } = useGet(`customer-support`);
+
+  useEffect(()=>{
+    GetCustomerSupport();
+  },[])
+
+  useEffect(()=>{
+    if(CustomerSupportData) {
+      setIsRead(CustomerSupportData?.some((msg) => !msg.seen));
+    }
+  },[CustomerSupportData])
 
   const location = useLocation()
   return (
@@ -49,6 +63,15 @@ export const Sidebar = (props) => {
         </li>
 
         <li className="sidebar-li">
+          <Link className={`sideLink ${location.pathname.includes('notification-management') ? 'active' : ''}`} to="/notification-management">
+            <span className="sideIcon">
+              <FontAwesomeIcon icon={faTableList} />
+            </span>
+            <span className="sideLinkText">Notification Management</span>
+          </Link>
+        </li>
+
+        <li className="sidebar-li">
           <Link className={`sideLink ${location.pathname.includes('user-management') ? 'active' : ''}`} to="/user-management">
             <span className="sideIcon">
               <FontAwesomeIcon icon={faUsers} />
@@ -58,19 +81,11 @@ export const Sidebar = (props) => {
         </li>
 
         <li className="sidebar-li">
-          <Link className={`sideLink ${location.pathname.includes('customer-support') ? 'active' : ''}`} to="/customer-support">
-            <span className="sideIcon">
-              <FontAwesomeIcon icon={faHeadphonesAlt} />
-            </span>
-            <span className="sideLinkText">Customer Support</span>
-          </Link>
-        </li>
-        <li className="sidebar-li">
           <Link className={`sideLink ${location.pathname.includes('lecture-management') ? 'active' : ''}`} to="/lecture-management">
             <span className="sideIcon">
               <FontAwesomeIcon icon={faVideo} />
             </span>
-            <span className="sideLinkText">Lecture/Video Management</span>
+            <span className="sideLinkText">Module Management</span>
           </Link>
         </li>
         <li className="sidebar-li">
@@ -105,14 +120,21 @@ export const Sidebar = (props) => {
             <span className="sideLinkText">Promotion Management</span>
           </Link>
         </li>
+
         <li className="sidebar-li">
-          <Link className={`sideLink ${location.pathname.includes('notification-management') ? 'active' : ''}`} to="/notification-management">
+          <Link className={`sideLink ${location.pathname.includes('customer-support') ? 'active' : ''}`} to="/customer-support">
             <span className="sideIcon">
-              <FontAwesomeIcon icon={faTableList} />
+              <FontAwesomeIcon icon={faHeadphonesAlt} />
             </span>
-            <span className="sideLinkText">Notification Management</span>
+            <span className="sideLinkText">Customer Support</span>
+            {
+              isRead && (
+                <span className="redDot"></span>
+              )
+            }
           </Link>
         </li>
+
       </ul>
     </div>
   );

@@ -28,6 +28,7 @@ import CustomButton from "../../Components/CustomButton";
 
 import "./style.css";
 import { useDelete, useGet } from "../../Api";
+import FormatDateTime from "../../Components/DateFormate";
 
 export const CourseManagement = () => {
   const [data, setData] = useState([]);
@@ -167,7 +168,7 @@ useEffect(() => {
                             </td>
                             <td>{item?.lecturesCount}</td>
                             <td className={item?.status == true ? 'greenColor' : "redColor"}>{item?.status == true ? 'Active' : "Inactive"}</td>
-                            <td>{item?.createdAt}</td>
+                            <td><FormatDateTime isoDateString={item?.createdAt}></FormatDateTime></td>
                             <td>
                               <Dropdown className="tableDropdown">
                                 <Dropdown.Toggle variant="transparent" className="notButton classicToggle">

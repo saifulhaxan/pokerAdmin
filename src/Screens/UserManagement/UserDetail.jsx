@@ -17,6 +17,8 @@ import BackButton from "../../Components/BackButton";
 import CustomModal from "../../Components/CustomModal";
 import CustomButton from "../../Components/CustomButton";
 import { useGet, usePatch } from "../../Api";
+import { male1 } from "../../Assets/images";
+import FormatDateTime from "../../Components/DateFormate";
 
 export const UserDetails = () => {
 
@@ -27,9 +29,18 @@ export const UserDetails = () => {
     const [showModal2, setShowModal2] = useState(false);
     const [showModal3, setShowModal3] = useState(false);
     const [showModal4, setShowModal4] = useState(false);
+    const [historyData, setHistoryData] = useState();
     const [message, setMessage] = useState(false)
     const { ApiData: UseeListingData, loading: UseeListingLoading, error: UseeListingError, get: GetUseeListing } = useGet(`user/getOne/${id}`);
     const { ApiData: StatusUpdateData, loading: StatusUpdateLoading, error: StatusUpdateError, patch: GetStatusUpdate } = usePatch(`user/${id}`);
+    const { ApiData: SubscriptionHistoryData, loading: SubscriptionHistoryLoading, error: SubscriptionHistoryError, get: GetSubscriptionHistory } = useGet(`subscription/history/${id}`);
+
+    useEffect(() => {
+        if (SubscriptionHistoryData) {
+            setHistoryData(SubscriptionHistoryData)
+        }
+
+    }, [SubscriptionHistoryData])
 
     const inActive = () => {
         setShowModal(false)
@@ -39,9 +50,9 @@ export const UserDetails = () => {
         })
         setShowModal2(true)
 
-        setTimeout(()=>{
+        setTimeout(() => {
             setShowModal2(false)
-        },1000)
+        }, 1000)
         console.log('status', status)
     }
     const Active = () => {
@@ -51,27 +62,28 @@ export const UserDetails = () => {
             status: true
         })
         setShowModal4(true)
-        setTimeout(()=>{
+        setTimeout(() => {
             setShowModal4(false)
-        },1000)
+        }, 1000)
         console.log('status', status)
     }
 
-    useEffect(()=>{
-        if(status) {
+    useEffect(() => {
+        if (status) {
             GetStatusUpdate(status);
         }
-    },[status])
+    }, [status])
 
 
-    useEffect(()=>{
-        if(StatusUpdateData) {
+    useEffect(() => {
+        if (StatusUpdateData) {
             GetUseeListing()
         }
-    },[StatusUpdateData])
+    }, [StatusUpdateData])
 
     useEffect(() => {
         GetUseeListing()
+        GetSubscriptionHistory()
     }, [])
 
 
@@ -109,12 +121,12 @@ export const UserDetails = () => {
 
 
                             <div className="row">
-                                {/* <div className="col-md-6 mb-4">
+                                <div className="col-md-12 mb-4">
 
-                                    <div className="productImage">
-                                        <img src={base_url + data?.image} />
+                                    <div className="productImages">
+                                        <img src={data?.profilePicture ? data?.profilePicture : male1} className="detailPro" />
                                     </div>
-                                </div> */}
+                                </div>
                                 <div className="col-xl-4 col-md-4 mb-3">
                                     <h4 className="secondaryLabel">User Name</h4>
                                     <p className="secondaryText">{data?.name}</p>
@@ -135,16 +147,49 @@ export const UserDetails = () => {
                                     <h4 className="secondaryLabel">User Subscription Status</h4>
                                     <p className="secondaryText">{data?.subscribedUser === true ? 'Active' : 'Inactive'}</p>
                                 </div>
+
+                                <div className="col-md-12">
+                                    <h3 className="mainTitle my-4">Subscription History</h3>
+                                    {
+                                        historyData?.length > 0 ? (
+                                            <table className="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Start Date</th>
+                                                        <th>End Date</th>
+                                                        <th>Plan</th>
+                                                        <th>Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {
+                                                        historyData && historyData?.map((item, index) => (
+                                                            <tr key={index}>
+                                                                <td><FormatDateTime isoDateString={item?.createdAt}></FormatDateTime></td>
+                                                                <td><FormatDateTime isoDateString={item?.endDate}></FormatDateTime></td>
+                                                                <td className="text-capitalize">{item?.plan}</td>
+                                                                <td className={item?.status == 'PAID' ? 'text-success' : 'text-danger'}>{item?.status}</td>
+                                                            </tr>
+                                                        ))
+                                                    }
+
+                                                </tbody>
+                                            </table>
+                                        ) : (
+                                            <p>No Subscription History</p>
+                                        )
+                                    }
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <CustomModal show={showModal} close={() => { setShowModal(false) }} action={inActive} heading='Are you sure you want to mark this user as inactive?' />
-                <CustomModal show={showModal2}  success heading='Marked as Inactive' />
+                <CustomModal show={showModal2} success heading='Marked as Inactive' />
 
                 <CustomModal show={showModal3} close={() => { setShowModal3(false) }} action={Active} heading='Are you sure you want to mark this user as Active?' />
-                <CustomModal show={showModal4}  success heading='Marked as Active' />
+                <CustomModal show={showModal4} success heading='Marked as Active' />
             </DashboardLayout>
         </>
     );

@@ -28,6 +28,7 @@ import CustomButton from "../../Components/CustomButton";
 
 import "./style.css";
 import { useDelete, useGet } from "../../Api";
+import FormatDateTime from "../../Components/DateFormate";
 
 export const LectureManagement = () => {
   const [data, setData] = useState([]);
@@ -98,7 +99,7 @@ export const LectureManagement = () => {
 
 
   useEffect(() => {
-    document.title = 'Poker | Lecture Management';
+    document.title = 'Poker | Module Management';
     GetUseeListing()
 
   }, []);
@@ -117,7 +118,7 @@ export const LectureManagement = () => {
     },
     {
       key: "username",
-      title: "Lecture Name",
+      title: "Module Name",
     },
     {
       key: "count",
@@ -155,11 +156,11 @@ export const LectureManagement = () => {
               <div className="dashCard">
                 <div className="row mb-3 justify-content-between">
                   <div className="col-md-6 mb-2">
-                    <h2 className="mainTitle">Lecture Management</h2>
+                    <h2 className="mainTitle">Module Management</h2>
                   </div>
                   <div className="col-md-6 mb-2">
                     <div className="addUser">
-                      <CustomButton text="Add New Lecture" variant='primaryButton' onClick={hanldeRoute} />
+                      <CustomButton text="Add New Module" variant='primaryButton' onClick={hanldeRoute} />
                       <CustomInput type="text" placeholder="Search Here..." value={inputValue} inputClass="mainInput" onChange={handleChange} />
                     </div>
                   </div>
@@ -180,7 +181,7 @@ export const LectureManagement = () => {
                             <td>{item?.category?.title}</td>
                             <td>{item?.tags[0]?.title}</td>
                             <td>{item?.course?.title}</td>
-                            <td>{item?.createdAt}</td>
+                            <td><FormatDateTime isoDateString={item?.createdAt}></FormatDateTime></td>
                             <td className={item?.course?.status == true ? 'greenColor' : "redColor"}>{item?.course?.status == true ? 'Active' : "Inactive"}</td>
                             <td>
                               <Dropdown className="tableDropdown">

@@ -28,6 +28,7 @@ import CustomButton from "../../Components/CustomButton";
 
 import "./style.css";
 import { useGet } from "../../Api";
+import FormatDateTime from "../../Components/DateFormate";
 
 export const CustomerSupport = () => {
   const [data, setData] = useState([]);
@@ -108,6 +109,11 @@ export const CustomerSupport = () => {
       title: "Email",
     },
     {
+      key: "read",
+      title: "Mark as Read",
+    },
+  
+    {
       key: "created_at",
       title: "Created On",
     },
@@ -150,7 +156,8 @@ export const CustomerSupport = () => {
                               {item?.name}
                             </td>
                             <td>{item?.email}</td>
-                            <td>{item?.createdAt}</td>
+                            <td className={item?.seen === true ? 'text-success' : 'text-danger'}>{item?.seen === true ? 'Read' : 'Unread'}</td>
+                            <td><FormatDateTime isoDateString={item?.createdAt}></FormatDateTime></td>
                             <td>
                               <Dropdown className="tableDropdown">
                                 <Dropdown.Toggle variant="transparent" className="notButton classicToggle">

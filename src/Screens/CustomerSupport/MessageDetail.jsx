@@ -28,6 +28,7 @@ export const MessageDetail = () => {
     const [showModal4, setShowModal4] = useState(false);
     const [message, setMessage] = useState(false)
     const { ApiData: UseeListingData, loading: UseeListingLoading, error: UseeListingError, get: GetUseeListing } = useGet(`customer-support/${id}`);
+    const { ApiData: SeenMarkedData, loading: SeenMarkedLoading, error: SeenMarkedError, get: GetSeenMarked } = useGet(`customer-support/unseen-count`);
 
     const inActive = () => {
         setShowModal(false)
@@ -40,6 +41,7 @@ export const MessageDetail = () => {
 
     useEffect(() => {
         GetUseeListing()
+        GetSeenMarked()
     }, [])
 
 

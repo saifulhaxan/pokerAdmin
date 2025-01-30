@@ -28,6 +28,8 @@ import CustomButton from "../../Components/CustomButton";
 
 import "./style.css";
 import { useGet } from "../../Api";
+import { male1 } from "../../Assets/images";
+import FormatDateTime from "../../Components/DateFormate";
 
 export const UserManagement = () => {
   const base_url = 'https://custom2.mystagingserver.site/food-stadium/public/'
@@ -86,11 +88,11 @@ export const UserManagement = () => {
   }, []);
 
 
-  useEffect(()=>{
-    if(UseeListingData) {
+  useEffect(() => {
+    if (UseeListingData) {
       setData(UseeListingData)
     }
-  },[UseeListingData])
+  }, [UseeListingData])
 
   const maleHeaders = [
     {
@@ -99,7 +101,7 @@ export const UserManagement = () => {
     },
     {
       key: "image",
-      title: "Thumbnail",
+      title: "Profile Picture",
     },
     {
       key: "username",
@@ -161,8 +163,10 @@ export const UserManagement = () => {
                           <tr key={index}>
                             <td>{index + 1}</td>
                             <td>
-                              {/* <img src={base_url + item?.product_images[0]?.image} className="avatarIcon" /> */}
-                              </td>
+                              <div className="avatarPhoto">
+                                <img src={item?.profilePicture ? item?.profilePicture : male1} className="detailPro" />
+                              </div>
+                            </td>
                             <td className="text-capitalize">
                               {item?.name}
                             </td>
@@ -170,7 +174,7 @@ export const UserManagement = () => {
                             <td>{item?.phone}</td>
                             <td className={item?.subscribedUser == true ? 'greenColor' : "redColor"}>{item?.subscribedUser == true ? 'Active' : "Inactive"}</td>
                             <td className={item?.isActive == true ? 'greenColor' : "redColor"}>{item?.isActive == true ? 'Active' : "Inactive"}</td>
-                            <td>{item?.createdAt}</td>
+                            <td><FormatDateTime isoDateString={item?.createdAt}></FormatDateTime></td>
                             <td>
                               <Dropdown className="tableDropdown">
                                 <Dropdown.Toggle variant="transparent" className="notButton classicToggle">

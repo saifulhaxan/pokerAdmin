@@ -2,8 +2,6 @@
 import { useState } from 'react';
 import { base_url } from './apiConfig';
 
-
-
 export const useAuth = (url, initialData = null) => {
   const [ApiData, setData] = useState(initialData);
   const [loading, setLoading] = useState(false);
