@@ -134,42 +134,72 @@ export const AddPromotion = () => {
                                                             <img src={formData?.image} alt="User" />
                                                             <button type="button" onClick={removeImage}><FontAwesomeIcon icon={faClose}></FontAwesomeIcon></button>
                                                         </div>
-                                                       
-                                            ) : ''
+
+                                                    ) : ''
                                                 }
 
-                                        </div>
+                                            </div>
 
-                                        <div className="col-md-12 mb-4">
-                                            <div className="inputWrapper">
-                                                <div className="form-controls">
-                                                    <label htmlFor="">Description</label>
-                                                    <textarea
-                                                        name="description"
-                                                        required
-                                                        className="form-control shadow border-0"
-                                                        id=""
-                                                        cols="30"
-                                                        rows="10"
-                                                        value={formData.description}
-                                                        onChange={handleChange}
-                                                    >
-                                                    </textarea>
+                                            <div className="col-md-6 mb-4">
+                                                <CustomInput
+                                                    label='Start Date'
+                                                    required
+                                                    id='name'
+                                                    type='date'
+                                                    // placeholder='Enter Promotion Name'
+                                                    labelClass='mainLabel'
+                                                    inputClass='mainInput'
+                                                    name="startDate"
+                                                    value={formData?.startData}
+                                                    onChange={handleChange}
+                                                />
+                                            </div>
+
+                                            <div className="col-md-6 mb-4">
+                                                <CustomInput
+                                                    label='End Date'
+                                                    required
+                                                    id='name'
+                                                    type='date'
+                                                    // placeholder='Enter Promotion Name'
+                                                    labelClass='mainLabel'
+                                                    inputClass='mainInput'
+                                                    name="endDate"
+                                                    value={formData?.endDate}
+                                                    onChange={handleChange}
+                                                />
+                                            </div>
+
+                                            <div className="col-md-12 mb-4">
+                                                <div className="inputWrapper">
+                                                    <div className="form-controls">
+                                                        <label htmlFor="">Description</label>
+                                                        <textarea
+                                                            name="description"
+                                                            required
+                                                            className="form-control shadow border-0"
+                                                            id=""
+                                                            cols="30"
+                                                            rows="10"
+                                                            value={formData.description}
+                                                            onChange={handleChange}
+                                                        >
+                                                        </textarea>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div className="col-md-12">
-                                            <CustomButton variant='primaryButton' text='Submit' type='submit' />
+                                            <div className="col-md-12">
+                                                <CustomButton variant='primaryButton' text='Submit' type='submit' />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                            </form>
                         </div>
-                    </form>
-                </div>
-            </div>
-        </div >
+                    </div>
+                </div >
 
-            <CustomModal show={showModal} close={() => { setShowModal(false) }} success heading='Promotion Added Successfully.' />
+                <CustomModal show={showModal} close={() => { setShowModal(false) }} success heading='Promotion Added Successfully.' />
 
             </DashboardLayout >
         </>

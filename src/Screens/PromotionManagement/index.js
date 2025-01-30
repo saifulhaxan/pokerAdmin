@@ -111,6 +111,14 @@ export const PromotionManagement = () => {
       title: "Status",
     },
     {
+      key: "start date",
+      title: "start date",
+    },
+    {
+      key: "end date",
+      title: "end date",
+    },
+    {
       key: "created_at",
       title: "Created On",
     },
@@ -154,6 +162,8 @@ export const PromotionManagement = () => {
                               {item?.title}
                             </td>
                             <td className={item?.status == true ? 'greenColor' : "redColor"}>{item?.status == true ? 'Active' : "Inactive"}</td>
+                            <td><FormatDateTime isoDateString={item?.startDate}></FormatDateTime></td>
+                            <td><FormatDateTime isoDateString={item?.endDate}></FormatDateTime></td>
                             <td><FormatDateTime isoDateString={item?.createdAt}></FormatDateTime></td>
                             <td>
                               <Dropdown className="tableDropdown">
