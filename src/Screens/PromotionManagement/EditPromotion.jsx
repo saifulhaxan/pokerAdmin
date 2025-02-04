@@ -110,6 +110,30 @@ export const EditPromotion = () => {
         })
     }
 
+    const discountList = [
+        {
+            code: '10%',
+            name: '10%'
+        },
+        {
+            code: '20%',
+            name: '20%'
+        },
+        {
+            code: '30%',
+            name: '30%'
+        },
+        {
+            code: '40%',
+            name: '40%'
+        },
+        {
+            code: '50%',
+            name: '50%'
+        }
+    ]
+
+
     return (
         <>
             <DashboardLayout>
@@ -144,7 +168,19 @@ export const EditPromotion = () => {
                                             </div>
 
                                             <div className="col-md-6 mb-4">
-                                                <ImageUpload onUpload={handleImageUpload} title="Upload Promotion Image" />
+                                                <SelectBox
+                                                    selectClass="mainInput"
+                                                    name="discount"
+                                                    label="Select Discount"
+                                                    value={formData?.discount}
+                                                    placeholder="Select Discount"
+                                                    option={discountList}
+                                                    onChange={handleChange}
+                                                />
+                                            </div>
+
+                                            <div className="col-md-6 mb-4">
+                                                <ImageUpload onUpload={handleImageUpload} title="Upload Promotion Image" maxWidth={1600} maxHeight={400} />
                                                 {
                                                     formData?.image ? (
                                                         <div className="imageUploadBanner">

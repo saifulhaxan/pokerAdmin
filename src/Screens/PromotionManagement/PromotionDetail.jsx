@@ -127,6 +127,9 @@ export const PromotionDetails = () => {
                                             <h2 className="">{data?.title}</h2>
                                         </div>
                                         <div className="col-xl-12 col-md-12 mb-3">
+                                            <h2 className="">{data?.discount}</h2>
+                                        </div>
+                                        <div className="col-xl-12 col-md-12 mb-3">
                                             <p className="">{data?.description}</p>
                                         </div>
                                     </div>

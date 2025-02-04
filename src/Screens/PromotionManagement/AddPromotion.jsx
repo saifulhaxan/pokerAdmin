@@ -82,6 +82,29 @@ export const AddPromotion = () => {
         })
     }
 
+    const discountList = [
+        {
+            code: '10%',
+            name: '10%'
+        },
+        {
+            code: '20%',
+            name: '20%'
+        },
+        {
+            code: '30%',
+            name: '30%'
+        },
+        {
+            code: '40%',
+            name: '40%'
+        },
+        {
+            code: '50%',
+            name: '50%'
+        }
+    ]
+
     return (
         <>
             <DashboardLayout>
@@ -114,6 +137,16 @@ export const AddPromotion = () => {
                                                     onChange={handleChange}
                                                 />
                                             </div>
+                                            <div className="col-md-6 mb-4">
+                                                <SelectBox
+                                                    selectClass="mainInput"
+                                                    name="discount"
+                                                    label="Select Discount"
+                                                    placeholder="Select Discount"
+                                                    option={discountList}
+                                                    onChange={handleChange}
+                                                />
+                                            </div>
 
                                             <div className="col-md-6 mb-4">
                                                 {/* <CustomInput
@@ -127,49 +160,49 @@ export const AddPromotion = () => {
                                                     // value={formData.image}
                                                     onChange={filehandleChange}
                                                 /> */}
-                                                <ImageUpload onUpload={handleImageUpload} title="Upload Promotion Image" />
+                                                <ImageUpload onUpload={handleImageUpload} title="Upload Promotion Image" maxWidth={1600} maxHeight={400} />
                                                 {
                                                     formData?.image ? (
                                                         <div className="imageUploadBanner">
                                                             <img src={formData?.image} alt="User" />
                                                             <button type="button" onClick={removeImage}><FontAwesomeIcon icon={faClose}></FontAwesomeIcon></button>
                                                         </div>
-                                                       
-                                            ) : ''
+
+                                                    ) : ''
                                                 }
 
-                                        </div>
+                                            </div>
 
-                                        <div className="col-md-12 mb-4">
-                                            <div className="inputWrapper">
-                                                <div className="form-controls">
-                                                    <label htmlFor="">Description</label>
-                                                    <textarea
-                                                        name="description"
-                                                        required
-                                                        className="form-control shadow border-0"
-                                                        id=""
-                                                        cols="30"
-                                                        rows="10"
-                                                        value={formData.description}
-                                                        onChange={handleChange}
-                                                    >
-                                                    </textarea>
+                                            <div className="col-md-12 mb-4">
+                                                <div className="inputWrapper">
+                                                    <div className="form-controls">
+                                                        <label htmlFor="">Description</label>
+                                                        <textarea
+                                                            name="description"
+                                                            required
+                                                            className="form-control shadow border-0"
+                                                            id=""
+                                                            cols="30"
+                                                            rows="10"
+                                                            value={formData?.description}
+                                                            onChange={handleChange}
+                                                        >
+                                                        </textarea>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div className="col-md-12">
-                                            <CustomButton variant='primaryButton' text='Submit' type='submit' />
+                                            <div className="col-md-12">
+                                                <CustomButton variant='primaryButton' text='Submit' type='submit' />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                            </form>
                         </div>
-                    </form>
-                </div>
-            </div>
-        </div >
+                    </div>
+                </div >
 
-            <CustomModal show={showModal} close={() => { setShowModal(false) }} success heading='Promotion Added Successfully.' />
+                <CustomModal show={showModal} close={() => { setShowModal(false) }} success heading='Promotion Added Successfully.' />
 
             </DashboardLayout >
         </>

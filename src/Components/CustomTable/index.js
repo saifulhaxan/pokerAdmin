@@ -29,12 +29,12 @@ const CustomTable = (props) => {
             <tr>
               {props?.headers.map((header) => (
                 <th key={header.key}>
-                  {header.key !== 'id' ? 
+                  {/* {header.key !== 'id' ? 
                   <div className="arrowTables">
                     <button><FontAwesomeIcon icon={faArrowUp}></FontAwesomeIcon> </button>
                     <button><FontAwesomeIcon icon={faArrowDown}></FontAwesomeIcon> </button>
                   </div>
-                  : ''}
+                  : ''} */}
                   {header.title}</th>
               ))}
             </tr>

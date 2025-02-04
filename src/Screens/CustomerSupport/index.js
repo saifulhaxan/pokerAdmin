@@ -37,10 +37,9 @@ export const CustomerSupport = () => {
   const [showModal3, setShowModal3] = useState(false);
   const [showModal4, setShowModal4] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(8);
+  const [itemsPerPage, setItemsPerPage] = useState(15);
   const [inputValue, setInputValue] = useState('');
-  const { ApiData: CustomerSupportData, loading: CustomerSupportLoading, error: CustomerSupportError, get: GetCustomerSupport } = useGet(`customer-support`);
-
+  const { ApiData: CustomerSupportData, loading: CustomerSupportLoading, error: CustomerSupportError, get: GetCustomerSupport } = useGet(`customer-support`)
 
   const navigate = useNavigate();
 
@@ -112,6 +111,10 @@ export const CustomerSupport = () => {
       key: "read",
       title: "Mark as Read",
     },
+    {
+      key: "status",
+      title: "Status",
+    },
   
     {
       key: "created_at",
@@ -157,6 +160,7 @@ export const CustomerSupport = () => {
                             </td>
                             <td>{item?.email}</td>
                             <td className={item?.seen === true ? 'text-success' : 'text-danger'}>{item?.seen === true ? 'Read' : 'Unread'}</td>
+                            <td>{item?.status}</td>
                             <td><FormatDateTime isoDateString={item?.createdAt}></FormatDateTime></td>
                             <td>
                               <Dropdown className="tableDropdown">

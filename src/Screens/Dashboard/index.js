@@ -162,42 +162,19 @@ export const Dashboard = () => {
                       <h3 className="mainTitle">Recently Login</h3>
                     </div>
                     <div className="dashData">
-                      <div className="userBox">
-                        <div className="userImage">
-                          <img src={male1} alt="Jhon" />
-                        </div>
-                        <div className="userName">
-                          <h5>Jhon Mikal</h5>
-                          <p>Last Login: 7:32 AM</p>
-                        </div>
-                      </div>
-                      <div className="userBox">
-                        <div className="userImage">
-                          <img src={male3} alt="Jhon" />
-                        </div>
-                        <div className="userName">
-                          <h5>Jhon Mikal</h5>
-                          <p>Last Login: 7:32 AM</p>
-                        </div>
-                      </div>
-                      <div className="userBox">
-                        <div className="userImage">
-                          <img src={male2} alt="Jhon" />
-                        </div>
-                        <div className="userName">
-                          <h5>Jhon Mikal</h5>
-                          <p>Last Login: 7:32 AM</p>
-                        </div>
-                      </div>
-                      <div className="userBox">
-                        <div className="userImage">
-                          <img src={female1} alt="Jhon" />
-                        </div>
-                        <div className="userName">
-                          <h5>Jhon Mikal</h5>
-                          <p>Last Login: 7:32 AM</p>
-                        </div>
-                      </div>
+                      {
+                        data?.recentLogins && data?.recentLogins?.map((item, index) => (
+                          <div className="userBox" key={index}>
+                            <div className="userImage">
+                              <img src={male1} alt="Jhon" />
+                            </div>
+                            <div className="userName">
+                              <h5>{item?.email}</h5>
+                              <p><FormatDateTime isoDateString={item?.createdAt}></FormatDateTime></p>
+                            </div>
+                          </div>
+                        ))
+                      }
                     </div>
                   </div>
                   <div className="col-md-6 mb-4">

@@ -1,18 +1,35 @@
 import React, { useState } from 'react';
 import { base_url } from '../../Api/apiConfig';
 
-const ImageUpload = ({ onUpload, title }) => {
+const ImageUpload = ({ onUpload, title, maxWidth, maxHeight }) => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [uploading, setUploading] = useState(false);
     const [error, setError] = useState(null);
     const LogoutData = localStorage.getItem('login');
+
+    // Validate image dimensions
+    const validateImageDimensions = (file) => {
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.src = URL.createObjectURL(file);
+            img.onload = () => {
+                if (maxWidth && img.width > maxWidth) {
+                    reject(`Image width should not exceed ${maxWidth}px.`);
+                } else if (maxHeight && img.height > maxHeight) {
+                    reject(`Image height should not exceed ${maxHeight}px.`);
+                } else {
+                    resolve();
+                }
+            };
+            img.onerror = () => reject('Error loading image.');
+        });
+    };
 
     // Handle file selection
     const handleFileChange = async (event) => {
         const file = event.target.files[0];
         if (!file) return;
 
-        // Optional: Validate file type and size
         if (!file.type.startsWith('image/')) {
             setError('Please select a valid image file.');
             return;
@@ -22,8 +39,15 @@ const ImageUpload = ({ onUpload, title }) => {
             return;
         }
 
+        try {
+            await validateImageDimensions(file);
+        } catch (dimensionError) {
+            setError(dimensionError);
+            return;
+        }
+
         setSelectedFile(file);
-        setError(null); // Clear previous errors
+        setError(null);
 
         const formData = new FormData();
         formData.append('file', file);
@@ -34,7 +58,6 @@ const ImageUpload = ({ onUpload, title }) => {
                 method: 'POST',
                 body: formData,
                 headers: {
-                    // 'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${LogoutData}`,
                 },
             });
@@ -44,8 +67,8 @@ const ImageUpload = ({ onUpload, title }) => {
             }
 
             const data = await response.json();
-            onUpload(data); // Pass the response data to the parent
-            setSelectedFile(null); // Clear the selected file
+            onUpload(data);
+            setSelectedFile(null);
         } catch (err) {
             setError('An error occurred during the upload. Please try again.');
         } finally {
@@ -59,11 +82,11 @@ const ImageUpload = ({ onUpload, title }) => {
                 type="file"
                 id='image'
                 className='d-none'
-                accept="image/*" // Accepts all image types
+                accept="image/*"
                 onChange={handleFileChange}
-               
             />
-            <label for="image"  disabled={uploading}>{title}</label>
+            <label htmlFor="image" disabled={uploading}>{title}</label>
+            <p>Max file size: 5MB{maxWidth && maxHeight ? `, Max dimensions: ${maxWidth} x ${maxHeight}px` : ''}</p>
             {uploading && <p>Uploading...</p>}
             {error && <p style={{ color: 'red' }}>{error}</p>}
         </div>
