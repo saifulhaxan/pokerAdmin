@@ -192,6 +192,37 @@ export const EditPromotion = () => {
                                                 }
                                             </div>
 
+
+                                             <div className="col-md-6 mb-4">
+                                                <CustomInput
+                                                    label='Start Date'
+                                                    required
+                                                    id='name'
+                                                    type='date'
+                                                    // placeholder='Enter Promotion Name'
+                                                    labelClass='mainLabel'
+                                                    inputClass='mainInput'
+                                                    name="startDate"
+                                                    value={formData?.startData}
+                                                    onChange={handleChange}
+                                                />
+                                            </div>
+
+                                            <div className="col-md-6 mb-4">
+                                                <CustomInput
+                                                    label='End Date'
+                                                    required
+                                                    id='name'
+                                                    type='date'
+                                                    // placeholder='Enter Promotion Name'
+                                                    labelClass='mainLabel'
+                                                    inputClass='mainInput'
+                                                    name="endDate"
+                                                    value={formData?.endDate}
+                                                    onChange={handleChange}
+                                                />
+                                            </div>
+
                                             <div className="col-md-12 mb-4">
                                                 <div className="inputWrapper">
                                                     <div className="form-controls">
