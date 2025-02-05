@@ -40,7 +40,11 @@ export const EditPromotion = () => {
                 ...formData,
                 title: EditCourseData?.title,
                 description: EditCourseData?.description,
-                image: EditCourseData?.image
+                image: EditCourseData?.image,
+                startDate: EditCourseData?.startDate,
+                endDate: EditCourseData?.endDate,
+                discount: EditCourseData?.discount
+                
             });
         }
     }, [EditCourseData])
@@ -112,23 +116,23 @@ export const EditPromotion = () => {
 
     const discountList = [
         {
-            code: '10%',
+            code: 10,
             name: '10%'
         },
         {
-            code: '20%',
+            code: 20,
             name: '20%'
         },
         {
-            code: '30%',
+            code: 30,
             name: '30%'
         },
         {
-            code: '40%',
+            code: 40,
             name: '40%'
         },
         {
-            code: '50%',
+            code: 50,
             name: '50%'
         }
     ]
@@ -203,7 +207,7 @@ export const EditPromotion = () => {
                                                     labelClass='mainLabel'
                                                     inputClass='mainInput'
                                                     name="startDate"
-                                                    value={formData?.startData}
+                                                    value={formData?.startDate ? formData?.startDate.split("T")[0] : ""}
                                                     onChange={handleChange}
                                                 />
                                             </div>
@@ -218,7 +222,7 @@ export const EditPromotion = () => {
                                                     labelClass='mainLabel'
                                                     inputClass='mainInput'
                                                     name="endDate"
-                                                    value={formData?.endDate}
+                                                    value={formData?.endDate ? formData?.endDate.split("T")[0] : ""}
                                                     onChange={handleChange}
                                                 />
                                             </div>

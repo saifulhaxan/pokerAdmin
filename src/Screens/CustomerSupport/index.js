@@ -29,6 +29,7 @@ import CustomButton from "../../Components/CustomButton";
 import "./style.css";
 import { useGet, usePatch } from "../../Api";
 import FormatDateTime from "../../Components/DateFormate";
+import { base_url } from "../../Api/apiConfig";
 
 export const CustomerSupport = () => {
   const [data, setData] = useState([]);
@@ -70,9 +71,16 @@ export const CustomerSupport = () => {
     setInputValue(e.target.value);
   }
 
-  const filterData = data.filter(item =>
-    item?.name?.toLowerCase().includes(inputValue.toLowerCase())
+  const [statusFilter, setStatusFilter] = useState("ALL");
+  const filterData = data.filter(ticket =>
+    (statusFilter === "ALL" || ticket.status === statusFilter) &&
+    (inputValue === "" || ticket.name.toLowerCase().includes(inputValue.toLowerCase()))
   );
+
+
+  // const filterData = data.filter(item =>
+  //   item?.name?.toLowerCase().includes(inputValue.toLowerCase())
+  // );
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -94,7 +102,7 @@ export const CustomerSupport = () => {
     }
   }, [CustomerSupportData]);
 
-  
+
 
 
 
@@ -131,25 +139,42 @@ export const CustomerSupport = () => {
     },
   ];
 
-  const markResolved = (itemId, statusID) => {
-    setListID(itemId);
-    setStatus(statusID);
-    alert(itemId, statusID)
-  }
+  const LogoutData = localStorage.getItem('login');
 
-  useEffect(()=>{
-    if(status && listID) {
-      GetStatusChange()
-    }
-  },[status, listID])
+  const markResolved = async (listID, status) => {
+    if (listID && status) {
+      try {
+        const response = await fetch(
+          `${base_url}customer-support/change-status/${listID}?status=${status == 'CLOSE' ? 'OPEN' : 'CLOSE'}`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              // Add authorization token if required
+              "Authorization": `Bearer ${LogoutData}`
+            },
+          }
+        );
 
-  useEffect(()=>{
-    if(StatusChangeData) {
-      setStatus('');
-      setListID(null);
-      GetCustomerSupport()
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setStatus('');
+        setListID(null);
+        GetCustomerSupport()
+        return data;
+      } catch (error) {
+        console.error("Error changing customer status:", error);
+        return null;
+      }
     }
-  },[StatusChangeData])
+  };
+
+
+
+
 
   return (
     <>
@@ -163,7 +188,15 @@ export const CustomerSupport = () => {
                     <h2 className="mainTitle">Customer Management</h2>
                   </div>
                   <div className="col-md-6 mb-2">
-                    <div className="addUser">
+                    <div className="addUser align-items-end">
+                      <div className="filterBox mb-3">
+                        <label>Filter by Status: </label>
+                        <select className="mainInput" onChange={(e) => setStatusFilter(e.target.value)} value={statusFilter}>
+                          <option value="ALL">All</option>
+                          <option value="OPEN">Open</option>
+                          <option value="CLOSE">Resolved</option>
+                        </select>
+                      </div>
                       {/* <CustomButton text="Add New Message" variant='primaryButton' onClick={hanldeRoute} /> */}
                       <CustomInput type="text" placeholder="Search Here..." value={inputValue} inputClass="mainInput" onChange={handleChange} />
                     </div>
@@ -176,7 +209,9 @@ export const CustomerSupport = () => {
 
                     >
                       <tbody>
-                        {currentItems?.map((item, index) => (
+                        {currentItems?.map((item, index) =>
+                        (
+
                           <tr key={index}>
                             <td>{index + 1}</td>
                             <td className="text-capitalize">
@@ -184,7 +219,7 @@ export const CustomerSupport = () => {
                             </td>
                             <td>{item?.email}</td>
                             <td className={item?.seen === true ? 'text-success' : 'text-danger'}>{item?.seen === true ? 'Read' : 'Unread'}</td>
-                            <td>{item?.status}</td>
+                            <td className={item?.status === 'CLOSE' ? 'text-success' : 'text-danger'}>{item?.status == "CLOSE" ? 'RESOLVED' : item?.status}</td>
                             <td><FormatDateTime isoDateString={item?.createdAt}></FormatDateTime></td>
                             <td>
                               <Dropdown className="tableDropdown">
@@ -195,7 +230,10 @@ export const CustomerSupport = () => {
 
                                   <Link to={`/customer-support/message-details/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faEye} className="tableActionIcon" />View</Link>
                                   {item?.status == 'OPEN' && (
-                                    <button className="tableAction" onClick={()=>{ markResolved(item?.id, item?.status)}}><FontAwesomeIcon icon={faCheck} className="tableActionIcon" />Resolve</button>
+                                    <button className="tableAction" onClick={() => { markResolved(item?.id, item?.status) }}><FontAwesomeIcon icon={faCheck} className="tableActionIcon" />Resolve</button>
+                                  )}
+                                  {item?.status == 'CLOSE' && (
+                                    <button className="tableAction" onClick={() => { markResolved(item?.id, item?.status) }}><FontAwesomeIcon icon={faCheck} className="tableActionIcon" />Open</button>
                                   )}
                                 </Dropdown.Menu>
                               </Dropdown>

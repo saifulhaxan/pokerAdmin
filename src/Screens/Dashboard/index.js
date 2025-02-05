@@ -163,7 +163,8 @@ export const Dashboard = () => {
                     </div>
                     <div className="dashData">
                       {
-                        data?.recentLogins && data?.recentLogins?.map((item, index) => (
+                        data?.recentLogins && data?.recentLogins?.map((item, index) => 
+                          item?.email != 'admin@yopmail.com' && (
                           <div className="userBox" key={index}>
                             <div className="userImage">
                               <img src={male1} alt="Jhon" />
