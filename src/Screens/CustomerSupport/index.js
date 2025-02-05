@@ -27,7 +27,7 @@ import CustomButton from "../../Components/CustomButton";
 
 
 import "./style.css";
-import { useGet } from "../../Api";
+import { useGet, usePatch } from "../../Api";
 import FormatDateTime from "../../Components/DateFormate";
 
 export const CustomerSupport = () => {
@@ -39,7 +39,10 @@ export const CustomerSupport = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(15);
   const [inputValue, setInputValue] = useState('');
+  const [listID, setListID] = useState(null);
+  const [status, setStatus] = useState('');
   const { ApiData: CustomerSupportData, loading: CustomerSupportLoading, error: CustomerSupportError, get: GetCustomerSupport } = useGet(`customer-support`)
+  const { ApiData: StatusChangeData, loading: StatusChangeLoading, error: StatusChangeError, patch: GetStatusChange } = usePatch(`customer-support/change-status/${listID}?status=${status}`)
 
   const navigate = useNavigate();
 
@@ -85,11 +88,13 @@ export const CustomerSupport = () => {
   }, []);
 
 
-  useEffect(()=>{
-    if(CustomerSupportData) {
+  useEffect(() => {
+    if (CustomerSupportData) {
       setData(CustomerSupportData)
     }
-  },[CustomerSupportData])
+  }, [CustomerSupportData]);
+
+  
 
 
 
@@ -115,7 +120,7 @@ export const CustomerSupport = () => {
       key: "status",
       title: "Status",
     },
-  
+
     {
       key: "created_at",
       title: "Created On",
@@ -126,6 +131,25 @@ export const CustomerSupport = () => {
     },
   ];
 
+  const markResolved = (itemId, statusID) => {
+    setListID(itemId);
+    setStatus(statusID);
+    alert(itemId, statusID)
+  }
+
+  useEffect(()=>{
+    if(status && listID) {
+      GetStatusChange()
+    }
+  },[status, listID])
+
+  useEffect(()=>{
+    if(StatusChangeData) {
+      setStatus('');
+      setListID(null);
+      GetCustomerSupport()
+    }
+  },[StatusChangeData])
 
   return (
     <>
@@ -170,8 +194,9 @@ export const CustomerSupport = () => {
                                 <Dropdown.Menu align="end" className="tableDropdownMenu">
 
                                   <Link to={`/customer-support/message-details/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faEye} className="tableActionIcon" />View</Link>
-                                  {/* <Link to={`/user-management/edit-user/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faEdit} className="tableActionIcon" />Edit</Link> */}
-
+                                  {item?.status == 'OPEN' && (
+                                    <button className="tableAction" onClick={()=>{ markResolved(item?.id, item?.status)}}><FontAwesomeIcon icon={faCheck} className="tableActionIcon" />Resolve</button>
+                                  )}
                                 </Dropdown.Menu>
                               </Dropdown>
                             </td>

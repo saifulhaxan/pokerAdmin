@@ -84,23 +84,23 @@ export const AddPromotion = () => {
 
     const discountList = [
         {
-            code: '10%',
+            code: 10,
             name: '10%'
         },
         {
-            code: '20%',
+            code: 20,
             name: '20%'
         },
         {
-            code: '30%',
+            code: 30,
             name: '30%'
         },
         {
-            code: '40%',
+            code: 40,
             name: '40%'
         },
         {
-            code: '50%',
+            code: 50,
             name: '50%'
         }
     ]
