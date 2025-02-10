@@ -33,11 +33,18 @@ export const CategotyManagement = () => {
     const [formData, setFormData] = useState({});
     const [catID, setCatID] = useState('');
     const [delID, setDelID] = useState('');
+    const [courses, setCourses] = useState([]);
     const { ApiData: CategoryData, loading: CategoryLoading, error: CategoryError, get: GetCategory } = useGet(`category`);
     const { ApiData: AddNewCategoryData, loading: AddNewCategoryLoading, error: AddNewCategoryError, post: GetAddNewCategory } = usePost(`category`);
     const { ApiData: EditCategoryData, loading: EditCategoryLoading, error: EditCategoryError, get: GetEditCategory } = useGet(`category/${catID ? catID : ''}`);
     const { ApiData: TagUpdateData, loading: TagUpdateLoading, error: TagUpdateError, patch: GetTagUpdate } = usePatch(`category/${catID}`);
     const { ApiData: TagDeleteData, loading: TagDeleteLoading, error: TagDeleteError, del: GetTagDelete } = useDelete(`category/${delID}`);
+    const { ApiData: CourseData, get: GetCourse } = useGet(`courses`);
+
+
+    useEffect(() => {
+        if (CourseData) setCourses(CourseData);
+    }, [CourseData]);
 
     // list category 
 
@@ -72,6 +79,7 @@ export const CategotyManagement = () => {
     useEffect(() => {
         document.title = 'Poker | Category Management';
         GetCategory()
+        GetCourse()
     }, []);
 
 
@@ -119,10 +127,11 @@ export const CategotyManagement = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+        
 
         setFormData((prevData) => ({
             ...prevData,
-            [name]: value,
+            [name]: name == 'courseId' ? parseInt(value) : value,
         }));
 
         console.log(formData)
@@ -164,7 +173,7 @@ export const CategotyManagement = () => {
 
     }
 
-  
+
 
     useEffect(() => {
         if (TagUpdateData) {
@@ -179,9 +188,9 @@ export const CategotyManagement = () => {
     }, [TagUpdateData])
 
 
-      //delete 
+    //delete 
 
-      useEffect(() => {
+    useEffect(() => {
         if (delID) {
             GetTagDelete()
             GetCategory()
@@ -268,6 +277,20 @@ export const CategotyManagement = () => {
                     {/* add unit  */}
 
                     <CustomModal show={addUser} close={() => { setUser(false) }} handleSubmit={handleSubmit}>
+
+
+                        <SelectBox
+                            selectClass="mainInput"
+                            name="courseId"
+                            label="Select Course"
+                            placeholder="Select Course"
+                            required
+                            value={formData?.courseId || ""}
+                            option={courses}
+                            onChange={handleChange}
+                        />
+
+
                         <CustomInput
                             label="Add Category"
                             type="text"
@@ -295,6 +318,19 @@ export const CategotyManagement = () => {
                     </CustomModal>
 
                     <CustomModal show={editUser} close={() => { setEditUser(false) }} >
+
+                        <SelectBox
+                            selectClass="mainInput"
+                            name="courseId"
+                            label="Edit Course"
+                            placeholder="Select Course"
+                            required
+                            value={formData?.courseId || ""}
+                            option={courses}
+                            onChange={handleChange}
+                        />
+
+
                         <CustomInput
                             label="Edit Category"
                             type="text"
