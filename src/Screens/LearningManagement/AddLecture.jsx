@@ -12,9 +12,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const AddLecture = () => {
     // States for form data, categories, tags, courses, and UI feedback
-    const [formData, setFormData] = useState({ 
+    const [formData, setFormData] = useState({
         tagIds: [],
-        });
+    });
     const [categories, setCategories] = useState([]);
     const [tags, setTags] = useState([]);
     const [courses, setCourses] = useState([]);
@@ -70,14 +70,18 @@ export const AddLecture = () => {
 
     // Handle form input changes
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const { name, value, type, checked } = e.target;
+
         setFormData((prevData) => ({
             ...prevData,
-            [name]: name === "tagIds" ? [Number(value)] : value,
+            [name]:
+                name === "isShowContent" ? checked :
+                name === "tagIds" ? [Number(value)] : value
         }));
 
-        console.log('ac', formData)
+        console.log('ac', formData);
     };
+
 
     // Handle form submission
     const CHUNK_SIZE = 5 * 1024 * 1024; // 5MB chunks
@@ -293,6 +297,12 @@ export const AddLecture = () => {
                                         onChange={handleChange}
                                     />
                                 </div>
+                                <div className="col-md-6 mb-4">
+                                    <div class="form-group form-check pt-3">
+                                        <input type="checkbox" class="form-check-input" id="moduleTrue" onChange={handleChange} name="isShowContent" />
+                                        <label class="form-check-label" for="moduleTrue">Only show in content Library?</label>
+                                    </div>
+                                </div>
                                 <div className="col-md-12 mb-4">
                                     <textarea
                                         name="description"
@@ -313,7 +323,7 @@ export const AddLecture = () => {
                                         onDragLeave={() => dropZoneRef.current.classList.remove('dragover')}
                                     >
                                         <FontAwesomeIcon icon={faVideoCamera} className="mb-3 text-primary" size="4x" />
-                                        <h4 className="mb-3">Drag and drop a file, or</h4>
+                                        <h4 className="mb-3">Upload Video</h4>
                                         <button
                                             onClick={() => fileInputRef.current.click()}
                                             type="button"

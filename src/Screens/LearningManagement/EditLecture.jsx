@@ -18,7 +18,7 @@ export const EditLecture = () => {
     const [courses, setCourses] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate();
-    const {id} = useParams();
+    const { id } = useParams();
     const fileInputRef = useRef(null);
 
 
@@ -37,9 +37,10 @@ export const EditLecture = () => {
         GetSpecificLecture()
     }, []);
 
-    useEffect(()=>{ 
-        if(sepicficLecture) {
-            setFormData({...formData,
+    useEffect(() => {
+        if (sepicficLecture) {
+            setFormData({
+                ...formData,
                 videoUpload: sepicficLecture?.videoUpload,
                 courseId: sepicficLecture?.course?.id,
                 categoryId: sepicficLecture?.category?.id,
@@ -51,7 +52,7 @@ export const EditLecture = () => {
 
             })
         }
-    },[sepicficLecture])
+    }, [sepicficLecture])
 
     useEffect(() => {
         if (CategoriesData) setCategories(CategoriesData);
@@ -78,13 +79,16 @@ export const EditLecture = () => {
 
     // Handle form input changes
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const { name, value, type, checked } = e.target;
+
         setFormData((prevData) => ({
             ...prevData,
-            [name]: name === "tagIds" ? [Number(value)] : value,
+            [name]:
+                name === "isShowContent" ? checked :
+                    name === "tagIds" ? [Number(value)] : value
         }));
 
-        console.log('ac', formData)
+        console.log('ac', formData);
     };
 
     // Handle form submission
@@ -112,7 +116,7 @@ export const EditLecture = () => {
             await uploadFile(modifiedFile);
         }
     };
-    
+
 
     const updateProgressBar = (current, total) => {
         const percentage = (current / total) * 100;
@@ -296,6 +300,12 @@ export const EditLecture = () => {
                                         option={tags}
                                         onChange={handleChange}
                                     />
+                                </div>
+                                <div className="col-md-6 mb-4">
+                                    <div class="form-group form-check pt-3">
+                                        <input type="checkbox" class="form-check-input" id="moduleTrue" onChange={handleChange} name="isShowContent" value={formData?.isShowContent} />
+                                        <label class="form-check-label" for="moduleTrue">Only show in content Library?</label>
+                                    </div>
                                 </div>
                                 <div className="col-md-12 mb-4">
                                     <textarea
