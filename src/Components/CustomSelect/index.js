@@ -16,17 +16,19 @@ export const SelectBox = (props) => {
             {props?.label && <label htmlFor={props?.id} className={props?.labelClass}>{props?.label}{props?.required ? '*' : ''}</label>}
             <div className="fieldData">
                 <select className={props?.selectClass} name={props?.name} onChange={props.onChange} value={props.value}>
-                    <option>{`Select ${props?.name}`}</option>
-                    {Array.isArray(props.option) && props.option.map(item => (
-                       
+                    <option className='text-capitalize'>
+                        {`Select ${props?.name.replace(/id(s)?|\W+/gi, '')}`}
+                    </option>
+                    {Array.isArray(props?.option) && props?.option.map(item => (
+
                         <option value={!item.code ? item.id : item.code}>{item.name ? item.name : item?.title}</option>
                     ))
                     }
-                </select>   
-               {props?.buttonAction && (
-                <button type='button' onClick={handleClick}><FontAwesomeIcon icon={faTrashAlt} className="removeField"></FontAwesomeIcon></button>
-               )
-               }
+                </select>
+                {props?.buttonAction && (
+                    <button type='button' onClick={handleClick}><FontAwesomeIcon icon={faTrashAlt} className="removeField"></FontAwesomeIcon></button>
+                )
+                }
             </div>
 
         </div>

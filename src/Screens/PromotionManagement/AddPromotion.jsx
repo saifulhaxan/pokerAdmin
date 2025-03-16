@@ -137,7 +137,7 @@ export const AddPromotion = () => {
                                                     onChange={handleChange}
                                                 />
                                             </div>
-                                            <div className="col-md-6 mb-4">
+                                            {/* <div className="col-md-6 mb-4">
                                                 <SelectBox
                                                     selectClass="mainInput"
                                                     name="discount"
@@ -146,7 +146,7 @@ export const AddPromotion = () => {
                                                     option={discountList}
                                                     onChange={handleChange}
                                                 />
-                                            </div>
+                                            </div> */}
 
                                             <div className="col-md-6 mb-4">
                                                 {/* <CustomInput
