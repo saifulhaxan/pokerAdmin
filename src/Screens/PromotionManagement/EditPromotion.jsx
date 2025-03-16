@@ -171,7 +171,7 @@ export const EditPromotion = () => {
                                                 />
                                             </div>
 
-                                            <div className="col-md-6 mb-4">
+                                            {/* <div className="col-md-6 mb-4">
                                                 <SelectBox
                                                     selectClass="mainInput"
                                                     name="discount"
@@ -181,7 +181,7 @@ export const EditPromotion = () => {
                                                     option={discountList}
                                                     onChange={handleChange}
                                                 />
-                                            </div>
+                                            </div> */}
 
                                             <div className="col-md-6 mb-4">
                                                 <ImageUpload onUpload={handleImageUpload} title="Upload Promotion Image" maxWidth={1600} maxHeight={400} />
