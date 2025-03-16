@@ -14,6 +14,7 @@ export const AddLecture = () => {
     // States for form data, categories, tags, courses, and UI feedback
     const [formData, setFormData] = useState({
         tagIds: [],
+        isShowContent: false
     });
     const [categories, setCategories] = useState([]);
     const [tags, setTags] = useState([]);
