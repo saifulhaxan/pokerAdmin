@@ -45,7 +45,7 @@ const FileUpload = () => {
 
   const uploadChunk = async (formData, chunkIndex, totalChunks) => {
     try {
-      const response = await fetch('https://devapi.archcitylms.com/lectures/upload', {
+      const response = await fetch('https://api.archcitypoker.com/lectures/upload', {
         method: 'POST',
         body: formData,
       });

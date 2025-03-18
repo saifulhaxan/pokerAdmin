@@ -93,7 +93,7 @@ export const EditLecture = () => {
 
     // Handle form submission
     const CHUNK_SIZE = 5 * 1024 * 1024; // 5MB chunks
-    const BASE_URL = 'https://devapi.archcitylms.com/lectures';
+    const BASE_URL = 'https://api.archcitypoker.com/lectures';
     const [progress, setProgress] = useState(0);
     const [status, setStatus] = useState('');
     const [cloudinaryResponse, setCloudinaryResponse] = useState(null);
